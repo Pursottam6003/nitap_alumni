@@ -27,15 +27,12 @@ const DeptList = [
   { label: "Civil Eng," },
   { label: "Electronics and Comm. Eng" },
   { label: "Electrical Eng." },
-  { label: "Dept of BAS" },
-  { label: "Dept of CS" },
-  { label: "Dept of VLSI" },
-  { label: "Dept of ME" },
-  { label: "Dept of physics" },
+  { label: "Dept of Basic and Applied Sciences" },
+  { label: "Dept of Management and Humanities" },
   { label: "Dept of Civil Eng" },
 ];
 
-export default function PaymentForm({
+export default function CourseDetails({
   activeStep,
   handleBack,
   handleNext,

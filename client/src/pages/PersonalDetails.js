@@ -14,9 +14,10 @@ import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 //import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import Pincode from "react-pincode";
+// import Pincode from "react-pincode";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+import cx from 'classnames';
 
 const TitleList = [
   { label: "Mr." },
@@ -26,7 +27,6 @@ const TitleList = [
 ];
 const NationalityList = [
   { label: "Indian" },
-  { label: "Pakistani" },
   { label: "Srilankan" },
   { label: "Bangladeshi" },
   { label: "Nepali" },
@@ -46,34 +46,29 @@ const categoryList = [
 const ReligionList = [
   { label: "Hindu" },
   { label: "Muslim" },
+  { label: "Indegeneous" },
   { label: "Christian" },
   { label: "Sikh" },
   { label: "Jain" },
   { label: "Other" },
 ];
 
-export default function AddressForm({
+export default function PersonalDetails({
   activeStep,
   handleBack,
   handleNext,
   formData,
+  handleInputChange
 }) {
   const [value, setValue] = useState(dayjs("2000-04-07"));
-  const [pincodeData, setPincodeData] = useState("");
   const [myphoneVal, setPhoneVal] = useState(null);
   const [alternateNo, setAlternateNo] = useState(null);
-  if (pincodeData) console.log(pincodeData);
-
-  const handleControl = (e) => {
-    console.log("hendle control");
-  };
 
   /**
    * @param {Event} e
    * */
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
     const data = new FormData(e.currentTarget);
 
     const d = {
@@ -86,6 +81,7 @@ export default function AddressForm({
       category: data.get('category'),
       religion: data.get('religion'),
       address: data.get('address'),
+      pincode: data.get('pincode'),
       state: data.get('state'),
       city: data.get('city'),
       country: data.get('country'),
@@ -127,13 +123,16 @@ export default function AddressForm({
                 value={value}
                 required
                 id="dob"
-                name="date of birth"
+                name="dateOfBirth"
                 fullWidth
                 autoComplete="dob"
                 variant="standard"
                 onChange={(newValue) => {
+                  console.log(newValue.format('DD/MM/YYYY'));
                   setValue(newValue);
                 }}
+                // value={formData.dateOfBirth}
+                // onChange={(newValue) => {handleInputChange('dateOfBirth', newValue)}}
                 renderInput={(params) => (
                   <TextField
                     required
@@ -246,34 +245,14 @@ export default function AddressForm({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Pincode
-              invalidError="Please check pincode"
-              lengthError="check length"
-              className="container"
-              // data={e.target.value}
-              pincodeContainer={{ marginTop: "3px" }}
-              pincodeInput={{
-                width: "189px",
-                height: "30px",
-                marginTop: "12px",
-                fontSize: "16px",
-                borderTopStyle: "hidden",
-                borderRightStyle: "hidden",
-                borderLeftStyle: "hidden",
-                borderBottomStyle: "groove",
-                borderColor: "#e0e0e0",
-                boxshadow: "none",
-                outlined: "none",
-              }}
-              cityContainer={{ display: "none" }}
-              districtContainer={{ display: "none" }}
-              stateContainer={{ display: "none" }}
-              areaContainer={{ display: "none" }}
-              getData={(data) => {
-                console.log(data);
-                setPincodeData(data);
-                handleControl();
-              }}
+            <TextField
+              id="pincode"
+              type="number"
+              name="pincode"
+              label="Pincode"
+              fullWidth
+              autoComplete="pincode"
+              variant="standard"
             />
           </Grid>
 
@@ -311,23 +290,27 @@ export default function AddressForm({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <PhoneInput
-              placeholder="  Phone Number *"
-              defaultCountry="IN"
-              value={myphoneVal}
-              onChange={setPhoneVal}
-              className="phoneNumber removeborder"
-            />
+            <div className='phoneInputField'>
+              <PhoneInput
+                defaultCountry="IN"
+                value={myphoneVal}
+                onChange={setPhoneVal}
+                className={cx({ filled: myphoneVal })}
+              />
+              <label className='phoneInputLabel'>Phone number *</label>
+            </div>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <PhoneInput
-              placeholder="  Alternate Phone Number *"
-              value={alternateNo}
-              defaultCountry="IN"
-              onChange={setAlternateNo}
-              className="phoneNumber removeborder"
-            />
+            <div className='phoneInputField'>
+              <PhoneInput
+                defaultCountry="IN"
+                value={alternateNo}
+                onChange={setAlternateNo}
+                className={cx({ filled: alternateNo })}
+              />
+              <label className='phoneInputLabel'>Alternate phone number *</label>
+            </div>
           </Grid>
 
           <Grid item xs={12} sm={6}>

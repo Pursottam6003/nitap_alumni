@@ -86,19 +86,7 @@ export default function SignUp() {
       dept : data.get('department'),
     }
 
-    auth.createUserWithEmailAndPassword(user.email, user.password).then((userCredential) => {
-      // Signed in 
-      setSignedUp(true);
-      fs.collection('Users').doc(userCredential.user.uid).set(user)
-    .then(
-      console.log('Date Saved Sucessfully')
-    )
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(error);
-    });
+    console.log(user)
   };
 
   const [value, setValue] = useState(null)

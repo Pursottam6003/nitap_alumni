@@ -33,15 +33,15 @@ const steps = ["Personal Details", "Course Details", "Form Preview"];
 
 const theme = createTheme();
 
-export default function Checkout() {
+export default function Form() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [formData, setFormData] = React.useState({0: null, 1: null});
+  const [formData, setFormData] = React.useState({});
 
-  const handleNext = (data) => {
-    console.log('handleNext:', data);
-    const fData = formData;
-    fData[activeStep] = data;
-    setFormData(fData);
+  const handleNext = () => {
+    // console.log('handleNext:', data);
+    // const fData = formData;
+    // fData[activeStep] = data;
+    // setFormData(fData);
     setActiveStep(activeStep + 1);
   };
 
@@ -49,14 +49,18 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
+  const handleInputChange = (name, value) => {
+    setFormData((prevData) => ({...prevData, [name]: value}))
+  }
+
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <PersonalDetails formData={formData} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+        return <PersonalDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 1:
-        return <CourseDetails formData={formData} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+        return <CourseDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 2:
-        return <Preview activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+        return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       default:
         throw new Error("Unknown step");
     }

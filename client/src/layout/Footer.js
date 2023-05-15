@@ -111,12 +111,7 @@ export function Footer() {
                     Pursottam Sah
                   </Link>
                 </li>
-                <li>
-                  <Link color='CaptionText' underline='hover' target='_blank' rel='noreferrer'
-                    href='https://github.com/dev-singh-kanyal'>
-                    Dev Singh Kanyal
-                  </Link>
-                </li>
+            
                 <li>
                   <Link color='CaptionText' underline='hover' target='_blank' rel='noreferrer'
                     href='https://github.com/daknya'>
