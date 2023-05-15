@@ -41,6 +41,7 @@ export default function CourseDetails({
   const [value, setValue] = useState(dayjs());
   const [gradYear, setGradyear] = useState();
   const [sign, setSign] = useState(null);
+  const [profilePic,setProfilePic] = useState(null);
 
   /**
    * @param {Event} e
@@ -189,8 +190,44 @@ export default function CourseDetails({
               </>
             )}
           </Grid>
+
           <Grid item xs={12} sm={6}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+          {profilePic ? (
+              <>
+                <div>
+                  <img
+                    alt="not found"
+                    width={"200px"}
+                    src={URL.createObjectURL(sign)}
+                  />
+                  <br />
+                  <Button color="error" onClick={() => setProfilePic(null)}>
+                    Remove
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <FormLabel mt={2} component="legend">
+                  Passport Photo{" "}
+                </FormLabel>
+                <Button variant="contained" component="label">
+                  Upload File
+                  <input
+                    type="file"
+                    onChange={(event) => {
+                      console.log(event.target.files[0]);
+                      if (event.target.files[0].length !== 0) {
+                        setProfilePic(event.target.files[0]);
+                      }
+                    }}
+                    hidden
+                  />
+                </Button>
+              </>
+            )}
+
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
               <MobileDatePicker
                 label="Date"
                 value={value}
@@ -212,7 +249,9 @@ export default function CourseDetails({
                   />
                 )}
               />
-            </LocalizationProvider>
+            </LocalizationProvider> */}
+
+
           </Grid>
 
           <Grid item xs={12}>
