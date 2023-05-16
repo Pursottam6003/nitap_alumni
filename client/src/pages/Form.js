@@ -42,6 +42,7 @@ export default function Form() {
     // const fData = formData;
     // fData[activeStep] = data;
     // setFormData(fData);
+    console.log(formData)
     setActiveStep(activeStep + 1);
   };
 

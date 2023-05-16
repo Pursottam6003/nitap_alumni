@@ -51,7 +51,7 @@ export default function CourseDetails({
     const data = new FormData(e.currentTarget);
 
     const d = {
-      courseCompleted: data.get("courseCompleted"),
+      department: data.get("department"),
       discipline: data.get("discipline"),
       date: data.get("date"),
       year: data.get("year"),
@@ -69,27 +69,39 @@ export default function CourseDetails({
       <Box component="form" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TextField
-              autoComplete="course completed"
-              name="Course Completed"
-              required
-              variant="standard"
-              fullWidth
-              id="courseCompleted"
-              label="Course Completed"
+            <Autocomplete
+              options={courseList}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  autoComplete="department"
+                  name="department"
+                  required
+                  variant="standard"
+                  fullWidth
+                  id="department"
+                  label="Department"
+                />
+              )}
             />
-           
           </Grid>
           <Grid item xs={12} md={6}>
-              <TextField
-                autoComplete="discipline"
-                name="discipline"
-                variant="standard"
-                required
-                fullWidth
-                id="discipline"
-                label="Decipline Studied"
-              />
+
+            <Autocomplete
+              options={DeptList}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  autoComplete="discipline"
+                  name="discipline"
+                  variant="standard"
+                  required
+                  fullWidth
+                  id="discipline"
+                  label="Decipline Studied"
+                />
+              )}
+            />
           </Grid>
           <Grid item xs={12} md={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -148,8 +160,7 @@ export default function CourseDetails({
                 <div>
                   <img
                     alt="not found"
-                    width={"250px"}
-                    height={"150px"}
+                    width={"200px"}
                     src={URL.createObjectURL(sign)}
                   />
                   <br />
@@ -186,9 +197,8 @@ export default function CourseDetails({
                 <div>
                   <img
                     alt="not found"
-                    width={"250px"}
-                    height={"150px"}
-                    src={URL.createObjectURL(profilePic)}
+                    width={"200px"}
+                    src={URL.createObjectURL(sign)}
                   />
                   <br />
                   <Button color="error" onClick={() => setProfilePic(null)}>
@@ -216,6 +226,32 @@ export default function CourseDetails({
                 </Button>
               </>
             )}
+
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <MobileDatePicker
+                label="Date"
+                value={value}
+                required
+                id="date"
+                name="date"
+                fullWidth
+                autoComplete="date"
+                variant="standard"
+                onChange={(newValue) => {
+                  setValue(newValue);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    required
+                    fullWidth
+                    {...params}
+                    variant="standard"
+                  />
+                )}
+              />
+            </LocalizationProvider> */}
+
+
           </Grid>
 
           <Grid item xs={12}>
