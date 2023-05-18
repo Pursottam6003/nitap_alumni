@@ -37,11 +37,12 @@ export default function Form() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formData, setFormData] = React.useState({});
 
-  const handleNext = () => {
+  const handleNext = (d) => {
     // console.log('handleNext:', data);
     // const fData = formData;
     // fData[activeStep] = data;
     // setFormData(fData);
+    setFormData((prevData) => ({...prevData, ...d}))
     console.log(formData)
     setActiveStep(activeStep + 1);
   };

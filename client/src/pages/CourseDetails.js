@@ -37,11 +37,12 @@ export default function CourseDetails({
   handleBack,
   handleNext,
   formData,
+  handleInputChange
 }) {
   const [value, setValue] = useState(dayjs());
   const [gradYear, setGradyear] = useState();
   const [sign, setSign] = useState(null);
-  const [profilePic,setProfilePic] = useState(null);
+  const [profilePic, setProfilePic] = useState(null);
 
   /**
    * @param {Event} e
@@ -57,7 +58,6 @@ export default function CourseDetails({
       year: data.get("year"),
       membership: data.get("membership"),
     };
-    // console.log(d);
     handleNext(d);
   };
 
@@ -71,25 +71,29 @@ export default function CourseDetails({
           <Grid item xs={12}>
             <TextField
               autoComplete="course completed"
-              name="Course Completed"
+              name="courseCompleted"
               required
               variant="standard"
               fullWidth
               id="courseCompleted"
               label="Course Completed"
+              value={formData.courseCompleted}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
             />
-           
+
           </Grid>
           <Grid item xs={12} md={6}>
-              <TextField
-                autoComplete="discipline"
-                name="discipline"
-                variant="standard"
-                required
-                fullWidth
-                id="discipline"
-                label="Decipline Studied"
-              />
+            <TextField
+              autoComplete="discipline"
+              name="discipline"
+              variant="standard"
+              required
+              fullWidth
+              id="discipline"
+              value={formData.discipline}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              label="Decipline Studied"
+            />
           </Grid>
           <Grid item xs={12} md={6}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -98,11 +102,12 @@ export default function CourseDetails({
                 required
                 fullWidth
                 label="Year of Graduation"
-                value={gradYear}
+                value={dayjs().year(formData.gradYear)}
                 variant="standard"
                 onChange={(newValue) => {
-                  setGradyear(newValue);
+                  handleInputChange('gradYear', newValue.$y)
                 }}
+
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -126,6 +131,7 @@ export default function CourseDetails({
               defaultValue="membership-level-1"
               name="radio-buttons-group"
               id="membership"
+              required
             >
               <FormControlLabel
                 value="membership-level-1"
@@ -148,8 +154,8 @@ export default function CourseDetails({
                 <div>
                   <img
                     alt="not found"
-                    width={"250px"}
-                    height={"150px"}
+                    width={"135px"}
+                    height={"100px"}
                     src={URL.createObjectURL(sign)}
                   />
                   <br />
@@ -167,9 +173,12 @@ export default function CourseDetails({
                   Upload File
                   <input
                     type="file"
+                    name="sign"
+                    required
                     onChange={(event) => {
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
+                        handleInputChange('sign',URL.createObjectURL(event.target.files[0]))
                         setSign(event.target.files[0]);
                       }
                     }}
@@ -181,12 +190,12 @@ export default function CourseDetails({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-          {profilePic ? (
+            {profilePic ? (
               <>
                 <div>
                   <img
                     alt="not found"
-                    width={"250px"}
+                    width={"135px"}
                     height={"150px"}
                     src={URL.createObjectURL(profilePic)}
                   />
@@ -205,10 +214,14 @@ export default function CourseDetails({
                   Upload File
                   <input
                     type="file"
+                    name="passport"
+                    required
                     onChange={(event) => {
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
                         setProfilePic(event.target.files[0]);
+                        handleInputChange('passport',URL.createObjectURL(event.target.files[0]))
+
                       }
                     }}
                     hidden

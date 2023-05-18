@@ -8,6 +8,12 @@ import Grid from '@mui/material/Grid';
 
 export default function Preview({formData}) {
 
+var today = new Date();
+
+var strDate = 'Y-m-d'
+  .replace('Y', today.getFullYear())
+  .replace('m', today.getMonth()+1)
+  .replace('d', today.getDate());
   console.log(formData);
   return (
     <React.Fragment>
@@ -16,94 +22,99 @@ export default function Preview({formData}) {
           <Grid container spacing={2}>
             {/* row 1 */}
             <Grid item xs={12} sm={4}>
-             <img src=""></img>
-             Profile Photo
+             <img   alt="not found" width={"135px"} height={"150px"} src={formData.passport}></img>
+             
             </Grid>
 
             <Grid item xs={12} sm={8}>
               <span className='previewLabel'>Name: </span>
-              <span className='draftData'>Mr Pursottam Sah </span>
+              <span className='draftData'>{formData.title+" "+ formData.firstName +" " +formData.middleName+ " "+formData.lastName}   </span>
+
+              <div>
+                <span className='previewLabel'>Date Of Birth:</span>
+                <span className='draftData'>{formData.dob} </span>
+              </div>
+
+            
+              <div>
+                <span className='previewLabel'>Nationality:</span>
+                <span className='draftData'>{formData.nationality} </span>
+              </div>
+
+              <div>
+                <span className='previewLabel'>Religion:</span>
+                <span className='draftData'>{formData.religion} </span>
+              </div>
+
+              <div>
+                <span className='previewLabel'>Category:</span>
+                <span className='draftData'>{formData.category} </span>
+
+              </div>
             </Grid>
 
-           {/* row 2 */}
-            <Grid item xs={12} sm={4}>
-            <span className='previewLabel'>Nationality: </span>
-            <span className='draftData'>Indian </span>
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-            <span className='previewLabel'>Category: </span>
-            <span className='draftData'>OBC </span>
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-            <span className='previewLabel'>Religion: </span>
-            <span className='draftData'>Hindu </span>
-            </Grid>
+          
 
             <Grid item xs={12}>
             <span className='previewLabel'>Current Address: </span>
-            <span className='draftData'>Lohit Hostel NIT Arunachal Pradesh </span>
+            <span className='draftData'>{formData.address} </span>
             </Grid>
             {/* row 3 */}
             <Grid item xs={12} sm={8}>
             <span className='previewLabel'>State: </span>
-            <span className='draftData'>Arunachal Pradesh </span>
+            <span className='draftData'>{formData.state} </span>
             </Grid>
 
             <Grid item xs={12} sm={4}>
               <span className='previewLabel'>Pincode: </span>
-              <span className='draftData'>791113 </span>
+              <span className='draftData'>{formData.pincode} </span>
             </Grid>
 
             {/* row 4 */}
             <Grid item xs={12} sm={6}>
             <span className='previewLabel'> Ph No. :  </span>
-            <span className='draftData'> +91 6033938402 </span>
+            <span className='draftData'>{formData.phone} </span>
             
             </Grid>
 
             <Grid item xs={12} sm={6}>
             <span className='previewLabel'>Alternate No. </span>
-            <span className='draftData'>+91 8259053265</span>
+            <span className='draftData'>{formData.altPhone}</span>
             </Grid>
 
             {/* row 5 */}
 
             <Grid item xs={12} sm={6}>
             <span className='previewLabel'> Email :  </span>
-            <span className='draftData'> abcde@gmail.com</span>
+            <span className='draftData'> {formData.email}</span>
             
             </Grid>
 
             <Grid item xs={12} sm={6}>
             <span className='previewLabel'>Occupation </span>
-            <span className='draftData'> Student</span>v
+            <span className='draftData'>{formData.occupation}</span>
             </Grid>
             {/* row 6 */}
             <Grid item xs={12} >
             <span className='previewLabel'> Job Title:  </span>
-            <span className='draftData'> Software Developer</span>v
+            <span className='draftData'>{formData.jobtitle}</span>
             </Grid>
 
 
             <Grid item xs={12} >
             <span className='previewLabel'> Course Completed </span>
-            <span className='draftData'> 4 Years B Tech in CSE</span>
+            <span className='draftData'> {formData.courseCompleted}</span>
             </Grid>
 
             <Grid item xs={12} >
             <span className='previewLabel'>Declipline: </span>
-            <span className='draftData'> Computer Science and Engineering</span>
+            <span className='draftData'>{formData.discipline}</span>
             </Grid>
 
             <Grid item xs ={12}>
             <span className='previewLabel'>Year of Graduation: </span>
-            <span className='draftData'> 2024</span>
+            <span className='draftData'>{formData.gradYear}</span>
             </Grid>
-
-
-          
 
             <Grid item xs={12}>
             I have read the terms and conditions and fully checked my details 
@@ -111,12 +122,12 @@ export default function Preview({formData}) {
 
             <Grid item xs ={12} sm={6}>
             <span className='previewLabel'> Date: </span>
-            <span className='draftData'>15 May 2023</span>
+            <span className='draftData'>{strDate}</span>
             </Grid>
 
             <Grid item xs ={12} sm={6}>
             <span className='previewLabel'> Signature </span>
-              <img src=""></img>
+              <img alt="not found" width={"180px"} height={"70px"} src={formData.sign} ></img>
             </Grid>
 
 
