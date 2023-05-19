@@ -16,21 +16,7 @@ import PersonalDetails from "./PersonalDetails";
 import CourseDetails from "./CourseDetails";
 import Preview from "./Preview";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const steps = ["Personal Details", "Course Details", "Form Preview"];
-
 const theme = createTheme();
 
 export default function Form() {
@@ -38,10 +24,6 @@ export default function Form() {
   const [formData, setFormData] = React.useState({});
 
   const handleNext = (d) => {
-    // console.log('handleNext:', data);
-    // const fData = formData;
-    // fData[activeStep] = data;
-    // setFormData(fData);
     setFormData((prevData) => ({...prevData, ...d}))
     console.log(formData)
     setActiveStep(activeStep + 1);
@@ -80,17 +62,6 @@ export default function Form() {
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
       >
-        <Toolbar sx={{ display: "flex", justifyContent: "center" }}>
-          <Typography
-            variant="h6"
-            align="center"
-            color="inherit"
-            id="formHeading"
-            noWrap
-          >
-            NIT Arunachal Pradesh Alumni Membership Form
-          </Typography>
-        </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
@@ -98,7 +69,7 @@ export default function Form() {
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
-            Membership Form
+          Alumni Membership Form
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -138,7 +109,6 @@ export default function Form() {
             </React.Fragment>
           )}
         </Paper>
-        <Copyright />
       </Container>
     </ThemeProvider>
   );

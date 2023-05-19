@@ -1,54 +1,150 @@
 
-import logo from '../media/alumni.jpg'
 import React from 'react'
-import { height } from '@mui/system'
-import { Button } from '@mui/material'
-import {Typography} from '@mui/material'
+import { NavLink } from "react-router-dom";
+import {AppBar, Toolbar, Container, Typography, Menu, MenuItem, Button, IconButton, Tooltip, Avatar} from "@mui/material";
+import { Box } from "@mui/system";
 
-const topbarLinks =[
-    {label:"Home" ,links:"https://nitap.ac.in"},
-    {label:"About NITAP Alumni" ,links:"https://google.com"},
-    {label:"President's Message" ,links:"http://facebook.com"}, 
-    {label:"Previous Talk" ,links:"https://abcd.com"},
-    {label:"Gallery" ,links:"https://iitb.ac.in"},
-    {label:"More" ,links:"https://pqrs.com"},      
-    {label:"Join Us" ,links:"https://gmail.com"},   
+import { AccountCircle as UserIcon, Logout as LogoutIcon } from '@mui/icons-material'
+
+import NITAP from '../media/Logo/nitap.png'
+
+const Logo = () => (
+  <Box sx={{ display: "flex", alignItems: "center", textDecoration: 'none' }} component={NavLink} to='/'>
+    <Box sx={{ height: 64, mr: 1, padding: 1 }}>
+      <img src={NITAP} style={{
+        height: '100%'
+      }} alt="" />
+    </Box>
+    <Typography
+      variant='h5'
+      noWrap
+      sx={{
+        mr: 2,
+        display: { xs: 'none', sm: 'flex' },
+        fontFamily: 'monospace',
+        fontWeight: 700,
+        letterSpacing: '.3rem',
+        color: 'black',
+        textDecoration: 'none',
+      }}>
+      NITAP ALUMNI 
+    </Typography>
+ </Box>)
+
+// navbox for storing the details 
+
+const NavBox = ({ display, children }) => {
+  return (
+    <Box sx={{ flexGrow: 1, display: "flex" }}>
+      {children}
+    </Box>
+  )
+}
+
+
+const navItems = [
+  { url: '/admin', icon: 'floppy', label: 'Dashboard' },
+  { url: '/register', icon: 'floppy', label: 'Register' },
 ]
 
 
-const Navigation = () => {
+const Navigation = ({logoutUser,user}) => {
+
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    handleCloseUserMenu();
+    logoutUser();
+  }
   return (
     <>
-    <div className='navBox'>
-        <div className='logoBox'>
-        <img src={logo} style={{height:"100px"}}></img>
-        </div>
 
-        <div className='navLinks'>
-        { topbarLinks.map((data,i) =>{
-              return (
-                <div className ="navEle" key ={data.links}> <a  target="_blank" href={data.links}>
-                {data.label} 
-                </a></div>
-              )
-            })
-        }
-      </div>
+<AppBar elevation={2} position="sticky" color="transparent" sx={{
+      backgroundColor: '#ffffffcc',
+      backdropFilter: 'blur(4px)'
+    }}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Logo display='desktop' />
+          <NavBox>
+            {user && (<>
+              {navItems.map((page) => (
+                <Button
+                  disableTouchRipple
+                  key={page.label}
+                  sx={{
+                    color: 'grey',
+                    my: 1, display: 'block',
+                    '&.active': {
+                      color: 'black'
+                    },
+                    '&.hover': {
+                      backgroundColor: 'seagreen',
+                      border: 'solid 1px seagreen'
+                    }
+                  }}
+                  LinkComponent={NavLink} to={page.url}
+                >{page.label}</Button>
+              ))}
+            </>)}
+          </NavBox>
 
-        <div style={{display:"flex" ,gap:"20px" ,paddingRight:"30px"}}>
-            <Button  variant='outlined' to='/login'>
+          {user ? (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Profile">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt={user.name} sx={{ bgcolor: '#4191b7' }}>
+                    <UserIcon />
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <Box marginX={2} marginY={2} sx={{ minWidth: 100 }}>
+                  <Typography textAlign='center' variant="h6">
+                    {user.name}
+                  </Typography>
+                  <Typography textAlign='center' variant="body1">
+                    {user.email}
+                  </Typography>
+                </Box>
+                <MenuItem onClick={handleLogout} sx={{ justifyContent: 'center', gap: 1 }}>
+                  <LogoutIcon />
+                  <Typography>Logout</Typography>
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Button component={NavLink} variant='outlined' to='/login'>
               <Typography textAlign="center">Login</Typography>
             </Button>
-
-            <Button  variant='outlined' to='/register'>
-              <Typography textAlign="center">Register</Typography>
-            </Button>
-        </div>
-    </div>
-
-
-
-
+          )}
+        </Toolbar>
+      </Container>
+    </AppBar>
     
     </>
   )

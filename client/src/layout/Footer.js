@@ -29,6 +29,8 @@ export function Footer() {
                 display: 'flex',
                 flexDirection: 'column',
               }}>
+                 <img src={Logo} style={{height:"100px"}}></img>
+
                 {/* <Logo ftr={true}/> */}
                 <Typography variant='subtitle1'>
                   Alumni Association NIT Arunachal Pradesh
@@ -42,7 +44,6 @@ export function Footer() {
                 justifyContent: { xs: 'center', sm: 'flex-start' },
               }}>
                  
-                 <img src={Logo} style={{width:"500px"}}></img>
               </Box>
             </Box>
 
@@ -53,13 +54,13 @@ export function Footer() {
               <ul className='lists'>
                 <li>
                   <Link color='CaptionText' underline='hover' target='_blank' rel='noreferrer'
-                    href='https://iocl.com/'>
+                    href=''>
                     Alumni Association NIT AP
                   </Link>
                 </li>
                 <li>
                   <Link color='CaptionText' underline='hover' target='_blank' rel='noreferrer'
-                    href='https://github.com/tripathics/iocl-tracker/'>
+                    href='https://github.com/Pursottam6003/nitap_alumni'>
                     Project Repository
                   </Link>
                 </li>
@@ -129,7 +130,7 @@ export function Footer() {
           }} />
           <Box sx={{ textAlign: "center" }}>
             <Typography variant='caption'>
-              © 2022-Present, Airavat Pvt. Ltd.
+              © 2023-Present, NIT Arunachal Pradesh.
             </Typography>
           </Box>
         </Container>
