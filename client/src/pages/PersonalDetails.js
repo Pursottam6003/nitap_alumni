@@ -59,10 +59,6 @@ export default function PersonalDetails({
   formData,
   handleInputChange
 }) {
-  const [value, setValue] = useState(dayjs("2000-04-07"));
-  const [myphoneVal, setPhoneVal] = useState(null);
-  const [alternateNo, setAlternateNo] = useState(null);
-
   /**
    * @param {Event} e
    * */
@@ -196,6 +192,7 @@ export default function PersonalDetails({
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required
                   autoComplete="Nationality"
                   name="nationality"
                   variant="standard"
@@ -260,6 +257,7 @@ export default function PersonalDetails({
               name="address"
               label="Current Address"
               fullWidth
+              required
               value = {formData.address}
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
               autoComplete="applicant address"
@@ -273,6 +271,7 @@ export default function PersonalDetails({
               type="number"
               name="pincode"
               label="Pincode"
+              required
               fullWidth
               value = {formData.pincode}
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
@@ -287,6 +286,7 @@ export default function PersonalDetails({
               name="state"
               label="State/Province/Region"
               value = {formData.state}
+              required
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
               fullWidth
               variant="standard"
