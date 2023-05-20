@@ -2,13 +2,13 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Button,CssBaseline,TextField,FormControlLabel,Checkbox,Link,Grid,Box,Typography,Container,Autocomplete,Alert,AlertTitle} from '@mui/material';
+import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container, Autocomplete, Alert, AlertTitle } from '@mui/material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import {auth,provider,facebookProvider,microsoftProvider} from '../config/config'
+import { auth, provider, facebookProvider, microsoftProvider } from '../config/config'
 
-import {getAuth,signInWithPopup,GoogleAuthProvider} from "firebase/auth"
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 
 
 
@@ -30,87 +30,57 @@ const theme = createTheme();
 
 
 export default function LogIn() {
-  const history  = useNavigate();
+  const history = useNavigate();
+  const loginAuth = async (user) => {
+    try {
+      const email = user.email;
+      const password = user.password;
+      const response = await fetch('http://localhost:5000/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+        headers: {
+          'Content-type': 'application/json'
+        }
+      });
+      console.log(response);
 
-  function updateSignInRoutes()
-{
-  setTimeout(() => {
-    history('/')
-  }, 1000);
-}
+      if (response) {
+        history('/');
+      }
+      // console.log(response);
+      // if(response.status===404){
+      //   alert("user not found");
+      // }
+      // const token = response.data.token;
+
+      // // Save the token to local storage
+      // if(token) 
+      // {
+      //   console.log(token);
+      // }
+      // localStorage.setItem('token', token);
+
+      // Redirect to the dashboard or perform any other action
+      // For example, you can use React Router to navigate to the dashboard
+      // history.push('/dashboard');
+      // console.log('Login successful');
+    } catch (error) {
+      alert("user not found please enter a valid email and password");
+    }
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
-   const user ={
+    const user = {
       email: data.get('email'),
       password: data.get('password'),
     };
-
     console.log(user);
-
-    auth.signInWithEmailAndPassword(user.email,user.password).then(()=>{
-      // sign ned sucessfully
-      setSignedUp(true);
-      console.log('signed in sucessfully')
-      updateSignInRoutes();
-    })
-    .catch(error => console.log(error.message))
-    
+    // call the function of user
+    loginAuth(user)
   };
 
-  const [value,setValue] = useState('')
-  const SignUpGoogle =()=>{
-    
-    signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    setSignedUp(true);
-    updateSignInRoutes();
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
-  }
-
-  const signUpFacebook =()=>{
-    console.log('facebook authentication')
-    setSignedUp(true);
-    signInWithPopup(auth,facebookProvider)
-    .then((result)=>{
-      // signed in user info
-      const user = result.user;
-      console.log(user);
-      updateSignInRoutes();
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
-
-  }
-
-  const signUpMicrosoft =()=>{
-    console.log('Microsoft authentication')
-    setSignedUp(true);
-    signInWithPopup(auth,microsoftProvider)
-      .then((result) =>{
-        // user signed in 
-        console.log(result);
-      })
-
-    .catch((error)=>{
-      console.log(error);
-    })
-  }
-
-  const [signedUp,setSignedUp] = useState(false);
+  const [signedUp, setSignedUp] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
@@ -124,14 +94,14 @@ export default function LogIn() {
             alignItems: 'center',
           }}
         >
-          <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png"/>
+          <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png" />
 
-          { signedUp && <>
+          {signedUp && <>
             <Alert severity="success">
-            <AlertTitle>Success</AlertTitle>
-            This is a success alert — <strong>check it out!</strong>
+              <AlertTitle>Success</AlertTitle>
+              This is a success alert — <strong>check it out!</strong>
             </Alert>
-            </>}
+          </>}
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -156,7 +126,7 @@ export default function LogIn() {
               id="password"
               autoComplete="current-password"
             />
-{/* 
+            {/* 
             <div className='MoreOptions'>
               <h3>OR</h3>
               <div className='SignInOptions'>
@@ -198,7 +168,7 @@ export default function LogIn() {
             {/* {user ? <>hello </> :  <div>
               <button onClick={handleClick}>Sign in with google</button>
             </div>} */}
-           
+
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

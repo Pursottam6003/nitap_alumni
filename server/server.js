@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 // app.use(require('./routes/record'));
-// app.use(require('./routes/users'));
+app.use(require('./routes/users'));
 
 const port = process.env.PORT || 5050;
 

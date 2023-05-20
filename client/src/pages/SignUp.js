@@ -3,6 +3,7 @@ import {Button,CssBaseline,TextField,FormControlLabel,Checkbox,Link,Grid,Box,Typ
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import {useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import {auth,fs} from '../config/config'
 import cx from 'classnames';
@@ -70,6 +71,27 @@ const BatchList =[
 
 
 export default function SignUp() {
+  const history = useNavigate();
+
+  const addUser = async (user) => {
+    const response = await fetch(`http://localhost:5000/signup`, {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+    // const token = response.data.token;
+    // console.log(token);
+
+    // // Save the token to local storage
+    // localStorage.setItem('token', token);
+
+
+    if (!response.ok) alert(`An error occured: ${response.statusText}`);
+    return history('/login');
+  }
+
   const handleSubmit = (e) => {
 
     e.preventDefault();
@@ -86,6 +108,9 @@ export default function SignUp() {
     }
 
     console.log(user)
+
+    addUser(user);
+   
   };
 
   const [phoneVal, setPhoneValue] = useState('')

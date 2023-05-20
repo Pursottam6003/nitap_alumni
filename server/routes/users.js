@@ -4,8 +4,14 @@ const userRoutes = express.Router()
 const bcrypt = require('bcrypt')
 
 const db = require('../db/conn')
+const app = express()
 
-userRoutes.route('/signup'),post((req,res)=>{
+// Middleware to parse JSON data
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+
+userRoutes.route('/signup').post((req,res)=>{
     const {name, email, password,address,batch,dept } = req.body;
     console.log(req.body);
     // check if the email already exits 
