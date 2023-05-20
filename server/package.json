@@ -1,14 +1,19 @@
 {
-  "name": "server",
+  "name": "nitap_alumni",
   "version": "1.0.0",
-  "description": "Database server for alumni of NIT Arunachal Pradesh ",
+  "description": "NIT AP alumni database management ",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Pursottam Sah and Chandrashekhar Tripathi",
+  "author": "Pursottam Sah",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cookies": "^0.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "mysql": "^2.18.1"
   }
 }

@@ -12,26 +12,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Autocomplete } from "@mui/material";
-const handleChange = (e) => {
-  console.log("hello");
-};
-
-const courseList = [
-  { label: "Bechlors of Technology [B Tech] (4Yrs)" },
-  { label: "Masters of Technology [M Tech] (4Yrs)" },
-  { label: "Doctor of Philosoph [PhD] (2-5 Yrs)" },
-];
-const DeptList = [
-  { label: "Mechanical Eng." },
-  { label: "Computer Science Eng." },
-  { label: "Civil Eng," },
-  { label: "Electronics and Comm. Eng" },
-  { label: "Electrical Eng." },
-  { label: "Dept of Basic and Applied Sciences" },
-  { label: "Dept of Management and Humanities" },
-  { label: "Dept of Civil Eng" },
-];
-
+ 
+ 
 export default function CourseDetails({
   activeStep,
   handleBack,

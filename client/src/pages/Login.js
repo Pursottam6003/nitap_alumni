@@ -10,7 +10,6 @@ import {auth,provider,facebookProvider,microsoftProvider} from '../config/config
 
 import {getAuth,signInWithPopup,GoogleAuthProvider} from "firebase/auth"
 
-//const auth = getAuth();
 
 
 
@@ -30,7 +29,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 
-export default function SignIn() {
+export default function LogIn() {
   const history  = useNavigate();
 
   function updateSignInRoutes()
@@ -157,7 +156,7 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-
+{/* 
             <div className='MoreOptions'>
               <h3>OR</h3>
               <div className='SignInOptions'>
@@ -174,7 +173,7 @@ export default function SignIn() {
               </div>
               </div>
 
-            </div>
+            </div> */}
             <Button
               type="submit"
               fullWidth
@@ -185,12 +184,12 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

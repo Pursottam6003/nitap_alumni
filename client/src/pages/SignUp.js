@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {Button,CssBaseline,TextField,FormControlLabel,Checkbox,Link,Grid,Box,Typography,Container,Autocomplete,Alert,AlertTitle} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -6,6 +5,7 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { useState } from 'react';
 import {auth,fs} from '../config/config'
+import cx from 'classnames';
 
 const theme = createTheme();
 
@@ -30,7 +30,6 @@ const DeptList =[
   { label: "Electrical Eng."},
   { label: "Dept of BAS"},
   { label: "Dept of CS"},
-  { label: "Dept of VLSI"},
   { label: "Dept of ME"},
   { label: "Dept of physics"},
   { label: "Dept of Civil Eng"}
@@ -77,9 +76,9 @@ export default function SignUp() {
     const data = new FormData(e.currentTarget);
  
     const user ={
-      fullName:data.get('firstName')+' '+data.get('lastName'),
+      fullName:data.get('firstName')+" "+data.get('lastName'),
       email: data.get('email'),
-      phoneNumber:value,
+      phoneNumber:phoneVal,
       address:data.get('address'),
       password: data.get('password'),
       batch: data.get('batch'),
@@ -89,7 +88,7 @@ export default function SignUp() {
     console.log(user)
   };
 
-  const [value, setValue] = useState(null)
+  const [phoneVal, setPhoneValue] = useState('')
   const [signedUp,setSignedUp] = useState(false);
 
   return (
@@ -104,10 +103,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          {/* <Avatar sx={{ m: 4}}>
-            <LockOutlinedIcon />
-
-          </Avatar> */}
+          
             <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png"/>
             { signedUp && <>
             <Alert severity="success">
@@ -151,16 +147,18 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
-
-              <Grid item xs={12}  >
-              
+          <Grid item xs={12}>
+              <div className='phoneInputField phoneInputField2'>
                 <PhoneInput
-                  placeholder="  Phone Number *"
-                  value={value}
-                  onChange={setValue}
-                  className="phoneNumber"
-                  />
-              </Grid>
+                defaultCountry="IN"
+                onChange={(val) => {
+                  setPhoneValue(val);
+                }}
+                className={cx({ filled:phoneVal })}
+              />
+              <label className='phoneInputLabel'>Phone number *</label>
+            </div>
+          </Grid>
 
               <Grid item xs={12}>
                 <TextField
@@ -234,7 +232,7 @@ export default function SignUp() {
 
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
