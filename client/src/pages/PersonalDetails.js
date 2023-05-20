@@ -71,8 +71,7 @@ export default function PersonalDetails({
       city: data.get('city'),
       country: data.get('country'),
       email: data.get('email'),
-      occupation: data.get('occupation'),
-      jobtitle: data.get('jobtitle')
+      altEmail: data.get('altEmail')
     }
     handleNext(d);
   };
@@ -354,31 +353,18 @@ export default function PersonalDetails({
 
           <Grid item xs={12} sm={6}>
             <TextField
-              required
-              id="occupation"
-              name="occupation"
-              label="Occupation"
+              id="altEmail"
+              name="altEmail"
+              label="Alternate Email"
               fullWidth
-              value = {formData.occupation}
+              value = {formData.altEmail}
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
-              autoComplete="occupation"
+              autoComplete="altEmail"
               variant="standard"
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <TextField
-              required
-              id="jobtitle"
-              name="jobtitle"
-              label="Job Title"
-              fullWidth                  
-              value = {formData.jobtitle}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
-              autoComplete="jobtitle"
-              variant="standard"
-            />
-          </Grid>
+       
 
           <Grid item xs={12}>
             <FormControlLabel

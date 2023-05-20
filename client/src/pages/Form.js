@@ -14,9 +14,10 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import PersonalDetails from "./PersonalDetails";
 import CourseDetails from "./CourseDetails";
+import EmploymentDetails from "./EmploymentDetails";
 import Preview from "./Preview";
 
-const steps = ["Personal Details", "Course Details", "Form Preview"];
+const steps = ["Personal Details", "Course Details","Employment Details", "Form Preview"];
 const theme = createTheme();
 
 export default function Form() {
@@ -44,8 +45,11 @@ export default function Form() {
       case 1:
         return <CourseDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 2:
-        return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
-      default:
+        return <EmploymentDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+      case 3:
+          return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+    
+        default:
         throw new Error("Unknown step");
     }
   }

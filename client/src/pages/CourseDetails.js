@@ -36,9 +36,12 @@ export default function CourseDetails({
     const d = {
       courseCompleted: data.get("courseCompleted"),
       discipline: data.get("discipline"),
+      registratinNo: data.get("registrationNo"),
+      rollNo: data.get("rollNo"),
       date: data.get("date"),
       year: data.get("year"),
       membership: data.get("membership"),
+
     };
     handleNext(d);
   };
@@ -64,6 +67,34 @@ export default function CourseDetails({
             />
 
           </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              autoComplete="registrationNo"
+              name="registrationNo"
+              required
+              variant="standard"
+              fullWidth
+              id="registrationNo"
+              label="Registration No."
+              value={formData.courseCompleted}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              autoComplete="RollNo."
+              name="rollNo"
+              variant="standard"
+              fullWidth
+              id="rollNo"
+              label="Roll No."
+              value={formData.courseCompleted}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+            />
+          </Grid>
+
           <Grid item xs={12} md={6}>
             <TextField
               autoComplete="discipline"
@@ -222,6 +253,7 @@ export default function CourseDetails({
             />
           </Grid>
         </Grid>
+
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           {activeStep !== 0 && (
             <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
