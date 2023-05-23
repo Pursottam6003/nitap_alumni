@@ -58,8 +58,7 @@ export default function Form() {
   });
 
   const handleNext = (d) => {
-    setFormData((prevData) => ({...prevData, ...d}))
-    console.log(formData)
+    // setFormData((prevData) => ({...prevData, ...d}))
     setActiveStep(activeStep + 1);
   };
 
@@ -108,7 +107,7 @@ export default function Form() {
           <Typography component="h1" variant="h4" align="center">
           Alumni Membership Form
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper alternativeLabel activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>

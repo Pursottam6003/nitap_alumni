@@ -363,18 +363,6 @@ export default function PersonalDetails({
               variant="standard"
             />
           </Grid>
-
-       
-
-          <Grid item xs={12}>
-            <FormControlLabel
-            required
-              control={
-                <Checkbox color="secondary" name="saveAddress" value="yes" />
-              }
-              label="I confirm the Personal Details are authentic"
-            />
-          </Grid>
         </Grid>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           {activeStep !== 0 && (

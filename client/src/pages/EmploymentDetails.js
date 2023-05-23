@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { Box, Grid, TextField, Typography, Button } from "@mui/material";
+import { Box, Grid, TextField, Typography, Button, FormControlLabel, FormControl, FormLabel, RadioGroup, Radio } from "@mui/material";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
@@ -68,24 +68,19 @@ const EmploymentDetails = ({
 
       <Box component="form" onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-
           <Grid item xs={12}>
-
-            <label>Hii, I am </label>
-            <input checked={currentStatus === 'working'} className="option-input" onChange={event => setCurrentStatus('working')} id="option-2" type="radio" name="options" />
-            <label className="option" htmlFor="option-2">
-              <sub>Working Professional</sub>
-            </label>
-            <input checked={currentStatus === 'higher-education'} className="option-input" onChange={event => setCurrentStatus('higher-education')} defaultChecked id="option-1" type="radio" name="options" />
-            <label className="option" htmlFor="option-1">
-              <span className="option__indicator">
-                <sub>Pursuing Higher Education</sub>
-              </span>
-            </label>
-            <input checked={currentStatus === 'preparing'} className="option-input" onChange={event => setCurrentStatus('preparing')} id="option-2" type="radio" name="options" />
-            <label className="option" htmlFor="option-3">
-              <sub>Currently preparing</sub>
-            </label>
+            <FormControl required>
+              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel onChange={(e) => setCurrentStatus('working')} checked={currentStatus === 'working'} value="working" control={<Radio />} label="Working Professional" />
+                <FormControlLabel onChange={(e) => setCurrentStatus('higher-education')} checked={currentStatus === 'higher-education'} value="higher-education" control={<Radio />} label="Pursuing for Higher Education" />
+                <FormControlLabel onChange={(e) => setCurrentStatus('preparing')} checked={currentStatus === 'preparing'} value="preparing" control={<Radio />} label="Preparing" />
+              </RadioGroup>
+            </FormControl>
           </Grid>
 
           {currentStatus === 'preparing' && <>
@@ -137,7 +132,7 @@ const EmploymentDetails = ({
               <TextField
                 id="ctc"
                 name="ctc"
-                label="Current CTC(In Rupees)"
+                label="Current CTC (in Rs.)"
                 fullWidth
                 value={formData.ctc}
                 onChange={e => { handleInputChange('ctc', e.target.value) }}

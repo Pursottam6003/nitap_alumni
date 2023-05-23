@@ -12,17 +12,15 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Autocomplete } from "@mui/material";
- 
- 
+
+
 export default function CourseDetails({
   activeStep,
   handleBack,
   handleNext,
-  formData, 
+  formData,
   handleInputChange
 }) {
-  const [value, setValue] = useState(dayjs());
-  const [gradYear, setGradyear] = useState();
   const [sign, setSign] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
 
@@ -77,7 +75,7 @@ export default function CourseDetails({
               fullWidth
               id="registrationNo"
               label="Registration No."
-              value={formData.registratinNo}
+              value={formData.registrationNo}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
             />
           </Grid>
@@ -89,7 +87,7 @@ export default function CourseDetails({
               variant="standard"
               fullWidth
               id="rollNo"
-              label="Roll No." 
+              label="Roll No."
               value={formData.rollNo}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
             />
@@ -191,11 +189,18 @@ export default function CourseDetails({
                     onChange={(event) => {
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
-                        handleInputChange('sign',URL.createObjectURL(event.target.files[0]))
+                        handleInputChange('sign', URL.createObjectURL(event.target.files[0]))
                         setSign(event.target.files[0]);
                       }
                     }}
-                    hidden
+                    style={{
+                      width: '1px',
+                      opacity: '0',
+                      top: '0',
+                      bottom: '0',
+                      position: 'absolute',
+                      pointerEvents: 'none'
+                    }}
                   />
                 </Button>
               </>
@@ -233,24 +238,21 @@ export default function CourseDetails({
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
                         setProfilePic(event.target.files[0]);
-                        handleInputChange('passport',URL.createObjectURL(event.target.files[0]))
-
+                        handleInputChange('passport', URL.createObjectURL(event.target.files[0]))
                       }
                     }}
-                    hidden
+                    style={{
+                      width: '1px',
+                      opacity: '0',
+                      top: '0',
+                      bottom: '0',
+                      position: 'absolute',
+                      pointerEvents: 'none'
+                    }}
                   />
                 </Button>
               </>
             )}
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox color="secondary" name="saveAddress" value="yes" />
-              }
-              label="I confirm the Course Details are correct"
-            />
           </Grid>
         </Grid>
 
