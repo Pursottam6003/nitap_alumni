@@ -87,19 +87,13 @@ var strDate = 'Y-m-d'
             <Grid item xs={12} sm={6}>
             <span className='previewLabel'> Email :  </span>
             <span className='draftData'> {formData.email}</span>
-            
             </Grid>
+
 
             <Grid item xs={12} sm={6}>
-            <span className='previewLabel'>Occupation </span>
-            <span className='draftData'>{formData.occupation}</span>
+            <span className='previewLabel'> Registration No. :  </span>
+            <span className='draftData'> {formData.registrationNo}</span>
             </Grid>
-            {/* row 6 */}
-            <Grid item xs={12} >
-            <span className='previewLabel'> Job Title:  </span>
-            <span className='draftData'>{formData.jobtitle}</span>
-            </Grid>
-
 
             <Grid item xs={12} >
             <span className='previewLabel'> Course Completed </span>
@@ -115,6 +109,63 @@ var strDate = 'Y-m-d'
             <span className='previewLabel'>Year of Graduation: </span>
             <span className='draftData'>{formData.gradYear}</span>
             </Grid>
+
+            {formData.occupation && <>
+            <Grid item xs={12} sm={6}>
+            <span className='previewLabel'>Occupation </span>
+            <span className='draftData'>{formData.occupation}</span>
+            </Grid>
+            {/* row 6 */}
+            <Grid item xs={12} >
+            <span className='previewLabel'> Job Title:  </span>
+            <span className='draftData'>{formData.jobtitle}</span>
+            </Grid>
+
+            <Grid item xs={12} sm={6} >
+            <span className='previewLabel'> Current Organisation  </span>
+            <span className='draftData'>{formData.currentOrganisation}</span>
+            </Grid>
+            
+
+            <Grid item xs={12} sm={6} >
+            <span className='previewLabel'>Current CTC </span>
+            <span className='draftData'>{formData.ctc}</span>
+            </Grid>
+            </>}
+            
+            {formData.preparing && <>
+            <Grid item xs={12} >
+            <span className='previewLabel'> Preparing:  </span>
+            <span className='draftData'>{formData.preparing}</span>
+            </Grid>
+            </>}
+
+            {formData.onGoingCourseDetails && <>
+            <Grid item xs={12} >
+            <span className='previewLabel'> Ongoing Couse Details:  </span>
+            <span className='draftData'>{formData.onGoingCourseDetails}</span>
+            </Grid>
+            
+            <Grid item xs={12} >
+            <span className='previewLabel'> Ongoing Couse Declipline  </span>
+            <span className='draftData'>{formData.onGoingdiscipline}</span>
+            </Grid>
+
+
+            <Grid item xs={12} sm={6} >
+            <span className='previewLabel'> Current Organisation  </span>
+            <span className='draftData'>{formData.currentOrganisation}</span>
+            </Grid>
+            
+
+            <Grid item xs={12} sm={6} >
+            <span className='previewLabel'> Graduation Year  </span>
+            <span className='draftData'>{formData.onGoingGradYear}</span>
+            </Grid>
+            </>}
+
+
+        
 
             <Grid item xs={12}>
             I have read the terms and conditions and fully checked my details 

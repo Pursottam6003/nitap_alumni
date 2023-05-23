@@ -22,7 +22,40 @@ const theme = createTheme();
 
 export default function Form() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [formData, setFormData] = React.useState({});
+  const [formData, setFormData] = React.useState({
+    "title": "Mr.",
+    "firstName": "Daknya",
+    "lastName": "Bam",
+    "nationality": "Indian",
+    "category": "General",
+    "undefined": "Gener",
+    "religion": "Other",
+    "address": "Arunachal",
+    "pincode": "790003",
+    "state": "Arunachal Pradesh",
+    "city": "Itanagar",
+    "country": "IN",
+    "phone": "+916033926408",
+    "altPhone": "+918004600238",
+    "email": "email@daknya.com",
+    "altEmail": "daknya@email.com",
+    "dob": "05/22/2023",
+    "middleName": "",
+    "courseCompleted": "B Tech in Computer Science and Engineering",
+    "registrationNo": "xxxxxxxxxxxxxxxx",
+    "rollNo": "CSE/20/37",
+    "discipline": "sasdf",
+    "sign": "blob:http://localhost:3000/027ba233-9b15-4341-9524-da11b683f241",
+    "passport": "blob:http://localhost:3000/3fa3183b-f325-46b7-b3fd-add4dccaf5f4",
+    "onGoingCourseDetails": "",
+    "onGoingdiscipline": "",
+    "onGoingGradYear": "",
+    "currentOrganisation": "",
+    "occupation": "",
+    "jobtitle": "",
+    "ctc": "",
+    "preparing": ""
+  });
 
   const handleNext = (d) => {
     setFormData((prevData) => ({...prevData, ...d}))

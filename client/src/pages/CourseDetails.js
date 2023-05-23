@@ -18,7 +18,7 @@ export default function CourseDetails({
   activeStep,
   handleBack,
   handleNext,
-  formData,
+  formData, 
   handleInputChange
 }) {
   const [value, setValue] = useState(dayjs());
@@ -43,7 +43,7 @@ export default function CourseDetails({
       membership: data.get("membership"),
 
     };
-    handleNext(d);
+    handleNext();
   };
 
   return (
@@ -63,7 +63,7 @@ export default function CourseDetails({
               id="courseCompleted"
               label="Course Completed"
               value={formData.courseCompleted}
-              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              onChange={e => { handleInputChange('courseCompleted', e.target.value) }}
             />
 
           </Grid>
@@ -77,7 +77,7 @@ export default function CourseDetails({
               fullWidth
               id="registrationNo"
               label="Registration No."
-              value={formData.courseCompleted}
+              value={formData.registratinNo}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
             />
           </Grid>
@@ -89,8 +89,8 @@ export default function CourseDetails({
               variant="standard"
               fullWidth
               id="rollNo"
-              label="Roll No."
-              value={formData.courseCompleted}
+              label="Roll No." 
+              value={formData.rollNo}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
             />
           </Grid>
@@ -104,7 +104,7 @@ export default function CourseDetails({
               fullWidth
               id="discipline"
               value={formData.discipline}
-              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              onChange={e => { handleInputChange('discipline', e.target.value) }}
               label="Decipline Studied"
             />
           </Grid>

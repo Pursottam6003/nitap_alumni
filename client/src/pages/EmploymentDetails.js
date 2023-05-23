@@ -20,8 +20,7 @@ const EmploymentDetails = ({
      * */
 
   const [currentStatus, setCurrentStatus] = useState('working');
-  const [workingProfessional, setWorkingProfessional] = useState(false);
-  const [preparing, setPreparing] = useState(false);
+   
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -29,6 +28,14 @@ const EmploymentDetails = ({
     const d = {
       courseCompleted: data.get("courseCompleted"),
       discipline: data.get("discipline"),
+      currentStatus : currentStatus,
+      jobtitle : data.get('jobtitle'),
+      occupation : data.get('occupation'),
+      preparing : data.get('preparing'),
+      onGoingCourseDetails : data.get('onGoingCourseDetails'),
+      onGoingdiscipline : data.get('onGoingdiscipline'),
+      currentOrganisation : data.get('currentOrganisation'),
+      ctc : data.get('ctc'),
       date: data.get("date"),
       year: data.get("year"),
       membership: data.get("membership"),
@@ -129,8 +136,8 @@ const EmploymentDetails = ({
             <Grid item xs={12} sm={6}>
               <TextField
                 id="ctc"
-                name="jobt"
-                label="Current CTC"
+                name="ctc"
+                label="Current CTC(In Rupees)"
                 fullWidth
                 value={formData.ctc}
                 onChange={e => { handleInputChange('ctc', e.target.value) }}
