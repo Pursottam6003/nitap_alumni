@@ -363,6 +363,34 @@ export default function PersonalDetails({
               variant="standard"
             />
           </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="linkedin"
+              type="url"
+              name="linkedin"
+              label="Linkedin"
+              fullWidth
+              value = {formData.linkedin}
+              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              autoComplete="linkedin"
+              variant="standard"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="github"
+              type="url"
+              name="github"
+              label="Github"
+              value = {formData.github}
+              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              fullWidth
+              variant="standard"
+            />
+          </Grid>
+
         </Grid>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           {activeStep !== 0 && (

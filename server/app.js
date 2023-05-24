@@ -4,11 +4,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require('cors');
 const app = express();
-const port = 5000; 
+const port = 5000;
 
 app.use(cors({
-  origin:['http://localhost:3000','http://localhost:3001'],
-  credentials:true
+  origin: ['http://localhost:3000', 'http://localhost:3001'],
+  credentials: true
 }))
 
 
@@ -28,11 +28,11 @@ db.connect((err) => {
 
 // Middleware to parse JSON data
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 // Signup route
 // Signup route
 app.post('/signup', (req, res) => {
-  const { email, password } = req.body;
+  const { fullName, email, password, phoneNumber, address, batch, dept } = req.body;
   console.log(req.body);
   // Check if the email already exists
   const checkemailSql = 'SELECT * FROM users WHERE email = ?';
@@ -49,16 +49,41 @@ app.post('/signup', (req, res) => {
         if (err) throw err;
 
         // Store the user details in the database
-        const insertUserSql = 'INSERT INTO users (email, password) VALUES (?, ?)';
+        const insertUserSql = 'INSERT INTO users (id,email, password) VALUES (UUID_TO_BIN(UUID()),?, ?)';
         db.query(insertUserSql, [email, hash], (err, result) => {
           if (err) throw err;
-
           // Generate a JWT with a secret key
           const token = jwt.sign({ id: result.insertId }, 'alumniDatabase');
           console.log('User registered');
           res.json({ token });
         });
-      });
+
+
+        const searchQuery = 'SELECT id FROM users WHERE users.email=?'
+
+        let userId = ''
+        db.query(searchQuery, [email], (err, result) => {
+          if (err) throw err;
+
+          // console.log(result['id']);
+          // const newBuffer = bufferFromBufferString()
+          const d = result[0].id;
+          userId = (d.toString('hex'));
+          console.log(userId);
+          const insertProfileDetails = 'INSERT INTO profile(username,email,phone,current_address,batch,department,profile_Id) VALUES (?,?,?,?,?,?,?)'
+
+          db.query(insertProfileDetails, [fullName, email, phoneNumber, address, batch, dept, userId], (err, result) => {
+            if (err) throw err;
+
+            console.log('Inserted profile data');
+          })
+        })
+
+
+
+      })
+
+
     }
   });
 });
@@ -129,6 +154,6 @@ function authenticateToken(req, res, next) {
   });
 }
 
-app.listen(port,()=>{
+app.listen(port, () => {
   console.log('server running at 5000');
 })
