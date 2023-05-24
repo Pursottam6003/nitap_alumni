@@ -107,29 +107,19 @@ export default function CourseDetails({
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                views={["year"]}
-                required
-                fullWidth
-                label="Year of Graduation"
-                value={dayjs().year(formData.gradYear)}
-                variant="standard"
-                onChange={(newValue) => {
-                  handleInputChange('gradYear', newValue.$y)
-                }}
-
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    variant="standard"
-                    helperText={null}
-                    id="year"
-                  />
-                )}
-              />
-            </LocalizationProvider>
+            <TextField
+              id="gradYear"
+              type="number"
+              name="gradYear"
+              label="Year of Graduation"
+              InputProps={{ inputProps: { min: 2014 } }}
+              required
+              fullWidth
+              value={formData.gradYear}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              autoComplete="gradYear"
+              variant="standard"
+            />
           </Grid>
 
           <Grid item xs={12}>

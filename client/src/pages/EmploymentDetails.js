@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Box, Grid, TextField, Typography, Button, FormControlLabel, FormControl, FormLabel, RadioGroup, Radio } from "@mui/material";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 
 
@@ -19,8 +19,8 @@ const EmploymentDetails = ({
      * @param {Event} e
      * */
 
-  const [currentStatus, setCurrentStatus] = useState('working');
-   
+  const [currentStatus, setCurrentStatus] = useState(formData.currentStatus);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
@@ -28,37 +28,36 @@ const EmploymentDetails = ({
     const d = {
       courseCompleted: data.get("courseCompleted"),
       discipline: data.get("discipline"),
-      currentStatus : currentStatus,
-      jobtitle : data.get('jobtitle'),
-      occupation : data.get('occupation'),
-      preparing : data.get('preparing'),
-      onGoingCourseDetails : data.get('onGoingCourseDetails'),
-      onGoingdiscipline : data.get('onGoingdiscipline'),
-      currentOrganisation : data.get('currentOrganisation'),
-      ctc : data.get('ctc'),
+      currentStatus: currentStatus,
+      jobtitle: data.get('jobtitle'),
+      occupation: data.get('occupation'),
+      preparing: data.get('preparing'),
+      onGoingCourseDetails: data.get('onGoingCourseDetails'),
+      onGoingdiscipline: data.get('onGoingdiscipline'),
+      currentOrganisation: data.get('currentOrganisation'),
+      ctc: data.get('ctc'),
       date: data.get("date"),
       year: data.get("year"),
       membership: data.get("membership"),
     };
+    const fields = {
+      onGoingCourseDetails: 'higher-education',
+      onGoingdiscipline: 'higher-education',
+      onGoingGradYear: 'higher-education',
+      ongoingInstitute: 'higher-education',
+      currentOrganisation: 'working',
+      occupation: 'working',
+      jobtitle: 'working',
+      ctc: 'working',
+      preparing: 'preparing',
+    }
+    
+    Object.keys(fields).filter(key => fields[key] !== currentStatus)
+      .forEach(key => {
+        handleInputChange(key, '');
+      })
     handleNext(d);
   };
-
-  React.useEffect(() => {
-    const init = {
-      onGoingCourseDetails: '',
-      onGoingdiscipline: '',
-      onGoingGradYear: '',
-      currentOrganisation: '',
-      occupation: '',
-      jobtitle: '',
-      ctc: '',
-      preparing: '',
-    }
-    Object.keys(init).forEach(key => {
-      handleInputChange(key, init[key]);
-    })
-  }, [currentStatus])
-
 
   return (
     <React.Fragment>
@@ -76,14 +75,14 @@ const EmploymentDetails = ({
                 defaultValue="female"
                 name="radio-buttons-group"
               >
-                <FormControlLabel onChange={(e) => setCurrentStatus('working')} checked={currentStatus === 'working'} value="working" control={<Radio />} label="Working Professional" />
-                <FormControlLabel onChange={(e) => setCurrentStatus('higher-education')} checked={currentStatus === 'higher-education'} value="higher-education" control={<Radio />} label="Pursuing for Higher Education" />
-                <FormControlLabel onChange={(e) => setCurrentStatus('preparing')} checked={currentStatus === 'preparing'} value="preparing" control={<Radio />} label="Preparing" />
+                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'working')} checked={formData.currentStatus === 'working'} value="working" control={<Radio />} label="Working Professional" />
+                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'higher-education')} checked={formData.currentStatus === 'higher-education'} value="higher-education" control={<Radio />} label="Pursuing for Higher Education" />
+                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'preparing')} checked={formData.currentStatus === 'preparing'} value="preparing" control={<Radio />} label="Preparing" />
               </RadioGroup>
             </FormControl>
           </Grid>
 
-          {currentStatus === 'preparing' && <>
+          {formData.currentStatus === 'preparing' && <>
             <Grid item xs={12}>
               <TextField
                 required
@@ -99,7 +98,7 @@ const EmploymentDetails = ({
             </Grid>
           </>}
 
-          {currentStatus === 'working' && <>
+          {formData.currentStatus === 'working' && <>
             <Grid item xs={12}>
               <TextField
                 required
@@ -156,7 +155,7 @@ const EmploymentDetails = ({
             </Grid>
           </>}
 
-          {currentStatus === 'higher-education' && (<>
+          {formData.currentStatus === 'higher-education' && (<>
             <Grid item xs={12}>
               <TextField
                 autoComplete="Higher Education"
@@ -185,39 +184,29 @@ const EmploymentDetails = ({
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  views={["year"]}
-                  required
-                  fullWidth
-                  label="Year of Graduation"
-                  value={dayjs().year(formData.onGoingGradYear ? formData.onGoingGradYear : '1970')}
-                  variant="standard"
-                  onChange={(newValue) => {
-                    handleInputChange('onGoingGradYear', newValue.$y)
-                  }}
-
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      fullWidth
-                      variant="standard"
-                      helperText={null}
-                      id="year"
-                    />
-                  )}
-                />
-              </LocalizationProvider>
+              <TextField
+                id="onGoingGradYear"
+                type="number"
+                name="onGoingGradYear"
+                label="Year of Graduation"
+                InputProps={{ inputProps: { min: 2014 } }}
+                required
+                fullWidth
+                value={formData.onGoingGradYear}
+                onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+                autoComplete="onGoingGradYear"
+                variant="standard"
+              />
             </Grid>
             <Grid item xs={12} >
               <TextField
-                autoComplete="currentOrganisation"
-                name="currentOrganisation"
+                autoComplete="ongoingInstitute"
+                name="ongoingInstitute"
                 variant="standard"
                 required
                 fullWidth
-                id="currentOrganisation"
-                value={formData.currentOrganisation}
+                id="ongoingInstitute"
+                value={formData.ongoingInstitute}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 label="Current Organisation"
               />

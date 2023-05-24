@@ -14,7 +14,6 @@ var strDate = 'Y-m-d'
   .replace('Y', today.getFullYear())
   .replace('m', today.getMonth()+1)
   .replace('d', today.getDate());
-  console.log(formData);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -154,7 +153,7 @@ var strDate = 'Y-m-d'
 
             <Grid item xs={12} sm={6} >
             <span className='previewLabel'> Current Organisation  </span>
-            <span className='draftData'>{formData.currentOrganisation}</span>
+            <span className='draftData'>{formData.ongoingInstitute}</span>
             </Grid>
             
 
