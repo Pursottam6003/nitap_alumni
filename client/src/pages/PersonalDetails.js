@@ -49,10 +49,6 @@ export default function PersonalDetails({
   formData,
   handleInputChange
 }) {
-  const [value, setValue] = useState(dayjs("2000-04-07"));
-  const [myphoneVal, setPhoneVal] = useState(null);
-  const [alternateNo, setAlternateNo] = useState(null);
-
   /**
    * @param {Event} e
    * */
@@ -75,8 +71,7 @@ export default function PersonalDetails({
       city: data.get('city'),
       country: data.get('country'),
       email: data.get('email'),
-      occupation: data.get('occupation'),
-      jobtitle: data.get('jobtitle')
+      altEmail: data.get('altEmail')
     }
     handleNext(d);
   };
@@ -88,7 +83,7 @@ export default function PersonalDetails({
       </Typography>
       <Box component='form' onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={3}>
             <Autocomplete
               id="title"
               options={TitleList}
@@ -106,6 +101,46 @@ export default function PersonalDetails({
                   label="Title (eg Mr/Ms/Dr)"
                 />
               )}
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <TextField
+              required
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              label="First name"
+              fullWidth
+              autoComplete="given-name"
+              variant="standard"
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <TextField
+              id="middleName"
+              name="middleName"
+              value={formData.middleName}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              label="Middle name"
+              fullWidth
+              autoComplete="family-name"
+              variant="standard"
+            />
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <TextField
+              required
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              label="Last name"
+              fullWidth
+              autoComplete="family-name"
+              variant="standard"
             />
           </Grid>
 
@@ -135,47 +170,31 @@ export default function PersonalDetails({
             </LocalizationProvider>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
-              onChange={e => {handleInputChange(e.target.name, e.target.value)}}
-              label="First name"
-              fullWidth
-              autoComplete="given-name"
-              variant="standard"
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="middleName"
-              name="middleName"
-              value = {formData.middleName}
-              onChange={e => {handleInputChange(e.target.name, e.target.value)}}
-              label="Middle name"
-              fullWidth
-              autoComplete="family-name"
-              variant="standard"
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={4}>
-            <TextField
-              required
-              id="lastName"
-              name="lastName"
-              value = {formData.lastName}
-              onChange={e => {handleInputChange(e.target.name, e.target.value)}}
-              label="Last name"
-              fullWidth
-              autoComplete="family-name"
-              variant="standard"
+          <Grid item xs={12} sm={6}>
+            <Autocomplete
+              id="category"
+              options={categoryList}
+              value={formData.category}
+              onInputChange={(e, val) => {
+                handleInputChange('category', val);
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  autoComplete="category"
+                  name="category"
+                  required
+                  value={formData.category}
+                  onChange={e => { handleInputChange(e.target.category, e.target.value) }}
+                  variant="standard"
+                  fullWidth
+                  label="Category"
+                />
+              )}
             />
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Autocomplete
               id="nationality"
               options={NationalityList}
@@ -186,6 +205,7 @@ export default function PersonalDetails({
               renderInput={(params) => (
                 <TextField
                   {...params}
+                  required
                   autoComplete="Nationality"
                   name="nationality"
                   variant="standard"
@@ -196,31 +216,7 @@ export default function PersonalDetails({
             />
           </Grid>
 
-          <Grid item xs={12} sm={4}>
-            <Autocomplete
-              id="category"
-              options={categoryList}
-              value = {formData.category}
-              onInputChange={(e,val)=>{
-                handleInputChange('category',val);
-              }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  autoComplete="category"
-                  name="category"
-                  required
-                  value={formData.category}
-                  onChange={e => {handleInputChange(e.target.category, e.target.value)}}
-                  variant="standard"
-                  fullWidth
-                  label="Category"
-                />
-              )}
-            />
-          </Grid>
-
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={6}>
             <Autocomplete
               id="religion"
               options={ReligionList}
@@ -250,6 +246,7 @@ export default function PersonalDetails({
               name="address"
               label="Current Address"
               fullWidth
+              required
               value = {formData.address}
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
               autoComplete="applicant address"
@@ -263,6 +260,7 @@ export default function PersonalDetails({
               type="number"
               name="pincode"
               label="Pincode"
+              required
               fullWidth
               value = {formData.pincode}
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
@@ -277,6 +275,7 @@ export default function PersonalDetails({
               name="state"
               label="State/Province/Region"
               value = {formData.state}
+              required
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
               fullWidth
               variant="standard"
@@ -354,41 +353,44 @@ export default function PersonalDetails({
 
           <Grid item xs={12} sm={6}>
             <TextField
-              required
-              id="occupation"
-              name="occupation"
-              label="Occupation"
+              id="altEmail"
+              name="altEmail"
+              label="Alternate Email"
               fullWidth
-              value = {formData.occupation}
+              value = {formData.altEmail}
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
-              autoComplete="occupation"
+              autoComplete="altEmail"
               variant="standard"
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
-              required
-              id="jobtitle"
-              name="jobtitle"
-              label="Job Title"
-              fullWidth                  
-              value = {formData.jobtitle}
+              id="linkedin"
+              type="url"
+              name="linkedin"
+              label="Linkedin"
+              fullWidth
+              value = {formData.linkedin}
               onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
-              autoComplete="jobtitle"
+              autoComplete="linkedin"
               variant="standard"
             />
           </Grid>
 
-          <Grid item xs={12}>
-            <FormControlLabel
-            required
-              control={
-                <Checkbox color="secondary" name="saveAddress" value="yes" />
-              }
-              label="I confirm the Personal Details are authentic"
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="github"
+              type="url"
+              name="github"
+              label="Github"
+              value = {formData.github}
+              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              fullWidth
+              variant="standard"
             />
           </Grid>
+
         </Grid>
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           {activeStep !== 0 && (

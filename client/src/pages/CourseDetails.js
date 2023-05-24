@@ -12,8 +12,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { DatePicker } from "@mui/x-date-pickers";
 import { Autocomplete } from "@mui/material";
- 
- 
+
+
 export default function CourseDetails({
   activeStep,
   handleBack,
@@ -21,8 +21,6 @@ export default function CourseDetails({
   formData,
   handleInputChange
 }) {
-  const [value, setValue] = useState(dayjs());
-  const [gradYear, setGradyear] = useState();
   const [sign, setSign] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
 
@@ -36,11 +34,14 @@ export default function CourseDetails({
     const d = {
       courseCompleted: data.get("courseCompleted"),
       discipline: data.get("discipline"),
+      registratinNo: data.get("registrationNo"),
+      rollNo: data.get("rollNo"),
       date: data.get("date"),
       year: data.get("year"),
       membership: data.get("membership"),
+
     };
-    handleNext(d);
+    handleNext();
   };
 
   return (
@@ -60,10 +61,38 @@ export default function CourseDetails({
               id="courseCompleted"
               label="Course Completed"
               value={formData.courseCompleted}
-              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              onChange={e => { handleInputChange('courseCompleted', e.target.value) }}
             />
 
           </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              autoComplete="registrationNo"
+              name="registrationNo"
+              required
+              variant="standard"
+              fullWidth
+              id="registrationNo"
+              label="Registration No."
+              value={formData.registrationNo}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TextField
+              autoComplete="RollNo."
+              name="rollNo"
+              variant="standard"
+              fullWidth
+              id="rollNo"
+              label="Roll No."
+              value={formData.rollNo}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+            />
+          </Grid>
+
           <Grid item xs={12} md={6}>
             <TextField
               autoComplete="discipline"
@@ -73,34 +102,24 @@ export default function CourseDetails({
               fullWidth
               id="discipline"
               value={formData.discipline}
-              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              onChange={e => { handleInputChange('discipline', e.target.value) }}
               label="Decipline Studied"
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                views={["year"]}
-                required
-                fullWidth
-                label="Year of Graduation"
-                value={dayjs().year(formData.gradYear)}
-                variant="standard"
-                onChange={(newValue) => {
-                  handleInputChange('gradYear', newValue.$y)
-                }}
-
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    fullWidth
-                    variant="standard"
-                    helperText={null}
-                    id="year"
-                  />
-                )}
-              />
-            </LocalizationProvider>
+            <TextField
+              id="gradYear"
+              type="number"
+              name="gradYear"
+              label="Year of Graduation"
+              InputProps={{ inputProps: { min: 2014 } }}
+              required
+              fullWidth
+              value={formData.gradYear}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
+              autoComplete="gradYear"
+              variant="standard"
+            />
           </Grid>
 
           <Grid item xs={12}>
@@ -160,11 +179,18 @@ export default function CourseDetails({
                     onChange={(event) => {
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
-                        handleInputChange('sign',URL.createObjectURL(event.target.files[0]))
+                        handleInputChange('sign', URL.createObjectURL(event.target.files[0]))
                         setSign(event.target.files[0]);
                       }
                     }}
-                    hidden
+                    style={{
+                      width: '1px',
+                      opacity: '0',
+                      top: '0',
+                      bottom: '0',
+                      position: 'absolute',
+                      pointerEvents: 'none'
+                    }}
                   />
                 </Button>
               </>
@@ -202,26 +228,24 @@ export default function CourseDetails({
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
                         setProfilePic(event.target.files[0]);
-                        handleInputChange('passport',URL.createObjectURL(event.target.files[0]))
-
+                        handleInputChange('passport', URL.createObjectURL(event.target.files[0]))
                       }
                     }}
-                    hidden
+                    style={{
+                      width: '1px',
+                      opacity: '0',
+                      top: '0',
+                      bottom: '0',
+                      position: 'absolute',
+                      pointerEvents: 'none'
+                    }}
                   />
                 </Button>
               </>
             )}
           </Grid>
-
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox color="secondary" name="saveAddress" value="yes" />
-              }
-              label="I confirm the Course Details are correct"
-            />
-          </Grid>
         </Grid>
+
         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           {activeStep !== 0 && (
             <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>

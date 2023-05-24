@@ -14,18 +14,51 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import PersonalDetails from "./PersonalDetails";
 import CourseDetails from "./CourseDetails";
+import EmploymentDetails from "./EmploymentDetails";
 import Preview from "./Preview";
 
-const steps = ["Personal Details", "Course Details", "Form Preview"];
+const steps = ["Personal Details", "Course Details","Employment Details", "Form Preview"];
 const theme = createTheme();
 
 export default function Form() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [formData, setFormData] = React.useState({});
+  const [formData, setFormData] = React.useState({
+    "title": "Mr.",
+    "firstName": "Daknya",
+    "lastName": "Bam",
+    "nationality": "Indian",
+    "category": "General",
+    "undefined": "Gener",
+    "religion": "Other",
+    "address": "Arunachal",
+    "pincode": "790003",
+    "state": "Arunachal Pradesh",
+    "city": "Itanagar",
+    "country": "IN",
+    "phone": "+916033926408",
+    "altPhone": "+918004600238",
+    "email": "email@daknya.com",
+    "altEmail": "daknya@email.com",
+    "dob": "05/22/2023",
+    "middleName": "",
+    "courseCompleted": "B Tech in Computer Science and Engineering",
+    "registrationNo": "xxxxxxxxxxxxxxxx",
+    "rollNo": "CSE/20/37",
+    "discipline": "sasdf",
+    "sign": "blob:http://localhost:3000/027ba233-9b15-4341-9524-da11b683f241",
+    "passport": "blob:http://localhost:3000/3fa3183b-f325-46b7-b3fd-add4dccaf5f4",
+    "onGoingCourseDetails": "",
+    "onGoingdiscipline": "",
+    "onGoingGradYear": "",
+    "currentOrganisation": "",
+    "occupation": "",
+    "jobtitle": "",
+    "ctc": "",
+    "preparing": ""
+  });
 
   const handleNext = (d) => {
-    setFormData((prevData) => ({...prevData, ...d}))
-    console.log(formData)
+    // setFormData((prevData) => ({...prevData, ...d}))
     setActiveStep(activeStep + 1);
   };
 
@@ -44,8 +77,11 @@ export default function Form() {
       case 1:
         return <CourseDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 2:
-        return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
-      default:
+        return <EmploymentDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+      case 3:
+          return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+    
+        default:
         throw new Error("Unknown step");
     }
   }
@@ -71,7 +107,7 @@ export default function Form() {
           <Typography component="h1" variant="h4" align="center">
           Alumni Membership Form
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper alternativeLabel activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
