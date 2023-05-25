@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 // Signup route
 // Signup route
 app.post('/signup', (req, res) => {
-  const { fullName, email, password, phoneNumber, address, batch, dept } = req.body;
+  const { firstName, middleName, lastName, email, password, phoneNumber, address, batch, dept } = req.body;
   console.log(req.body);
   // Check if the email already exists
   const checkemailSql = 'SELECT * FROM users WHERE email = ?';
@@ -70,17 +70,14 @@ app.post('/signup', (req, res) => {
           const d = result[0].id;
           userId = (d.toString('hex'));
           console.log(userId);
-          const insertProfileDetails = 'INSERT INTO profile(username,email,phone,current_address,batch,department,profile_Id) VALUES (?,?,?,?,?,?,?)'
+          const insertProfileDetails = 'INSERT INTO profile(firstName,middleName,lastName,email,phone,batch,department,profile_Id) VALUES (?,?,?,?,?,?,?,?)'
 
-          db.query(insertProfileDetails, [fullName, email, phoneNumber, address, batch, dept, userId], (err, result) => {
+          db.query(insertProfileDetails, [firstName, middleName, lastName, email, phoneNumber, batch, dept, userId], (err, result) => {
             if (err) throw err;
 
             console.log('Inserted profile data');
           })
         })
-
-
-
       })
 
 
