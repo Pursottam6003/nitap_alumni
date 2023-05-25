@@ -9,19 +9,17 @@ import './styles/styles.scss'
 
 function App() {
   return (
- <>
     <BrowserRouter>
-    <LayoutComponent>
-    <Routes>
-    <Route path="/" element={<Form />} />
-    <Route path="/login" element={<Login />} />
-    <Route path="/signup" element={<SignUp />} />
-    <Route path="/admin" element={<Admin />} />    
-    </Routes>
-    </LayoutComponent>
+      <LayoutComponent>
+        <Routes>
+          <Route path="/" element={<Form />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </LayoutComponent>
     </BrowserRouter>
- </>
-  );  
+  );
 }
 
 export default App;

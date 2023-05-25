@@ -1,11 +1,11 @@
 import React from 'react';
-import {Button,CssBaseline,TextField,FormControlLabel,Checkbox,Link,Grid,Box,Typography,Container,Autocomplete,Alert,AlertTitle} from '@mui/material';
+import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container, Autocomplete, Alert, AlertTitle } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import {auth,fs} from '../config/config'
+import { auth, fs } from '../config/config'
 import cx from 'classnames';
 
 const theme = createTheme();
@@ -23,49 +23,49 @@ function Copyright(props) {
   );
 }
 
-const DeptList =[
-  { label:"Mechanical Eng."},
-  { label: "Computer Science Eng."},
-  { label: "Civil Eng,"} ,
-  { label: "Electronics and Comm. Eng"},
-  { label: "Electrical Eng."},
-  { label: "Dept of BAS"},
-  { label: "Dept of CS"},
-  { label: "Dept of ME"},
-  { label: "Dept of physics"},
-  { label: "Dept of Civil Eng"}
+const DeptList = [
+  { label: "Mechanical Eng." },
+  { label: "Computer Science Eng." },
+  { label: "Civil Eng," },
+  { label: "Electronics and Comm. Eng" },
+  { label: "Electrical Eng." },
+  { label: "Dept of BAS" },
+  { label: "Dept of CS" },
+  { label: "Dept of ME" },
+  { label: "Dept of physics" },
+  { label: "Dept of Civil Eng" }
 ]
 
-const BatchList =[
-  {label:"UG 2010-14"},
-  {label:"UG 2011-15"},
-  {label:"UG 2012-16"},
-  {label:"UG 2013-17"},
-  {label:"UG 2014-18"},
-  {label:"UG 2015-19"},
-  {label:"UG 2016-20"},
-  {label:"UG 2017-21"},
-  {label:"UG 2018-22"},
-  {label:"UG 2019-23"},
-  {label:"UG 2020-24"},
-  {label:"UG 2021-25"},
-  {label:"UG 2022-26"},
-  {label:"PG 2015-17"},
-  {label:"PG 2016-18"},
-  {label:"PG 2017-19"},
-  {label:"PG 2018-20"} ,
-  {label:"PG 2019-21"} ,
-  {label:"PG 2020-22"} ,
-  {label:"PG 2021-23"} ,
-  {label:"PG 2022-24"} ,
-  {label:"PHD 2013-18"} ,
-  {label:"PHD 2014-19"} ,
-  {label:"PHD 2015-20"} ,
-  {label:"PHD 2016-21"} ,
-  {label:"PHD 2017-22"} ,
-  {label:"PHD 2018-23"} ,
-  {label:"PHD 2019-24"} ,
-  {label:"PHD 2020-25"} ,
+const BatchList = [
+  { label: "UG 2010-14" },
+  { label: "UG 2011-15" },
+  { label: "UG 2012-16" },
+  { label: "UG 2013-17" },
+  { label: "UG 2014-18" },
+  { label: "UG 2015-19" },
+  { label: "UG 2016-20" },
+  { label: "UG 2017-21" },
+  { label: "UG 2018-22" },
+  { label: "UG 2019-23" },
+  { label: "UG 2020-24" },
+  { label: "UG 2021-25" },
+  { label: "UG 2022-26" },
+  { label: "PG 2015-17" },
+  { label: "PG 2016-18" },
+  { label: "PG 2017-19" },
+  { label: "PG 2018-20" },
+  { label: "PG 2019-21" },
+  { label: "PG 2020-22" },
+  { label: "PG 2021-23" },
+  { label: "PG 2022-24" },
+  { label: "PHD 2013-18" },
+  { label: "PHD 2014-19" },
+  { label: "PHD 2015-20" },
+  { label: "PHD 2016-21" },
+  { label: "PHD 2017-22" },
+  { label: "PHD 2018-23" },
+  { label: "PHD 2019-24" },
+  { label: "PHD 2020-25" },
 
 ]
 
@@ -74,7 +74,8 @@ export default function SignUp() {
   const history = useNavigate();
 
   const addUser = async (user) => {
-    const response = await fetch(`http://localhost:5000/signup`, {
+    // const response = await fetch(`http://localhost:5000/signup`, {
+    const response = await fetch(`http://localhost:5000/users/register`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
@@ -95,26 +96,38 @@ export default function SignUp() {
   const handleSubmit = (e) => {
 
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
- 
-    const user ={
-      fullName:data.get('firstName')+" "+data.get('lastName'),
-      email: data.get('email'),
-      phoneNumber:phoneVal,
-      address:data.get('address'),
-      password: data.get('password'),
-      batch: data.get('batch'),
-      dept : data.get('department'),
+    const user = {
+      fullName: formData.firstName + " " + formData.lastName,
+      email: formData.email,
+      phoneNumber: formData.phone,
+      address: formData.address,
+      password: formData.password,
+      batch: formData.batch,
+      dept: formData.department,
     }
 
     console.log(user)
 
     addUser(user);
-   
+
   };
 
   const [phoneVal, setPhoneValue] = useState('')
-  const [signedUp,setSignedUp] = useState(false);
+  const [signedUp, setSignedUp] = useState(false);
+
+  const [formData, setFormData] = useState({
+    "firstName": "Chandrashekhar",
+    "lastName": "Tripathi",
+    "email": "tripathics17@gmail.com",
+    "phone": "+918448052150",
+    "batch": "UG 2010-14",
+    "department": "Mechanical Eng.",
+    "password": "12345"
+  });
+
+  const handleChange = (name, value) => {
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -128,14 +141,14 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          
-            <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png"/>
-            { signedUp && <>
+
+          <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png" />
+          {signedUp && <>
             <Alert severity="success">
-            <AlertTitle>Success</AlertTitle>
-            This is a success alert — <strong>check it out!</strong>
+              <AlertTitle>Success</AlertTitle>
+              This is a success alert — <strong>check it out!</strong>
             </Alert>
-            </>}
+          </>}
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -148,6 +161,8 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="firstName"
+                  value={formData.firstName}
+                  onChange={(e) => handleChange(e.target.name, e.target.value)}
                   label="First Name"
                   autoFocus
                 />
@@ -157,6 +172,8 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="lastName"
+                  value={formData.lastName}
+                  onChange={(e) => handleChange(e.target.name, e.target.value)}
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
@@ -167,99 +184,95 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
+                  value={formData.email}
+                  onChange={(e) => handleChange(e.target.name, e.target.value)}
                   label="Email Address"
                   name="email"
                   autoComplete="email"
                 />
               </Grid>
-          <Grid item xs={12}>
-              <div className='phoneInputField phoneInputField2'>
-                <PhoneInput
-                defaultCountry="IN"
-                onChange={(val) => {
-                  setPhoneValue(val);
-                }}
-                className={cx({ filled:phoneVal })}
-              />
-              <label className='phoneInputLabel'>Phone number *</label>
-            </div>
-          </Grid>
-
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="address"
-                  label="Current Address"
-                  type="text"
-                  id="address"
-                  autoComplete="location"
-                />
+                <div className='phoneInputField phoneInputField2'>
+                  <PhoneInput
+                    defaultCountry="IN"
+                    value={formData.phone}
+                    onChange={(val) => {
+                      handleChange('phone', val)
+                      // setPhoneValue(val);
+                    }}
+                    className={cx({ filled: formData?.phone })}
+                  />
+                  <label className='phoneInputLabel'>Phone number *</label>
+                </div>
               </Grid>
-
               <Grid item xs={12} sm={6}>
-              <Autocomplete 
-                    id="combo-box-demo"
-                    options={BatchList}
-                    renderInput={(params) => <TextField {...params} 
+                <Autocomplete
+                  id="combo-box-demo"
+                  options={BatchList}
+                  value={formData.batch}
+                  onInputChange={(e, val) => handleChange('batch', val)}
+                  renderInput={(params) => <TextField {...params}
                     autoComplete="batch"
                     name="batch"
                     required
                     fullWidth
                     id="batch"
                     label="Batch"
-                    />}                  
-                  />
+                  />}
+                />
               </Grid>
-
               <Grid item xs={12} sm={6}>
-                
-              <Autocomplete 
-                    options={DeptList}
-                    renderInput={(params) => <TextField {...params} 
+                <Autocomplete
+                  options={DeptList}
+                  value={formData.department}
+                  onInputChange={(e, val) => handleChange('department', val)}
+                  renderInput={(params) => <TextField {...params}
                     autoComplete="department"
                     name="department"
                     required
                     fullWidth
                     id="department"
                     label="Department"
-                    />}                  
-                  />
+                  />}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
                   name="password"
+                  value={formData.password}
+                  onChange={(e) => handleChange(e.target.name, e.target.value)}
                   label="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
                 />
               </Grid>
- 
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I agree to receive updates and notifications of NIT AP Alumni Association"
                 />
               </Grid>
-            </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign Up
+                </Button>
+              </Grid>
 
-
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href="login" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
             </Grid>
           </Box>

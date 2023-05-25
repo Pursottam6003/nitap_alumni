@@ -22,7 +22,7 @@ app.use(cookies());
 
 // Middleware to parse JSON data
 app.use(express.json());
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
 
 // app.use(require('./routes/record'));
 app.use(require('./routes/users'));

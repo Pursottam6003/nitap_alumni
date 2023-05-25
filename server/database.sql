@@ -17,7 +17,7 @@ CREATE TABLE users (
 CREATE TABLE profile (
     username varchar(50),
     email varchar(50),
-    phone varchar(12),
+    phone varchar(15),
     current_address varchar(150),
     batch varchar(20),
     department varchar(30),
