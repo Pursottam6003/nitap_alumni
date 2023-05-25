@@ -33,13 +33,12 @@ var strDate = 'Y-m-d'
                 <span className='previewLabel'>Date Of Birth:</span>
                 <span className='draftData'>{formData.dob} </span>
               </div>
-
-            
+  
               <div>
                 <span className='previewLabel'>Nationality:</span>
                 <span className='draftData'>{formData.nationality} </span>
               </div>
-
+  
               <div>
                 <span className='previewLabel'>Religion:</span>
                 <span className='draftData'>{formData.religion} </span>
@@ -48,7 +47,6 @@ var strDate = 'Y-m-d'
               <div>
                 <span className='previewLabel'>Category:</span>
                 <span className='draftData'>{formData.category} </span>
-
               </div>
             </Grid>
 
@@ -179,16 +177,6 @@ var strDate = 'Y-m-d'
             <span className='previewLabel'> Signature </span>
               <img alt="not found" width={"180px"} height={"70px"} src={formData.sign} ></img>
             </Grid>
-
-
-
-             
-
-
-
-
-        
-
           </Grid>
         </Box>
       </Typography>
