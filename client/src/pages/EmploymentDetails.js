@@ -19,7 +19,13 @@ const EmploymentDetails = ({
      * @param {Event} e
      * */
 
-  const [currentStatus, setCurrentStatus] = useState(formData.currentStatus);
+  const [currentStatus, setCurrentStatus] = useState('working');
+
+  React.useEffect(() => {
+    if (formData.currentStatus) {
+      setCurrentStatus(formData.currentStatus);
+    }
+  }, [formData.currentStatus])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,9 +47,9 @@ const EmploymentDetails = ({
       membership: data.get("membership"),
     };
     const fields = {
-      onGoingCourseDetails: 'higher-education',
-      onGoingdiscipline: 'higher-education',
-      onGoingGradYear: 'higher-education',
+      ongoingCourseDetails: 'higher-education',
+      ongoingDiscipline: 'higher-education',
+      ongoingGradYear: 'higher-education',
       ongoingInstitute: 'higher-education',
       currentOrganisation: 'working',
       occupation: 'working',
@@ -51,11 +57,13 @@ const EmploymentDetails = ({
       ctc: 'working',
       preparing: 'preparing',
     }
-    
+
+    console.log('currentStatus', currentStatus);
     Object.keys(fields).filter(key => fields[key] !== currentStatus)
       .forEach(key => {
         handleInputChange(key, '');
       })
+
     handleNext(d);
   };
 
