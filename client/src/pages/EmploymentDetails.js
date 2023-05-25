@@ -19,7 +19,13 @@ const EmploymentDetails = ({
      * @param {Event} e
      * */
 
-  const [currentStatus, setCurrentStatus] = useState(formData.currentStatus);
+  const [currentStatus, setCurrentStatus] = useState('working');
+
+  React.useEffect(() => {
+    if (formData.currentStatus) {
+      setCurrentStatus(formData.currentStatus);
+    }
+  }, [formData.currentStatus])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,10 +58,12 @@ const EmploymentDetails = ({
       preparing: 'preparing',
     }
 
+    console.log('currentStatus', currentStatus);
     Object.keys(fields).filter(key => fields[key] !== currentStatus)
       .forEach(key => {
         handleInputChange(key, '');
       })
+
     handleNext(d);
   };
 
