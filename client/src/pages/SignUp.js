@@ -75,7 +75,7 @@ export default function SignUp() {
 
   const addUser = async (user) => {
     // const response = await fetch(`http://localhost:5000/signup`, {
-    const response = await fetch(`http://localhost:5000/users/register`, {
+    const response = await fetch(`http://localhost:5000/signup`, {
       method: 'POST',
       body: JSON.stringify(user),
       headers: {
@@ -97,7 +97,8 @@ export default function SignUp() {
 
     e.preventDefault();
     const user = {
-      fullName: formData.firstName + " " + formData.lastName,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
       email: formData.email,
       phoneNumber: formData.phone,
       address: formData.address,

@@ -17,7 +17,7 @@ import CourseDetails from "./CourseDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import Preview from "./Preview";
 
-const steps = ["Personal Details", "Course Details","Employment Details", "Form Preview"];
+const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
 
 export default function Form() {
@@ -47,9 +47,9 @@ export default function Form() {
     "discipline": "sasdf",
     "sign": "blob:http://localhost:3000/027ba233-9b15-4341-9524-da11b683f241",
     "passport": "blob:http://localhost:3000/3fa3183b-f325-46b7-b3fd-add4dccaf5f4",
-    "onGoingCourseDetails": "",
-    "onGoingdiscipline": "",
-    "onGoingGradYear": "",
+    "ongoingCourseDetails": "",
+    "ongoingDiscipline": "",
+    "ongoingGradYear": "",
     "currentOrganisation": "",
     "occupation": "",
     "jobtitle": "",
@@ -57,9 +57,29 @@ export default function Form() {
     "preparing": ""
   });
 
+  const registerUser = async (userData) => {
+    // const response = await fetch(`http://localhost:5000/signup`, {
+    const response = await fetch(`http://localhost:5000/register`, {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+
+    console.log('submitted response ', response);
+
+    console.log('sent sucessfully')
+  }
   const handleNext = (d) => {
     // setFormData((prevData) => ({...prevData, ...d}))
     setActiveStep(activeStep + 1);
+
+    if (activeStep == 3) {
+      console.log(formData);
+      // console.log({formData});
+      registerUser(formData);
+    }
   };
 
   const handleBack = () => {
@@ -67,9 +87,16 @@ export default function Form() {
   };
 
   const handleInputChange = (name, value) => {
-    setFormData((prevData) => ({...prevData, [name]: value}))
+    setFormData((prevData) => ({ ...prevData, [name]: value }))
   }
 
+  const printform = () => {
+    console.log('Todo print out')
+  }
+
+  const logOut = () => {
+    console.log('exit')
+  }
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -79,9 +106,9 @@ export default function Form() {
       case 2:
         return <EmploymentDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 3:
-          return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
-    
-        default:
+        return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+
+      default:
         throw new Error("Unknown step");
     }
   }
@@ -105,7 +132,7 @@ export default function Form() {
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
           <Typography component="h1" variant="h4" align="center">
-          Alumni Membership Form
+            Alumni Membership Form
           </Typography>
           <Stepper alternativeLabel activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
@@ -117,12 +144,33 @@ export default function Form() {
           {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
-                Thank you for filling out the form.
+                Thank you for filling out the Membership form.
               </Typography>
               <Typography variant="subtitle1">
-                Your order number is #2001539. We have emailed your order
-                confirmation, and will send you an update when your order has
-                shipped.
+                Your response has been sucessfully saved.
+
+                Now, for verification process you have to visit Academic Block and download the form responses from the button given below
+
+                Authority will verify your details and approve.
+
+                All the best !
+
+
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button variant="outlined" onClick={logOut} color="error" sx={{ mt: 3, ml: 1 }}>
+                    Exit
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={printform}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                    Print Form
+                  </Button>
+
+                </Box>
+
+
               </Typography>
             </React.Fragment>
           ) : (

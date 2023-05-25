@@ -16,7 +16,7 @@ app.use(cors({
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "rootpass",
+  password: "Rahul@12345678",
   database: "alumniDatabase",
 });
 
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 // Signup route
 // Signup route
 app.post('/signup', (req, res) => {
-  const { firstName, middleName, lastName, email, password, phoneNumber, address, batch, dept } = req.body;
+  const { firstName, middleName, lastName, email, password, phoneNumber, batch, dept } = req.body;
   console.log(req.body);
   // Check if the email already exists
   const checkemailSql = 'SELECT * FROM users WHERE email = ?';
@@ -79,11 +79,28 @@ app.post('/signup', (req, res) => {
           })
         })
       })
-
-
     }
   });
 });
+
+app.post('/register', (req, res) => {
+
+  console.log('here in register')
+  const { title, firstName, lastName, middleName, nationality, category, religion, linkedin, github, address, pincode, state, city, country, phone, altPhone, dob, email, altEmail, courseCompleted, registrationNo, rollNo, discipline, gradYear, sign, passport, occupation, ctc, ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation, jobtitle, preparing, currentStatus
+  } = req.body;
+
+  res.send('reached');
+
+  const insertQuery = 'INSERT INTO alumnilist (title, firstName, lastName, middleName, nationality, category, religion, linkedin, github, address, pincode, state, city, country, phone, altPhone, dob, email, altEmail, courseCompleted, registrationNo, rollNo, discipline, gradYear, sign, passport, occupation, ctc, ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation, jobtitle, preparing, currentStatus) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+
+  db.query(insertQuery, [title, firstName, lastName, middleName, nationality, category, religion, linkedin, github, address, pincode, state, city, country, phone, altPhone, dob, email, altEmail, courseCompleted, registrationNo, rollNo, discipline, gradYear, sign, passport, occupation, ctc, ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation, jobtitle, preparing, currentStatus
+  ], (err, result) => {
+    if (err) throw err;
+
+    console.log('Inserted profile data');
+  })
+})
+
 
 
 // Login route

@@ -179,7 +179,8 @@ export default function CourseDetails({
                     onChange={(event) => {
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
-                        handleInputChange('sign', URL.createObjectURL(event.target.files[0]))
+                        // handleInputChange('sign', URL.createObjectURL(event.target.files[0]))
+                        handleInputChange('sign', event.target.files[0])
                         setSign(event.target.files[0]);
                       }
                     }}
@@ -228,7 +229,8 @@ export default function CourseDetails({
                       console.log(event.target.files[0]);
                       if (event.target.files[0].length !== 0) {
                         setProfilePic(event.target.files[0]);
-                        handleInputChange('passport', URL.createObjectURL(event.target.files[0]))
+                        // handleInputChange('passport', URL.createObjectURL(event.target.files[0]))
+                        handleInputChange('passport', (event.target.files[0]))
                       }
                     }}
                     style={{

@@ -15,14 +15,6 @@ CREATE TABLE users (
 
 
 CREATE TABLE profile (
-<<<<<<< Updated upstream
-    username varchar(50),
-    email varchar(50),
-    phone varchar(15),
-    current_address varchar(150),
-    batch varchar(20),
-    department varchar(30),
-=======
     firstName varchar(30) NOT NULL,
     middleName varchar(20) ,
     lastName varchar(20) NOT NULL,
@@ -30,7 +22,6 @@ CREATE TABLE profile (
     phone varchar(15),
     batch varchar(20) NOT NULL,
     department varchar(30) NOT NULL,
->>>>>>> Stashed changes
     profile_Id varchar(50)
 );
 -- select all from the table  
@@ -39,7 +30,9 @@ CREATE TABLE profile (
 
 CREATE TABLE alumnilist (
     title varchar(5) NOT NULL,
-    fullname varchar(30) NOT NULL,
+    firstName varchar(30) NOT NULL,
+    lastName varchar(20) ,
+    middleName  varchar(20),
     nationality varchar(15) NOT NULL,
     category  varchar(10),
     religion varchar(15),
@@ -64,10 +57,13 @@ CREATE TABLE alumnilist (
     passport LONGBLOB NOT NULL, 
     occupation varchar(30),
     ctc decimal(10,2),
-    ongoingCourse varchar(40),
+    ongoingCourseDetails varchar(40),
     ongoingDiscipline varchar(40) ,
-    ongoingGrad varchar(10),
-    preparing varchar(30)
+    ongoingGradYear varchar(10),
+    currentOrganisation varchar(50),
+    jobtitle varchar(40),
+    preparing varchar(30),
+    currentStatus BOOLEAN NOT NULL DEFAULT 0
 )
 
 CREATE TABLE organisationDetails 
