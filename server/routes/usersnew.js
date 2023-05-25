@@ -87,8 +87,8 @@ users.route('/users/login').post((req, res) => {
 
               if (result) {
                 const token = jwt.sign({ id: user.id_text }, SECRET);
-                const insertSessionSql = 'INSERT INTO session (id_text, token) VALUES (?, ?)';
-                db.query(insertSessionSql, [user.id_text, token], (err, result) => {
+                const insertSessionSql = 'INSERT INTO session (id_text) VALUES (?)';
+                db.query(insertSessionSql, [user.id_text], (err, result) => {
                   if (err) throw err;
                   res.cookie('auth', token).json({ message: 'User logged in', error: false });
                 });

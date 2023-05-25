@@ -32,6 +32,10 @@ CREATE TABLE profile (
     department varchar(30) NOT NULL,
     profile_Id varchar(50)
 );
+
+CREATE TABLE session (
+    id_text varchar(50) NOT NULL
+);
 -- select all from the table  
 
 -- create a alumnilist table for storing the databse while registration 
