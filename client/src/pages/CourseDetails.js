@@ -173,6 +173,7 @@ export default function CourseDetails({
                 <Button variant="contained" component="label">
                   Upload File
                   <input
+                  
                     type="file"
                     name="sign"
                     required

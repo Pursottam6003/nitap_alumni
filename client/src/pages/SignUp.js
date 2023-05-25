@@ -1,27 +1,15 @@
 import React from 'react';
-import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container, Autocomplete, Alert, AlertTitle } from '@mui/material';
+import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container, Autocomplete, Alert, AlertTitle, Avatar } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
-import { auth, fs } from '../config/config'
 import cx from 'classnames';
+import { apiPostCall } from '../utils/helpers';
 
 const theme = createTheme();
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        NIT AP Alumni Cell
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const DeptList = [
   { label: "Mechanical Eng." },
@@ -69,6 +57,7 @@ const BatchList = [
 
 ]
 
+const registerUser = apiPostCall('http://localhost:5000/users/')('register');
 
 export default function SignUp() {
   const history = useNavigate();
@@ -94,27 +83,19 @@ export default function SignUp() {
   }
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
-    const user = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      phoneNumber: formData.phone,
-      address: formData.address,
-      password: formData.password,
-      batch: formData.batch,
-      dept: formData.department,
-    }
+    console.log(formData)
 
-    console.log(user)
+    const user = formData;
 
-    addUser(user);
-
+    registerUser(user).then((response) => {
+      console.log(response);
+      if (response.status === 200)
+        return history('/login');
+    }).catch((error) => {
+      console.log(error);
+    })
   };
-
-  const [phoneVal, setPhoneValue] = useState('')
-  const [signedUp, setSignedUp] = useState(false);
 
   const [formData, setFormData] = useState({
     "firstName": "Chandrashekhar",
@@ -136,20 +117,15 @@ export default function SignUp() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            my: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-
-          <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png" />
-          {signedUp && <>
-            <Alert severity="success">
-              <AlertTitle>Success</AlertTitle>
-              This is a success alert — <strong>check it out!</strong>
-            </Alert>
-          </>}
+          <Box sx={{ mt: 1 }}>
+            <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png" alt='' />
+          </Box>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -250,13 +226,6 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I agree to receive updates and notifications of NIT AP Alumni Association"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <Button
                   type="submit"
@@ -278,7 +247,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

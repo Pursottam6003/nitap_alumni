@@ -37,7 +37,6 @@ export default function Preview({ formData }) {
                 <span className='draftData'>{formData.dob} </span>
               </div>
 
-
               <div>
                 <span className='previewLabel'>Nationality:</span>
                 <span className='draftData'>{formData.nationality} </span>
@@ -51,7 +50,6 @@ export default function Preview({ formData }) {
               <div>
                 <span className='previewLabel'>Category:</span>
                 <span className='draftData'>{formData.category} </span>
-
               </div>
             </Grid>
 
@@ -179,7 +177,6 @@ export default function Preview({ formData }) {
               <span className='previewLabel'> Signature </span>
               <img alt="not found" width={"180px"} height={"70px"} src={URL.createObjectURL(formData.sign)} ></img>
             </Grid>
-
           </Grid>
         </Box>
       </Typography>

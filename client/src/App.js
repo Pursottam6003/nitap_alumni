@@ -5,6 +5,7 @@ import SignUp from './pages/SignUp'
 import LayoutComponent from './layout/LayoutComponent'
 import Form from './pages/Form'
 import Admin from "./pages/Admin";
+
 import './styles/styles.scss'
 
 function App() {

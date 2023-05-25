@@ -8,11 +8,19 @@ USE alumniDatabase;
 
 CREATE TABLE users (
     id BINARY(16),
+    id_text varchar(36) generated always as
+        (insert(
+            insert(
+            insert(
+                insert(hex(id),9,0,'-'),
+                14,0,'-'),
+            19,0,'-'),
+            24,0,'-')
+        ) virtual,
     email varchar(50) NOT NULL,
     password varchar(100) NOT NULL,
     primary key(id) 
 );
-
 
 CREATE TABLE profile (
     firstName varchar(30) NOT NULL,
@@ -23,6 +31,10 @@ CREATE TABLE profile (
     batch varchar(20) NOT NULL,
     department varchar(30) NOT NULL,
     profile_Id varchar(50)
+);
+
+CREATE TABLE session (
+    id_text varchar(50) NOT NULL
 );
 -- select all from the table  
 
