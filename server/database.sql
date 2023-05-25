@@ -8,21 +8,21 @@ USE alumniDatabase;
 
 CREATE TABLE users (
     id BINARY(16),
+    id_text varchar(36) generated always as
+        (insert(
+            insert(
+            insert(
+                insert(hex(id),9,0,'-'),
+                14,0,'-'),
+            19,0,'-'),
+            24,0,'-')
+        ) virtual,
     email varchar(50) NOT NULL,
     password varchar(100) NOT NULL,
     primary key(id) 
 );
 
-
 CREATE TABLE profile (
-<<<<<<< Updated upstream
-    username varchar(50),
-    email varchar(50),
-    phone varchar(15),
-    current_address varchar(150),
-    batch varchar(20),
-    department varchar(30),
-=======
     firstName varchar(30) NOT NULL,
     middleName varchar(20) ,
     lastName varchar(20) NOT NULL,
@@ -30,7 +30,6 @@ CREATE TABLE profile (
     phone varchar(15),
     batch varchar(20) NOT NULL,
     department varchar(30) NOT NULL,
->>>>>>> Stashed changes
     profile_Id varchar(50)
 );
 -- select all from the table  
