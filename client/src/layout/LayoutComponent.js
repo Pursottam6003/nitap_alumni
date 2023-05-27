@@ -5,30 +5,28 @@ import { Box } from '@mui/system'
 import { createTheme, ThemeProvider } from '@mui/material'
 import { CssBaseline } from '@mui/material'
 
-const LayoutComponent = ({children}) => {
+const LayoutComponent = ({ children }) => {
+  const theme = createTheme({
+    palette: {
+      mode: 'light',
 
-    const theme = createTheme({
-        palette: {
-          mode: 'light',
-    
-          neutral: {
-            main: '#fff',
-            contrastText: '#000',
-          },
-        }
-      })
+      neutral: {
+        main: '#fff',
+        contrastText: '#000',
+      },
+    }
+  })
   return (
     <ThemeProvider theme={theme}>
       <Box className='layout-component'>
-      <CssBaseline />
-        <Navigation/>
+        <CssBaseline />
+        <Navigation />
         <Box component='main' className='main-component-wrapper'>
           {children}
         </Box>
         <Footer />
       </Box>
     </ThemeProvider>
-
   )
 }
 

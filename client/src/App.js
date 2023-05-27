@@ -1,24 +1,44 @@
-import React from "react";
+import React, { createContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import LayoutComponent from './layout/LayoutComponent'
 import Form from './pages/Form'
 import Admin from "./pages/Admin";
-
 import './styles/styles.scss'
+import useFetchProfile from "./hooks/useFetchProfile";
+import ProtectedComponent from "./components/ProtectedComponent";
+import axios from "axios";
+
+export const UserContext = createContext();
 
 function App() {
+  const { profile, error, loading, refetch } = useFetchProfile();
+
+  if (error) {
+    console.log(error);
+  }
+
+  const logout = () => {
+    axios.post('/users/logout', { withCredentials: true }).then(res => {
+      if (res.status === 200) refetch();
+    }).catch(err => {
+      throw err;
+    })
+  }
+
   return (
     <BrowserRouter>
-      <LayoutComponent>
-        <Routes>
-          <Route path="/" element={<Form />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
-      </LayoutComponent>
+      <UserContext.Provider value={{ profile, error, loading, logout }}>
+        <LayoutComponent>
+          <Routes>
+            <Route path="/login" element={<Login fetchProfile={refetch} />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<ProtectedComponent children={<Form />} />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        </LayoutComponent>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }

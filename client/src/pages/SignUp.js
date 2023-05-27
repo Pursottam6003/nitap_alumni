@@ -1,15 +1,15 @@
 import React from 'react';
-import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container, Autocomplete, Alert, AlertTitle, Avatar } from '@mui/material';
+import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container, Autocomplete, Alert, AlertTitle, Avatar, Collapse, IconButton } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import cx from 'classnames';
 import { apiPostCall } from '../utils/helpers';
 
 const theme = createTheme();
-
 
 const DeptList = [
   { label: "Mechanical Eng." },
@@ -57,10 +57,11 @@ const BatchList = [
 
 ]
 
-const registerUser = apiPostCall('http://localhost:5000/users/')('register');
+const registerUser = apiPostCall('/users')('/register');
 
 export default function SignUp() {
   const history = useNavigate();
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -72,8 +73,12 @@ export default function SignUp() {
       console.log(response);
       if (response.status === 200)
         return history('/login');
-    }).catch((error) => {
-      console.log(error);
+
+      setErrorMsg(response.data.message);
+      setFormData({});
+    }).catch(err => {
+      setErrorMsg(err.response.data.message);
+      setFormData({});
     })
   };
 
@@ -109,7 +114,28 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Collapse in={errorMsg.length !== 0}>
+              <Alert
+                severity='error'
+                variant='outlined'
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setErrorMsg('');
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ my: 3 }}
+              >
+                {errorMsg}
+              </Alert>
+            </Collapse>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -118,7 +144,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="firstName"
-                  value={formData.firstName}
+                  value={formData.firstName || ''}
                   onChange={(e) => handleChange(e.target.name, e.target.value)}
                   label="First Name"
                   autoFocus
@@ -129,7 +155,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="lastName"
-                  value={formData.lastName}
+                  value={formData.lastName || ''}
                   onChange={(e) => handleChange(e.target.name, e.target.value)}
                   label="Last Name"
                   name="lastName"
@@ -141,7 +167,7 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="email"
-                  value={formData.email}
+                  value={formData.email || ''}
                   onChange={(e) => handleChange(e.target.name, e.target.value)}
                   label="Email Address"
                   name="email"
@@ -152,7 +178,7 @@ export default function SignUp() {
                 <div className='phoneInputField phoneInputField2'>
                   <PhoneInput
                     defaultCountry="IN"
-                    value={formData.phone}
+                    value={formData.phone || ''}
                     onChange={(val) => {
                       handleChange('phone', val)
                       // setPhoneValue(val);
@@ -166,7 +192,8 @@ export default function SignUp() {
                 <Autocomplete
                   id="combo-box-demo"
                   options={BatchList}
-                  value={formData.batch}
+                  isOptionEqualToValue={(option, value) => option.label === value.label}
+                  value={{ label: formData.batch || '' }}
                   onInputChange={(e, val) => handleChange('batch', val)}
                   renderInput={(params) => <TextField {...params}
                     autoComplete="batch"
@@ -181,7 +208,8 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <Autocomplete
                   options={DeptList}
-                  value={formData.department}
+                  isOptionEqualToValue={(option, value) => option.label === value.label}
+                  value={{ label: formData.department || '' }}
                   onInputChange={(e, val) => handleChange('department', val)}
                   renderInput={(params) => <TextField {...params}
                     autoComplete="department"

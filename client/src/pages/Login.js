@@ -2,33 +2,35 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
-import { apiPostCall } from '../utils/helpers';
+import { Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container, Collapse, Alert, IconButton } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-const loginUser = apiPostCall('http://localhost:5000/users/')('login');
+import CloseIcon from '@mui/icons-material/Close';
+import axios from 'axios';
 
 const theme = createTheme();
 
-export default function LogIn() {
+export default function LogIn({ fetchProfile }) {
   const history = useNavigate();
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({});
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg('');
 
     // call api to login user
-    loginUser({
-      withCredentials: true,
-      ...formData
-    }).then(res => {
-      console.log(res);
+    try {
+      const res = await axios.post('/users/login', formData);
       if (res.status === 200) {
+        fetchProfile();
         history('/');
       }
-    }).catch(err => {
-      console.log(err);
-    });
+    }
+    catch (err) {
+      setErrorMsg(err.response.data.message || err.message);
+    } finally {
+      setFormData({});
+    }
   };
 
   const handleChange = (name, value) => {
@@ -53,7 +55,29 @@ export default function LogIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Collapse in={errorMsg?.length !== 0}>
+              <Alert
+                severity='error'
+                variant='outlined'
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setErrorMsg('');
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ my: 3 }}
+              >
+                {errorMsg}
+              </Alert>
+            </Collapse>
+
             <TextField
               margin="normal"
               required
@@ -61,7 +85,7 @@ export default function LogIn() {
               id="email"
               label="Email Address"
               name="email"
-              value={formData.email}
+              value={formData.email || ''}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
               autoComplete="email"
               autoFocus
@@ -71,7 +95,7 @@ export default function LogIn() {
               required
               fullWidth
               name="password"
-              value={formData.password}
+              value={formData.password || ''}
               onChange={(e) => handleChange(e.target.name, e.target.value)}
               label="Password"
               type="password"
