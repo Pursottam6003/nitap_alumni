@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
-import { apiPostCall } from "../utils/helpers";
-
-const baseUrl = "http://localhost:5000/users";
-const authApi = apiPostCall(baseUrl)("/auth");
+import axios from "axios";
 
 // create an auth hook to check for user authentication with jwt stored in Cookie and return the user object if authenticated else return null
 const useAuth = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isAuth, setIsAuth] = useState(false)
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  useEffect(() => {
+  const fetchAuth = async () => {
     setLoading(true);
-    authApi({ withCredentials: true }).then(res => {
-      console.log(res.data);
-      setUser(res.data);
-    }).catch(err => {
+    try {
+      const res = await axios.post('/users/auth', { withCredentials: true });
+      if (res.status !== 200 || res.data.error) {
+        setIsAuth(false);
+        throw new Error(res.statusText);
+      } else {
+        setIsAuth(true);
+      }
+    } catch (err) {
       setError(err);
-      console.error(err);
-    }).finally(() => {
-      setLoading(false);
-    })
+    } finally {
+      setTimeout(() => {
+        setLoading(false);
+      }, 300);
+    }
+  }
+
+  useEffect(() => {
+    fetchAuth();
   }, [])
 
-  return { user, loading, error }
+  return { isAuth, loading, error }
 }
 
 export default useAuth;
