@@ -110,10 +110,13 @@ users.route('/users/auth').post((req, res) => {
   const token = req.cookies.auth;
   findUserByToken(token)
     .then(results => {
-      res.status(200).json({ message: 'User authenticated', error: false });
+      if (results.length !== 0) {
+        return res.status(200).json({ message: 'User authenticated', error: false });
+      }
+      res.status(400).clearCookie('auth').json({ message: 'Invalid jwt', error: true });
     })
     .catch(err => {
-      res.status(400).json({ message: 'Invalid jwt', error: true });
+      res.clearCookie('auth').status(400).json({ message: 'Invalid jwt', error: true });
     });
 })
 
@@ -131,6 +134,24 @@ users.route('/users/logout').post((req, res) => {
     .catch(err => {
       res.status(400).json({ message: 'Invalid jwt', error: true });
     });
+});
+
+users.route('/users/profile').post((req, res) => {
+  const token = req.cookies.auth;
+  findUserByToken(token).then(results => {
+    if (results.length > 0) {
+      const db = getDb();
+      const sql = 'SELECT * FROM profile WHERE profile_Id = ?';
+      db.query(sql, [results[0].id_text], (err, results) => {
+        if (err) throw err;
+        res.status(200).json({ message: 'Profile found', error: false, profile: results[0] });
+      });
+    } else {
+      res.status(400).json({ message: 'Invalid jwt', error: true });
+    }
+  }).catch(err => {
+    res.status(400).json({ message: 'Invalid jwt', error: true });
+  });
 });
 
 module.exports = users;
