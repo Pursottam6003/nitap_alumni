@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import cx from 'classnames';
-import { apiPostCall } from '../utils/helpers';
+import axios from 'axios';
 
 const theme = createTheme();
 
@@ -57,8 +57,6 @@ const BatchList = [
 
 ]
 
-const registerUser = apiPostCall('/users')('/register');
-
 export default function SignUp() {
   const history = useNavigate();
   const [errorMsg, setErrorMsg] = useState('');
@@ -89,7 +87,7 @@ export default function SignUp() {
 
     const user = formData;
 
-    registerUser(user).then((response) => {
+    axios.post('/users/register', user).then((response) => {
       console.log(response);
       if (response.status === 200)
         return history('/login');
