@@ -60,7 +60,7 @@ export default function CourseDetails({
               fullWidth
               id="courseCompleted"
               label="Course Completed"
-              value={formData.courseCompleted}
+              value={formData.courseCompleted || ''}
               onChange={e => { handleInputChange('courseCompleted', e.target.value) }}
             />
 
@@ -75,7 +75,7 @@ export default function CourseDetails({
               fullWidth
               id="registrationNo"
               label="Registration No."
-              value={formData.registrationNo}
+              value={formData.registrationNo || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
             />
           </Grid>
@@ -88,7 +88,7 @@ export default function CourseDetails({
               fullWidth
               id="rollNo"
               label="Roll No."
-              value={formData.rollNo}
+              value={formData.rollNo || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
             />
           </Grid>
@@ -101,7 +101,7 @@ export default function CourseDetails({
               required
               fullWidth
               id="discipline"
-              value={formData.discipline}
+              value={formData.discipline || ''}
               onChange={e => { handleInputChange('discipline', e.target.value) }}
               label="Decipline Studied"
             />
@@ -115,7 +115,7 @@ export default function CourseDetails({
               InputProps={{ inputProps: { min: 2014 } }}
               required
               fullWidth
-              value={formData.gradYear}
+              value={formData.gradYear || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="gradYear"
               variant="standard"
@@ -173,7 +173,7 @@ export default function CourseDetails({
                 <Button variant="contained" component="label">
                   Upload File
                   <input
-                  
+
                     type="file"
                     name="sign"
                     required

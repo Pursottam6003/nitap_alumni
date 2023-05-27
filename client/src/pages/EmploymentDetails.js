@@ -1,11 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import { Box, Grid, TextField, Typography, Button, FormControlLabel, FormControl, FormLabel, RadioGroup, Radio } from "@mui/material";
-import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { DatePicker } from "@mui/x-date-pickers";
-
 
 const EmploymentDetails = ({
   activeStep,
@@ -98,7 +93,7 @@ const EmploymentDetails = ({
                 name="preparing"
                 label="Preparing for"
                 fullWidth
-                value={formData.preparing}
+                value={formData.preparing || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 autoComplete="occupation"
                 variant="standard"
@@ -114,7 +109,7 @@ const EmploymentDetails = ({
                 name="occupation"
                 label="Occupation"
                 fullWidth
-                value={formData.occupation}
+                value={formData.occupation || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 autoComplete="occupation"
                 variant="standard"
@@ -128,7 +123,7 @@ const EmploymentDetails = ({
                 name="jobtitle"
                 label="Job Title"
                 fullWidth
-                value={formData.jobtitle}
+                value={formData.jobtitle || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 autoComplete="jobtitle"
                 variant="standard"
@@ -141,7 +136,7 @@ const EmploymentDetails = ({
                 name="ctc"
                 label="Current CTC (in Rs.)"
                 fullWidth
-                value={formData.ctc}
+                value={formData.ctc || ''}
                 onChange={e => { handleInputChange('ctc', e.target.value) }}
                 autoComplete="ctc"
                 variant="standard"
@@ -156,7 +151,7 @@ const EmploymentDetails = ({
                 required
                 fullWidth
                 id="currentOrganisation"
-                value={formData.currentOrganisation}
+                value={formData.currentOrganisation || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 label="Current Organisation"
               />
@@ -173,7 +168,7 @@ const EmploymentDetails = ({
                 fullWidth
                 id="onGoingCourseDetails"
                 label="Ongoing Course Details"
-                value={formData.onGoingCourseDetails}
+                value={formData.onGoingCourseDetails || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               />
             </Grid>
@@ -186,7 +181,7 @@ const EmploymentDetails = ({
                 required
                 fullWidth
                 id="onGoingdiscipline"
-                value={formData.onGoingdiscipline}
+                value={formData.onGoingdiscipline || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 label="Decipline Studied"
               />
@@ -200,7 +195,7 @@ const EmploymentDetails = ({
                 InputProps={{ inputProps: { min: 2014 } }}
                 required
                 fullWidth
-                value={formData.onGoingGradYear}
+                value={formData.onGoingGradYear || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 autoComplete="onGoingGradYear"
                 variant="standard"
@@ -214,7 +209,7 @@ const EmploymentDetails = ({
                 required
                 fullWidth
                 id="ongoingInstitute"
-                value={formData.ongoingInstitute}
+                value={formData.ongoingInstitute || ''}
                 onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                 label="Current Organisation"
               />

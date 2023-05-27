@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import {Grid,Typography, FormControlLabel, Checkbox, TextField, Autocomplete, Box, Button} from "@mui/material";
+import { Grid, Typography, FormControlLabel, Checkbox, TextField, Autocomplete, Box, Button } from "@mui/material";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
@@ -9,10 +9,10 @@ import PhoneInput from "react-phone-number-input";
 import cx from 'classnames';
 
 const TitleList = [
-  { label: "Mr.", value:"Mr" },
-  { label: "Miss", value:"Miss" },
-  { label: "Mrs", value:"Mrs" },
-  { label: "Dr" , value:"Dr" },
+  { label: "Mr.", value: "Mr" },
+  { label: "Miss", value: "Miss" },
+  { label: "Mrs", value: "Mrs" },
+  { label: "Dr", value: "Dr" },
 ];
 const NationalityList = [
   { label: "Indian" },
@@ -87,9 +87,10 @@ export default function PersonalDetails({
             <Autocomplete
               id="title"
               options={TitleList}
-              value= {formData.title}
-              onInputChange={(e, val)=>{
-                handleInputChange('title',val)
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              value={{ label: formData.title || '' }}
+              onInputChange={(e, val) => {
+                handleInputChange('title', val)
               }}
               renderInput={(params) => (
                 <TextField
@@ -109,7 +110,7 @@ export default function PersonalDetails({
               required
               id="firstName"
               name="firstName"
-              value={formData.firstName}
+              value={formData.firstName || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               label="First name"
               fullWidth
@@ -121,7 +122,7 @@ export default function PersonalDetails({
             <TextField
               id="middleName"
               name="middleName"
-              value={formData.middleName}
+              value={formData.middleName || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               label="Middle name"
               fullWidth
@@ -135,7 +136,7 @@ export default function PersonalDetails({
               required
               id="lastName"
               name="lastName"
-              value={formData.lastName}
+              value={formData.lastName || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               label="Last name"
               fullWidth
@@ -174,7 +175,8 @@ export default function PersonalDetails({
             <Autocomplete
               id="category"
               options={categoryList}
-              value={formData.category}
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              value={{ label: formData.category || '' }}
               onInputChange={(e, val) => {
                 handleInputChange('category', val);
               }}
@@ -184,7 +186,7 @@ export default function PersonalDetails({
                   autoComplete="category"
                   name="category"
                   required
-                  value={formData.category}
+                  value={formData.category || ''}
                   onChange={e => { handleInputChange(e.target.category, e.target.value) }}
                   variant="standard"
                   fullWidth
@@ -198,9 +200,10 @@ export default function PersonalDetails({
             <Autocomplete
               id="nationality"
               options={NationalityList}
-              value = {formData.nationality}
-              onInputChange={(e,val)=>{
-                handleInputChange('nationality',val);
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              value={{ label: formData.nationality || '' }}
+              onInputChange={(e, val) => {
+                handleInputChange('nationality', val);
               }}
               renderInput={(params) => (
                 <TextField
@@ -220,17 +223,18 @@ export default function PersonalDetails({
             <Autocomplete
               id="religion"
               options={ReligionList}
-              value = {formData.religion}
-              onInputChange={(e,val)=>{
-                handleInputChange('religion',val);
+              isOptionEqualToValue={(option, value) => option.label === value.label}
+              value={{ label: formData.religion || '' }}
+              onInputChange={(e, val) => {
+                handleInputChange('religion', val);
               }}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   autoComplete="religion"
                   name="religion"
-                  value={formData.religion}
-                  onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+                  value={formData.religion || ''}
+                  onChange={e => { handleInputChange(e.target.name, e.target.value) }}
                   required
                   variant="standard"
                   fullWidth
@@ -247,8 +251,8 @@ export default function PersonalDetails({
               label="Current Address"
               fullWidth
               required
-              value = {formData.address}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.address || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="applicant address"
               variant="standard"
             />
@@ -262,8 +266,8 @@ export default function PersonalDetails({
               label="Pincode"
               required
               fullWidth
-              value = {formData.pincode}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.pincode || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="pincode"
               variant="standard"
             />
@@ -274,9 +278,9 @@ export default function PersonalDetails({
               id="state"
               name="state"
               label="State/Province/Region"
-              value = {formData.state}
+              value={formData.state || ''}
               required
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               fullWidth
               variant="standard"
             />
@@ -289,8 +293,8 @@ export default function PersonalDetails({
               name="city"
               label="City"
               fullWidth
-              value = {formData.city}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.city || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="shipping address-level2"
               variant="standard"
             />
@@ -302,8 +306,8 @@ export default function PersonalDetails({
               name="country"
               label="Country"
               fullWidth
-              value = {formData.country}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.country || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="shipping country"
               variant="standard"
             />
@@ -313,7 +317,7 @@ export default function PersonalDetails({
             <div className='phoneInputField'>
               <PhoneInput
                 defaultCountry="IN"
-                value={formData.phone}
+                value={formData.phone || ''}
                 onChange={(val) => {
                   handleInputChange('phone', val);
                 }}
@@ -327,7 +331,7 @@ export default function PersonalDetails({
             <div className='phoneInputField'>
               <PhoneInput
                 defaultCountry="IN"
-                value={formData.altPhone}
+                value={formData.altPhone || ''}
                 onChange={(val) => {
                   handleInputChange('altPhone', val);
                 }}
@@ -344,8 +348,8 @@ export default function PersonalDetails({
               name="email"
               label="Email"
               fullWidth
-              value = {formData.email}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.email || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="email"
               variant="standard"
             />
@@ -357,8 +361,8 @@ export default function PersonalDetails({
               name="altEmail"
               label="Alternate Email"
               fullWidth
-              value = {formData.altEmail}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.altEmail || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="altEmail"
               variant="standard"
             />
@@ -371,8 +375,8 @@ export default function PersonalDetails({
               name="linkedin"
               label="Linkedin"
               fullWidth
-              value = {formData.linkedin}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.linkedin || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               autoComplete="linkedin"
               variant="standard"
             />
@@ -384,8 +388,8 @@ export default function PersonalDetails({
               type="url"
               name="github"
               label="Github"
-              value = {formData.github}
-              onChange = {e => {handleInputChange(e.target.name,e.target.value)}}
+              value={formData.github || ''}
+              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               fullWidth
               variant="standard"
             />
