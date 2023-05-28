@@ -14,9 +14,6 @@ export default function Preview({ formData }) {
     .replace('Y', today.getFullYear())
     .replace('m', today.getMonth() + 1)
     .replace('d', today.getDate());
-
-
-
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
