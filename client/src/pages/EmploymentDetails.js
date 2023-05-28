@@ -9,11 +9,6 @@ const EmploymentDetails = ({
   formData,
   handleInputChange
 }) => {
-
-  /**
-     * @param {Event} e
-     * */
-
   const [currentStatus, setCurrentStatus] = useState('working');
 
   React.useEffect(() => {
@@ -53,7 +48,6 @@ const EmploymentDetails = ({
       preparing: 'preparing',
     }
 
-    console.log('currentStatus', currentStatus);
     Object.keys(fields).filter(key => fields[key] !== currentStatus)
       .forEach(key => {
         handleInputChange(key, '');
@@ -72,15 +66,15 @@ const EmploymentDetails = ({
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <FormControl required>
-              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+              <FormLabel id="demo-radio-buttons-group-label">Current status</FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue="female"
                 name="radio-buttons-group"
               >
-                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'working')} checked={formData.currentStatus === 'working'} value="working" control={<Radio />} label="Working Professional" />
-                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'higher-education')} checked={formData.currentStatus === 'higher-education'} value="higher-education" control={<Radio />} label="Pursuing for Higher Education" />
-                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'preparing')} checked={formData.currentStatus === 'preparing'} value="preparing" control={<Radio />} label="Preparing" />
+                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'working')} checked={formData.currentStatus === 'working'} value="working" control={<Radio required />} label="Working Professional" />
+                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'higher-education')} checked={formData.currentStatus === 'higher-education'} value="higher-education" control={<Radio required />} label="Pursuing for Higher Education" />
+                <FormControlLabel onChange={(e) => handleInputChange('currentStatus', 'preparing')} checked={formData.currentStatus === 'preparing'} value="preparing" control={<Radio required />} label="Preparing" />
               </RadioGroup>
             </FormControl>
           </Grid>

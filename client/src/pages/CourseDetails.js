@@ -4,15 +4,8 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { FormLabel } from "@mui/material";
 import { Button, Box, RadioGroup, Radio } from "@mui/material";
-import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
-import { DatePicker } from "@mui/x-date-pickers";
-import { Autocomplete } from "@mui/material";
-
 
 export default function CourseDetails({
   activeStep,
@@ -24,25 +17,18 @@ export default function CourseDetails({
   const [sign, setSign] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
 
-  /**
-   * @param {Event} e
-   * */
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
-
-    const d = {
-      courseCompleted: data.get("courseCompleted"),
-      discipline: data.get("discipline"),
-      registratinNo: data.get("registrationNo"),
-      rollNo: data.get("rollNo"),
-      date: data.get("date"),
-      year: data.get("year"),
-      membership: data.get("membership"),
-
-    };
     handleNext();
   };
+
+  React.useEffect(() => {
+    if (formData.sign && formData.passport) {
+      setProfilePic(formData.passport);
+      setSign(formData.sign);
+    }
+    // eslint-disable-next-line
+  }, [])
 
   return (
     <React.Fragment>
@@ -150,100 +136,85 @@ export default function CourseDetails({
           </Grid>
 
           <Grid item xs={12} md={6}>
-            {sign ? (
-              <>
-                <div>
-                  <img
-                    alt="not found"
-                    width={"135px"}
-                    height={"100px"}
-                    src={URL.createObjectURL(sign)}
-                  />
-                  <br />
-                  <Button color="error" onClick={() => setSign(null)}>
-                    Remove
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <>
-                <FormLabel mt={2} component="legend">
-                  Your Signature{" "}
-                </FormLabel>
-                <Button variant="contained" component="label">
-                  Upload File
-                  <input
-
-                    type="file"
-                    name="sign"
-                    required
-                    onChange={(event) => {
-                      console.log(event.target.files[0]);
-                      if (event.target.files[0].length !== 0) {
-                        handleInputChange('sign', URL.createObjectURL(event.target.files[0]))
-                        setSign(event.target.files[0]);
-                      }
-                    }}
-                    style={{
-                      width: '1px',
-                      opacity: '0',
-                      top: '0',
-                      bottom: '0',
-                      position: 'absolute',
-                      pointerEvents: 'none'
-                    }}
-                  />
-                </Button>
-              </>
+            <FormLabel sx={{ my: 2 }} component="legend">
+              Signature *
+            </FormLabel>
+            {sign !== null && (
+              <div>
+                <img
+                  alt="not found"
+                  width={"135px"}
+                  height={"100px"}
+                  src={URL.createObjectURL(sign)}
+                />
+              </div>
             )}
+            <Button variant="outlined" component="label">
+              {!sign ? 'Upload File' : 'Change File'}
+              <input
+                type="file"
+                name="sign"
+                required={!sign}
+                onChange={(event) => {
+                  if (event.target.files) {
+                    handleInputChange('sign', event.target.files[0])
+                    setSign(event.target.files[0]);
+                  } else {
+                    handleInputChange('sign', '')
+                    setSign(null);
+                  }
+                }}
+                style={{
+                  width: '1px',
+                  opacity: '0',
+                  top: '0',
+                  bottom: '0',
+                  position: 'absolute',
+                  pointerEvents: 'none'
+                }}
+              />
+            </Button>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            {profilePic ? (
-              <>
-                <div>
-                  <img
-                    alt="not found"
-                    width={"135px"}
-                    height={"150px"}
-                    src={URL.createObjectURL(profilePic)}
-                  />
-                  <br />
-                  <Button color="error" onClick={() => setProfilePic(null)}>
-                    Remove
-                  </Button>
-                </div>
-              </>
-            ) : (
-              <>
-                <FormLabel mt={2} component="legend">
-                  Passport Photo{" "}
-                </FormLabel>
-                <Button variant="contained" component="label">
-                  Upload File
-                  <input
-                    type="file"
-                    name="passport"
-                    required
-                    onChange={(event) => {
-                      console.log(event.target.files[0]);
-                      if (event.target.files[0].length !== 0) {
-                        setProfilePic(event.target.files[0]);
-                        handleInputChange('passport', URL.createObjectURL(event.target.files[0]))
-                      }
-                    }}
-                    style={{
-                      width: '1px',
-                      opacity: '0',
-                      top: '0',
-                      bottom: '0',
-                      position: 'absolute',
-                      pointerEvents: 'none'
-                    }}
-                  />
-                </Button>
-              </>
+            <FormLabel sx={{ my: 2 }} component="legend">
+              Passsport size photo *
+            </FormLabel>
+            {profilePic !== null && (
+              <div>
+                <img
+                  alt="not found"
+                  width={"135px"}
+                  height={"150px"}
+                  src={URL.createObjectURL(profilePic)}
+                />
+              </div>
             )}
+            <Button variant="outlined" component="label">
+              {!profilePic ? 'Upload File' : 'Change File'}
+              <input
+                type="file"
+                name="passport"
+                required={!profilePic}
+                onChange={(event) => {
+                  if (event.target.files) {
+                    handleInputChange('passport', event.target.files[0])
+                    setProfilePic(event.target.files[0]);
+                  } else {
+                    handleInputChange('passport', '')
+                    setProfilePic(null);
+                  }
+                }}
+                style={{
+                  width: '1px',
+                  opacity: '0',
+                  top: '0',
+                  bottom: '0',
+                  position: 'absolute',
+                  pointerEvents: 'none'
+                }}
+              />
+            </Button>
           </Grid>
         </Grid>
 

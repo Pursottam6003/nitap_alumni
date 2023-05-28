@@ -3,6 +3,7 @@ const users = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const SECRET = 'secret';
+const expiresInMin = 60;
 
 const getDb = require('../db/conn').getDb;
 
@@ -54,9 +55,12 @@ const findUserByToken = (token) => new Promise((resolve, reject) => {
     if (err) reject(err);
     if (!decoded) reject('Invalid jwt');
 
+    // if the token has expired, then reject
+    if (decoded.exp < Date.now() / 1000) reject('Invalid jwt');
+
     // if the token is valid, then query the database for the user
     const db = getDb();
-    const sql = 'SELECT * FROM session WHERE id_text = ?';
+    const sql = 'SELECT * FROM users WHERE id_text = ?';
     db.query(sql, [decoded.id], (err, results) => {
       if (err) reject(err);
       resolve(results);
@@ -70,6 +74,7 @@ users.route('/users/login').post((req, res) => {
 
   findUserByToken(token)
     .then(results => {
+      if (results.length === 0) return ('Invalid jwt');
       res.clearCookie('auth').json({ messge: 'User already logged in', error: true });
     })
     .catch(err => {
@@ -82,16 +87,12 @@ users.route('/users/login').post((req, res) => {
 
           if (results.length > 0) {
             const user = results[0];
-            bcrypt.compare(password, user.password, (err, result) => {
+            bcrypt.compare(password, user.password, (err, isMatch) => {
               if (err) throw err;
 
-              if (result) {
-                const token = jwt.sign({ id: user.id_text }, SECRET);
-                const insertSessionSql = 'INSERT INTO session (id_text) VALUES (?)';
-                db.query(insertSessionSql, [user.id_text], (err, result) => {
-                  if (err) throw err;
-                  res.cookie('auth', token).json({ message: 'User logged in', error: false });
-                });
+              if (isMatch) {
+                const token = jwt.sign({ id: user.id_text }, SECRET, { expiresIn: expiresInMin * 60 });
+                res.cookie('auth', token, { maxAge: expiresInMin * 60 * 1000 }).json({ message: 'User logged in', error: false });
               } else {
                 res.status(400).json({ message: 'Invalid credentials', error: true });
               }
@@ -124,15 +125,11 @@ users.route('/users/logout').post((req, res) => {
   const token = req.cookies.auth;
   findUserByToken(token)
     .then(results => {
-      const db = getDb();
-      const sql = 'DELETE FROM session WHERE id_text = ?';
-      db.query(sql, [results[0].id_text], (err, results) => {
-        if (err) throw err;
-        res.clearCookie('auth').json({ message: 'User logged out', error: false });
-      });
+      if (results.length === 0) return res.clearCookie('auth').status(400).json({ message: 'Invalid jwt', error: true });
+      res.clearCookie('auth').json({ message: 'User logged out', error: false });
     })
     .catch(err => {
-      res.status(400).json({ message: 'Invalid jwt', error: true });
+      res.clearCookie('auth').status(400).json({ message: 'Invalid jwt', error: true });
     });
 });
 
