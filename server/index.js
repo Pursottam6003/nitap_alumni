@@ -16,6 +16,7 @@ app.use(cors({
 
 // middlewares for routes
 app.use(require('./routes/usersnew'));
+app.use(require('./routes/alumni'));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

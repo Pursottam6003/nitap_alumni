@@ -9,13 +9,12 @@ const getDb = require('../db/conn').getDb;
 
 users.route('/users/register').post((req, res) => {
   const db = getDb();
-  const { email, password, firstName, middleName, lastName, phone, batch, department } = req.body;
+  const { email, password, firstName, lastName, phone, batch, department } = req.body;
   console.log(req.body);
 
   // check if email already exists
   db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
     if (err) throw err;
-
     // email already exists
     if (results.length > 0) {
       return res.status(400).send({ message: 'Email already exists' });
@@ -31,10 +30,10 @@ users.route('/users/register').post((req, res) => {
         console.log(result);
 
         // create profile
-        const profileInsertQuery = `INSERT INTO profile (firstName, middleName, lastName, email, phone, batch, department, profile_Id) VALUES (?, ?, ?, ?, ?, ?, ?, (
+        const profileInsertQuery = `INSERT INTO profile (firstName, lastName, email, phone, batch, department, profile_Id) VALUES (?, ?, ?, ?, ?, ?, (
           SELECT id_text FROM users WHERE email = ?
         ))`;
-        db.query(profileInsertQuery, [firstName, middleName, lastName, email, phone, batch, department, email], (err, result) => {
+        db.query(profileInsertQuery, [firstName, lastName, email, phone, batch, department, email], (err, result) => {
           if (err) throw err;
           console.log(result);
           res.status(200).json({
