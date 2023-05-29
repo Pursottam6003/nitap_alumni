@@ -59,7 +59,6 @@ export default function PersonalDetails({
       title: data.get('title'),
       dob: data.get('dob'),
       firstName: data.get('firstName'),
-      middleName: data.get('middleName'),
       lastName: data.get('lastName'),
       nationality: data.get('nationality'),
       category: data.get('category'),
@@ -82,7 +81,7 @@ export default function PersonalDetails({
       </Typography>
       <Box component='form' onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <Autocomplete
               id="title"
               options={TitleList}
@@ -104,7 +103,7 @@ export default function PersonalDetails({
             />
           </Grid>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={4}>
             <TextField
               required
               id="firstName"
@@ -117,20 +116,8 @@ export default function PersonalDetails({
               variant="standard"
             />
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <TextField
-              id="middleName"
-              name="middleName"
-              value={formData.middleName || ''}
-              onChange={e => { handleInputChange(e.target.name, e.target.value) }}
-              label="Middle name"
-              fullWidth
-              autoComplete="family-name"
-              variant="standard"
-            />
-          </Grid>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={6}>
             <TextField
               required
               id="lastName"

@@ -13,7 +13,7 @@ export function Footer() {
     <>
       <Box paddingY={3} sx={{
         backgroundColor: '#e7e7e7d9'
-      }}>
+      }} className='app-footer'>
         <Container maxWidth='xl'>
           <Box sx={{
             display: 'flex',
@@ -29,7 +29,7 @@ export function Footer() {
                 display: 'flex',
                 flexDirection: 'column',
               }}>
-                 <img src={Logo} style={{height:"100px"}}></img>
+                <img src={Logo} style={{ height: "100px" }}></img>
 
                 {/* <Logo ftr={true}/> */}
                 <Typography variant='subtitle1'>
@@ -43,7 +43,7 @@ export function Footer() {
                 width: '100%',
                 justifyContent: { xs: 'center', sm: 'flex-start' },
               }}>
-                 
+
               </Box>
             </Box>
 
@@ -79,7 +79,7 @@ export function Footer() {
                   </Link>
                 </li>
               </ul>
-                <Box sx={{
+              <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
                 gap: 2,
@@ -112,7 +112,7 @@ export function Footer() {
                     Pursottam Sah
                   </Link>
                 </li>
-            
+
                 <li>
                   <Link color='CaptionText' underline='hover' target='_blank' rel='noreferrer'
                     href='https://github.com/daknya'>

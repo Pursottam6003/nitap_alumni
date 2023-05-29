@@ -3,19 +3,18 @@ import CssBaseline from "@mui/material/CssBaseline";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import PersonalDetails from "./PersonalDetails";
 import CourseDetails from "./CourseDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import Preview from "./Preview";
+import axios from 'axios';
 
 const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
@@ -28,7 +27,6 @@ export default function Form() {
     "lastName": "Bam",
     "nationality": "Indian",
     "category": "General",
-    "undefined": "Gener",
     "religion": "Other",
     "address": "Arunachal",
     "pincode": "790003",
@@ -40,56 +38,61 @@ export default function Form() {
     "email": "email@daknya.com",
     "altEmail": "daknya@email.com",
     "dob": "05/22/2023",
-    "middleName": "",
     "courseCompleted": "B Tech in Computer Science and Engineering",
     "registrationNo": "xxxxxxxxxxxxxxxx",
     "rollNo": "CSE/20/37",
     "discipline": "sasdf",
-    "onGoingCourseDetails": "",
-    "onGoingdiscipline": "",
-    "onGoingGradYear": "",
-    "currentOrganisation": "",
-    "occupation": "",
-    "jobtitle": "",
-    "ctc": "",
-    "preparing": ""
+    "gradYear": 2014,
   });
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
 
-  const registerUser = async (userData) => {
-    // const response = await fetch(`http://localhost:5000/signup`, {
-    const response = await fetch(`http://localhost:5000/register`, {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: {
-        'Content-type': 'application/json',
-      },
+  const [formFiles, setFormFiles] = React.useState({ sign: null, passport: null });
+
+  const handleNext = () => {
+    if (activeStep >= 3) return;
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    Object.keys(formData).forEach(key => {
+      data.append(key, formData[key]);
     })
 
-    console.log('submitted response ', response);
+    Object.keys(formFiles).forEach(key => {
+      data.append(key, formFiles[key])
+    })
 
-    console.log('sent sucessfully')
+    // send the above formdata to the server.
+    axios.post('http://localhost:5000/register', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }).then(res => {
+      console.log(res.data);
+      if (res.data.success) {
+        setIsSubmitted(true);
+      }
+    }).catch(err => {
+      console.log(err);
+    })
   }
-  const handleNext = (d) => {
-    // setFormData((prevData) => ({...prevData, ...d}))
-    setActiveStep(activeStep + 1);
-
-    if (activeStep == 3) {
-      console.log(formData);
-      // console.log({formData});
-      registerUser(formData);
-    }
-  };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
   const handleInputChange = (name, value) => {
-    setFormData((prevData) => ({ ...prevData, [name]: value }))
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  }
+  const handleFileInputChange = (name, value) => {
+    setFormFiles((prevData) => ({ ...prevData, [name]: value }));
   }
 
   const printform = () => {
     console.log('Todo print out')
+    window.print();
   }
 
   const logOut = () => {
@@ -100,11 +103,11 @@ export default function Form() {
       case 0:
         return <PersonalDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 1:
-        return <CourseDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+        return <CourseDetails formData={formData} formFiles={formFiles} handleFileInputChange={handleFileInputChange} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 2:
         return <EmploymentDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 3:
-        return <Preview formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
+        return <Preview formData={formData} formFiles={formFiles} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
 
       default:
         throw new Error("Unknown step");
@@ -124,7 +127,7 @@ export default function Form() {
         }}
       >
       </AppBar>
-      <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+      <Container className="print-container" component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
@@ -139,57 +142,37 @@ export default function Form() {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length ? (
-            <React.Fragment>
-              <Typography variant="h5" gutterBottom>
-                Thank you for filling out the Membership form.
-              </Typography>
-              <Typography variant="subtitle1">
-                Your response has been sucessfully saved.
-
-                Now, for verification process you have to visit Academic Block and download the form responses from the button given below
-
-                Authority will verify your details and approve.
-
-                All the best !
-
-
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button variant="outlined" onClick={logOut} color="error" sx={{ mt: 3, ml: 1 }}>
-                    Exit
-                  </Button>
-                  <Button
-                    variant="contained"
-                    onClick={printform}
-                    sx={{ mt: 3, ml: 1 }}
-                  >
-                    Print Form
-                  </Button>
-
-                </Box>
-
-
-              </Typography>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {getStepContent(activeStep)}
-              {activeStep === steps.length - 1 && (
-                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                    Back
-                  </Button>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
-                  >
-                    Submit
-                  </Button>
-                </Box>
-              )}
-            </React.Fragment>
-          )}
+          <React.Fragment>
+            {getStepContent(activeStep)}
+            {!isSubmitted && activeStep === steps.length - 1 && (
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleSubmit}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  Submit
+                </Button>
+              </Box>
+            )}
+            {isSubmitted && (
+              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button onClick={printform} sx={{ mt: 3, ml: 1 }}>
+                  Print
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={logOut}
+                  sx={{ mt: 3, ml: 1 }}
+                >
+                  Exit
+                </Button>
+              </Box>
+            )}
+          </React.Fragment>
         </Paper>
       </Container>
     </ThemeProvider>

@@ -238,7 +238,7 @@
     .phoneInputLabel {
         pointer-events: none;
         color: rgba(0, 0, 0, 0.6);
-        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 400;
         font-size: 1rem;
         line-height: 1.4375em;
@@ -258,12 +258,12 @@
         -moz-transform: translate(48px, 20px) scale(1);
         -ms-transform: translate(48px, 20px) scale(1);
         transform: translate(48px, 20px) scale(1);
-        -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,-webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
-        transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, -webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
     }
 
     .PhoneInput {
-        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 400;
         font-size: 1rem;
         line-height: 1.4375em;
@@ -316,9 +316,11 @@
         transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         pointer-events: none;
     }
+
     .PhoneInput:hover::before {
         border-bottom: 2px solid rgba(0, 0, 0, 0.87);
     }
+
     .PhoneInput::after {
         border-bottom: 2px solid #1976d2;
         left: 0;
@@ -330,28 +332,29 @@
         transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
         pointer-events: none;
     }
-    .PhoneInput.PhoneInput--focus ~ .phoneInputLabel {
+
+    .PhoneInput.PhoneInput--focus~.phoneInputLabel {
         transform: translate(0, -1.5px) scale(0.75);
         color: #1976d2;
     }
+
     .PhoneInput.PhoneInput--focus::after {
         transform: scaleX(1) translateX(0);
     }
-    .PhoneInput.filled ~ .phoneInputLabel {
+
+    .PhoneInput.filled~.phoneInputLabel {
         transform: translate(0, -1.5px) scale(0.75);
     }
 }
 
 @media (min-width: 600px) {
-
     .css-nicjba-MuiContainer-root {
         max-width: 768px !important;
     }
 }
 
 @media (max-width:500px) {
-    .MuiStepper-root
-    {
+    .MuiStepper-root {
         flex-direction: column;
         flex-wrap: wrap;
     }
@@ -359,17 +362,15 @@
 
 input:focus {
     outline: none;
-
 }
 
 
-.previewLabel 
-{
+.previewLabel {
     color: #9E9E9E;
     font-size: medium;
 }
-.draftData
-{
+
+.draftData {
     font-size: medium;
     font-family: sans-serif;
 }
@@ -386,8 +387,8 @@ input:focus {
         font-size: 18px;
     }
 }
- 
- 
+
+
 .MoreOptions {
     text-align: center;
     color: rgb(255, 98, 0);
@@ -426,7 +427,7 @@ input:focus {
     .phoneInputLabel {
         pointer-events: none;
         color: rgba(0, 0, 0, 0.6);
-        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 400;
         font-size: 1rem;
         line-height: 1.4375em;
@@ -446,12 +447,12 @@ input:focus {
         -moz-transform: translate(48px, 20px) scale(1);
         -ms-transform: translate(48px, 20px) scale(1);
         transform: translate(48px, 20px) scale(1);
-        -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,-webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
-        transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, -webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
     }
 
     .PhoneInput {
-        font-family: "Roboto","Helvetica","Arial",sans-serif;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 400;
         font-size: 1rem;
         line-height: 1.4375em;
@@ -504,9 +505,11 @@ input:focus {
         transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
         pointer-events: none;
     }
+
     .PhoneInput:hover::before {
         border-bottom: 2px solid rgba(0, 0, 0, 0.87);
     }
+
     .PhoneInput::after {
         border-bottom: 2px solid #1976d2;
         left: 0;
@@ -518,44 +521,59 @@ input:focus {
         transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
         pointer-events: none;
     }
-    .PhoneInput.PhoneInput--focus ~ .phoneInputLabel {
+
+    .PhoneInput.PhoneInput--focus~.phoneInputLabel {
         transform: translate(0, -1.5px) scale(0.75);
         color: #1976d2;
     }
+
     .PhoneInput.PhoneInput--focus::after {
         transform: scaleX(1) translateX(0);
     }
-    .PhoneInput.filled ~ .phoneInputLabel {
+
+    .PhoneInput.filled~.phoneInputLabel {
         transform: translate(0, -1.5px) scale(0.75);
     }
 }
 
 @media (min-width: 768px) {
-
     .css-nicjba-MuiContainer-root {
         max-width: 768px !important;
     }
 }
 
-@media (min-width: 0px){
-
-.css-126nd9x-MuiPaper-root {
-    max-width: 768px !important;
-    padding-left:12px !important;
-    padding-right:12px !important;
-}
+@media (min-width: 0px) {
+    .css-126nd9x-MuiPaper-root {
+        max-width: 768px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
 }
 
 input:focus {
     outline: none;
 }
-.previewLabel 
-{
+
+.previewLabel {
     color: #9E9E9E;
     font-size: medium;
 }
-.draftData
-{
+
+.draftData {
     font-size: medium;
     font-family: sans-serif;
+}
+
+@media print {
+
+    .app-navigation,
+    .app-footer {
+        display: none !important;
+    }
+
+    .print-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
 }

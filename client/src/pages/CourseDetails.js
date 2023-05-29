@@ -12,7 +12,9 @@ export default function CourseDetails({
   handleBack,
   handleNext,
   formData,
-  handleInputChange
+  formFiles,
+  handleInputChange,
+  handleFileInputChange
 }) {
   const [sign, setSign] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
@@ -23,9 +25,9 @@ export default function CourseDetails({
   };
 
   React.useEffect(() => {
-    if (formData.sign && formData.passport) {
-      setProfilePic(formData.passport);
-      setSign(formData.sign);
+    if (formFiles.sign && formFiles.passport) {
+      setProfilePic(formFiles.passport);
+      setSign(formFiles.sign);
     }
     // eslint-disable-next-line
   }, [])
@@ -139,7 +141,7 @@ export default function CourseDetails({
             <FormLabel sx={{ my: 2 }} component="legend">
               Signature *
             </FormLabel>
-            {sign !== null && (
+            {sign && (
               <div>
                 <img
                   alt="not found"
@@ -157,10 +159,10 @@ export default function CourseDetails({
                 required={!sign}
                 onChange={(event) => {
                   if (event.target.files) {
-                    handleInputChange('sign', event.target.files[0])
+                    handleFileInputChange('sign', event.target.files[0])
                     setSign(event.target.files[0]);
                   } else {
-                    handleInputChange('sign', '')
+                    handleFileInputChange('sign', null)
                     setSign(null);
                   }
                 }}
@@ -180,7 +182,7 @@ export default function CourseDetails({
             <FormLabel sx={{ my: 2 }} component="legend">
               Passsport size photo *
             </FormLabel>
-            {profilePic !== null && (
+            {profilePic && (
               <div>
                 <img
                   alt="not found"
@@ -198,10 +200,10 @@ export default function CourseDetails({
                 required={!profilePic}
                 onChange={(event) => {
                   if (event.target.files) {
-                    handleInputChange('passport', event.target.files[0])
+                    handleFileInputChange('passport', event.target.files[0])
                     setProfilePic(event.target.files[0]);
                   } else {
-                    handleInputChange('passport', '')
+                    handleFileInputChange('passport', null)
                     setProfilePic(null);
                   }
                 }}
