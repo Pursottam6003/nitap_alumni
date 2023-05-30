@@ -19,6 +19,7 @@ CREATE TABLE users (
         ) virtual,
     email varchar(50) NOT NULL,
     password varchar(100) NOT NULL,
+    admin BOOLEAN DEFAULT false,
     primary key(id) 
 );
 

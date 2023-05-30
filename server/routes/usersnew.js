@@ -7,6 +7,45 @@ const expiresInMin = 60;
 
 const getDb = require('../db/conn').getDb;
 
+users.route('/users/register-admin').post((req, res) => {
+  const db = getDb();
+  const { email, password, firstName, lastName, phone } = req.body;
+  console.log(req.body);
+
+  // check if email already exists
+  db.query('SELECT * FROM users WHERE email = ?', [email], (err, results) => {
+    if (err) throw err;
+    // email already exists
+    if (results.length > 0) {
+      return res.status(400).send({ message: 'Email already exists' });
+    }
+
+    // hash user password
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+      if (err) throw err;
+
+      const insertQuery = "INSERT INTO users (id, email, password, admin) VALUES (UNHEX(REPLACE(UUID(),'-','')), ?, ?, ?)";
+      db.query(insertQuery, [email, hashedPassword, true], (err, result) => {
+        if (err) throw err;
+        console.log(result);
+
+        // create profile
+        const profileInsertQuery = `INSERT INTO profile (firstName, lastName, email, phone, batch, department, profile_Id) VALUES (?, ?, ?, ?, ?, ?, (
+          SELECT id_text FROM users WHERE email = ?
+        ))`;
+        db.query(profileInsertQuery, [firstName, lastName, email, phone, 'NA', 'NA', email], (err, result) => {
+          if (err) throw err;
+          console.log(result);
+          res.status(200).json({
+            success: true,
+            message: 'Admin registered'
+          });
+        });
+      });
+    });
+  });
+})
+
 users.route('/users/register').post((req, res) => {
   const db = getDb();
   const { email, password, firstName, lastName, phone, batch, department } = req.body;
@@ -111,7 +150,7 @@ users.route('/users/auth').post((req, res) => {
   findUserByToken(token)
     .then(results => {
       if (results.length !== 0) {
-        return res.status(200).json({ message: 'User authenticated', error: false });
+        return res.status(200).json({ message: 'User authenticated', error: false, admin: results[0].admin });
       }
       res.status(400).clearCookie('auth').json({ message: 'Invalid jwt', error: true });
     })

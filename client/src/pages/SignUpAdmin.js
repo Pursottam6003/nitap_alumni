@@ -12,15 +12,16 @@ import axios from 'axios';
 const theme = createTheme();
 
 const DeptList = [
-  { label: "Basic and Applied Sciences" },
-  { label: "Biotechnology" },
-  { label: "Chemical Engineering" },
-  { label: "Civil Engineering" },
-  { label: "Computer Science & Engineering" },
-  { label: "Electrical Engineering" },
-  { label: "Electronics & Communication Engineering" },
-  { label: "Mechanical Engineering" },
-  { label: "Management and Humanities" },
+  { label: "Mechanical Eng." },
+  { label: "Computer Science Eng." },
+  { label: "Civil Eng," },
+  { label: "Electronics and Comm. Eng" },
+  { label: "Electrical Eng." },
+  { label: "Dept of BAS" },
+  { label: "Dept of CS" },
+  { label: "Dept of ME" },
+  { label: "Dept of physics" },
+  { label: "Dept of Civil Eng" }
 ]
 
 const BatchList = [
@@ -56,29 +57,9 @@ const BatchList = [
 
 ]
 
-export default function SignUp() {
+export default function SignUpAdmin() {
   const history = useNavigate();
   const [errorMsg, setErrorMsg] = useState('');
-
-  const addUser = async (user) => {
-    // const response = await fetch(`http://localhost:5000/signup`, {
-    const response = await fetch(`http://localhost:5000/signup`, {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-    // const token = response.data.token;
-    // console.log(token);
-
-    // // Save the token to local storage
-    // localStorage.setItem('token', token);
-
-
-    if (!response.ok) alert(`An error occured: ${response.statusText}`);
-    return history('/login');
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -86,7 +67,7 @@ export default function SignUp() {
 
     const user = formData;
 
-    axios.post('/users/register', user).then((response) => {
+    axios.post('/users/register-admin', user).then((response) => {
       console.log(response);
       if (response.status === 200)
         return history('/login');
@@ -129,7 +110,7 @@ export default function SignUp() {
             <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/null/external-alumni-university-flaticons-flat-flat-icons-3.png" alt='' />
           </Box>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign up as Admin
           </Typography>
           <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Collapse in={errorMsg.length !== 0}>
@@ -204,39 +185,6 @@ export default function SignUp() {
                   />
                   <label className='phoneInputLabel'>Phone number *</label>
                 </div>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Autocomplete
-                  id="combo-box-demo"
-                  options={BatchList}
-                  isOptionEqualToValue={(option, value) => option.label === value.label}
-                  value={{ label: formData.batch || '' }}
-                  onInputChange={(e, val) => handleChange('batch', val)}
-                  renderInput={(params) => <TextField {...params}
-                    autoComplete="batch"
-                    name="batch"
-                    required
-                    fullWidth
-                    id="batch"
-                    label="Batch"
-                  />}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Autocomplete
-                  options={DeptList}
-                  isOptionEqualToValue={(option, value) => option.label === value.label}
-                  value={{ label: formData.department || '' }}
-                  onInputChange={(e, val) => handleChange('department', val)}
-                  renderInput={(params) => <TextField {...params}
-                    autoComplete="department"
-                    name="department"
-                    required
-                    fullWidth
-                    id="department"
-                    label="Department"
-                  />}
-                />
               </Grid>
               <Grid item xs={12}>
                 <TextField

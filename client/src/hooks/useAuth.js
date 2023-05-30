@@ -4,6 +4,7 @@ import axios from "axios";
 // create an auth hook to check for user authentication with jwt stored in Cookie and return the user object if authenticated else return null
 const useAuth = () => {
   const [isAuth, setIsAuth] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -15,6 +16,7 @@ const useAuth = () => {
         setIsAuth(false);
         throw new Error(res.statusText);
       } else {
+        setIsAdmin(!!res.data.admin);
         setIsAuth(true);
       }
     } catch (err) {
@@ -30,7 +32,7 @@ const useAuth = () => {
     fetchAuth();
   }, [])
 
-  return { isAuth, loading, error }
+  return { isAuth, isAdmin, loading, error }
 }
 
 export default useAuth;
