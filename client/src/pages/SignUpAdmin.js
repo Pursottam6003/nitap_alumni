@@ -136,6 +136,32 @@ export default function SignUpAdmin() {
             </Collapse>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  id="title"
+                  options={[
+                    { label: "Mr.", value: "Mr" },
+                    { label: "Miss", value: "Miss" },
+                    { label: "Mrs", value: "Mrs" },
+                    { label: "Dr", value: "Dr" },
+                  ]}
+                  isOptionEqualToValue={(option, value) => option.label === value.label}
+                  value={{ label: formData.title || '' }}
+                  onInputChange={(e, val) => {
+                    handleChange('title', val)
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      autoComplete="title"
+                      name="title"
+                      required
+                      variant="outlined"
+                      label="Title"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
@@ -148,7 +174,7 @@ export default function SignUpAdmin() {
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   required
                   fullWidth

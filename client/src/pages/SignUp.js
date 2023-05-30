@@ -60,26 +60,6 @@ export default function SignUp() {
   const history = useNavigate();
   const [errorMsg, setErrorMsg] = useState('');
 
-  const addUser = async (user) => {
-    // const response = await fetch(`http://localhost:5000/signup`, {
-    const response = await fetch(`http://localhost:5000/signup`, {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-    // const token = response.data.token;
-    // console.log(token);
-
-    // // Save the token to local storage
-    // localStorage.setItem('token', token);
-
-
-    if (!response.ok) alert(`An error occured: ${response.statusText}`);
-    return history('/login');
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData)
@@ -155,6 +135,32 @@ export default function SignUp() {
             </Collapse>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
+                <Autocomplete
+                  id="title"
+                  options={[
+                    { label: "Mr.", value: "Mr" },
+                    { label: "Miss", value: "Miss" },
+                    { label: "Mrs", value: "Mrs" },
+                    { label: "Dr", value: "Dr" },
+                  ]}
+                  isOptionEqualToValue={(option, value) => option.label === value.label}
+                  value={{ label: formData.title || '' }}
+                  onInputChange={(e, val) => {
+                    handleChange('title', val)
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      autoComplete="title"
+                      name="title"
+                      required
+                      variant="outlined"
+                      label="Title"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
@@ -167,7 +173,7 @@ export default function SignUp() {
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   required
                   fullWidth

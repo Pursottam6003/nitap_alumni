@@ -81,7 +81,7 @@ export default function PersonalDetails({
       </Typography>
       <Box component='form' onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={2.5}>
             <Autocomplete
               id="title"
               options={TitleList}
@@ -97,13 +97,13 @@ export default function PersonalDetails({
                   name="title"
                   required
                   variant="standard"
-                  label="Title (eg Mr/Ms/Dr)"
+                  label="Title"
                 />
               )}
             />
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3.5}>
             <TextField
               required
               id="firstName"
@@ -330,6 +330,7 @@ export default function PersonalDetails({
           <Grid item xs={12} sm={6}>
             <TextField
               required
+              disabled={true}
               id="email"
               name="email"
               label="Email"

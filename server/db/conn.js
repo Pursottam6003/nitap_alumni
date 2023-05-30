@@ -3,13 +3,15 @@ const mysql = require('mysql2');
 /** @type {import('mysql').Connection} */
 var _db;
 
+// q: process.env not owrking
+// a: https://stackoverflow.com/questions/13394140/using-environment-variables-in-node-js-applications
 module.exports = {
   connectToServer: function (callback) {
     const db = mysql.createConnection({
       host: 'localhost',
-      user: 'root',
-      password: 'Rahul@12345678',
-      database: 'alumniDatabase'
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_USER_PASSWORD || 'rootpass',
+      database: process.env.DB_NAME || 'alumniDatabase'
     });
 
     db.connect(function (err) {

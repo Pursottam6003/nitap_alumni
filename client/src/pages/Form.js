@@ -16,43 +16,38 @@ import EmploymentDetails from "./EmploymentDetails";
 import Preview from "./Preview";
 import axios from 'axios';
 import { UserContext } from '../App';
-
+import mockFormData from "../mocks/form";
 
 const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
 
 export default function Form() {
   const [activeStep, setActiveStep] = React.useState(0);
-  const [formData, setFormData] = React.useState({
-    "title": "Mr.",
-    "firstName": "Daknya",
-    "lastName": "Bam",
-    "nationality": "Indian",
-    "category": "General",
-    "religion": "Other",
-    "address": "Arunachal",
-    "pincode": "790003",
-    "state": "Arunachal Pradesh",
-    "city": "Itanagar",
-    "country": "IN",
-    "phone": "+916033926408",
-    "altPhone": "+918004600238",
-    "email": "email@daknya.com",
-    "altEmail": "daknya@email.com",
-    "dob": "05/22/2023",
-    "courseCompleted": "B Tech in Computer Science and Engineering",
-    "registrationNo": "xxxxxxxxxxxxxxxx",
-    "rollNo": "CSE/20/37",
-    "discipline": "sasdf",
-    "gradYear": 2014,
-  });
+  const [formData, setFormData] = React.useState({});
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const [formFiles, setFormFiles] = React.useState({ sign: null, passport: null });
+  const { profile, error, loading, logout } = React.useContext(UserContext);
+
+  React.useEffect(() => {
+    if (profile) {
+      setFormData((prevData) => ({
+        ...prevData,
+        title: profile.title,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        phone: profile.phone,
+        email: profile.email
+      }));
+    }
+  }, [profile])
 
   const handleNext = () => {
     if (activeStep >= 3) return;
     setActiveStep(activeStep + 1);
+  };
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
   };
 
   const handleSubmit = async (e) => {
@@ -67,10 +62,12 @@ export default function Form() {
     })
 
     // send the above formdata to the server.
-    axios.post('http://localhost:5000/register', data, {
+    // axios.post('http://localhost:5000/register', data, {
+    axios.post('http://localhost:5000/alumni/register', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
-      }
+      },
+      withCredentials: true
     }).then(res => {
       console.log(res.data);
       if (res.data.success) {
@@ -80,12 +77,6 @@ export default function Form() {
       console.log(err);
     })
   }
-  const { profile: user, error, loading, logout } = React.useContext(UserContext);
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
-
   const handleInputChange = (name, value) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   }
@@ -93,14 +84,6 @@ export default function Form() {
     setFormFiles((prevData) => ({ ...prevData, [name]: value }));
   }
 
-  const printform = () => {
-    console.log('Todo print out')
-    window.print();
-  }
-
-  const handlelogOut = () => {
-    logout();
-  }
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -111,25 +94,14 @@ export default function Form() {
         return <EmploymentDetails formData={formData} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
       case 3:
         return <Preview formData={formData} formFiles={formFiles} handleInputChange={handleInputChange} activeStep={activeStep} handleBack={handleBack} handleNext={handleNext} />;
-
       default:
-        throw new Error("Unknown step");
+        return <Box>An error occured! Please refresh the page</Box>;
     }
   }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
-        position="absolute"
-        color="default"
-        elevation={0}
-        sx={{
-          position: "relative",
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
-      >
-      </AppBar>
       <Container className="print-container" component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper
           variant="outlined"
@@ -170,12 +142,12 @@ export default function Form() {
               </Box>
               <Box className='button-preview' sx={{ display: "flex", justifyContent: "flex-end" }} >
 
-                <Button onClick={printform} variant="outlined" sx={{ mt: 3, ml: 1 }}>
+                <Button onClick={(e) => { e.preventDefault(); window.print() }} variant="outlined" sx={{ mt: 3, ml: 1 }}>
                   Print
                 </Button>
                 <Button
                   variant="contained"
-                  onClick={handlelogOut}
+                  onClick={e => { e.preventDefault(); logout(); }}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   Exit

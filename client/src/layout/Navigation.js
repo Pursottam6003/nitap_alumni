@@ -44,16 +44,15 @@ const NavBox = ({ display, children }) => {
   )
 }
 
-
 const navItems = [
-  { url: '/admin', icon: 'floppy', label: 'Dashboard' },
-  { url: '/register', icon: 'floppy', label: 'Register' },
+  { url: '/', label: 'Membership form' },
+  { url: '/admin', label: 'Admin', isAdmin: true },
 ]
 
 const Navigation = () => {
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { profile: user, error, loading, logout } = React.useContext(UserContext);
+  const { profile: user, error, loading, logout, admin } = React.useContext(UserContext);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -75,26 +74,28 @@ const Navigation = () => {
         <Toolbar disableGutters>
           <Logo display='desktop' />
           <NavBox>
-            {user && (<>
-              {navItems.map((page) => (
-                <Button
-                  disableTouchRipple
-                  key={page.label}
-                  sx={{
-                    color: 'grey',
-                    my: 1, display: 'block',
-                    '&.active': {
-                      color: 'black'
-                    },
-                    '&.hover': {
-                      backgroundColor: 'seagreen',
-                      border: 'solid 1px seagreen'
-                    }
-                  }}
-                  LinkComponent={NavLink} to={page.url}
-                >{page.label}</Button>
-              ))}
-            </>)}
+            {user && (
+              navItems.map((page) => (
+                (!page.isAdmin || admin) && (
+                  <Button
+                    disableTouchRipple
+                    key={page.label}
+                    sx={{
+                      color: 'grey',
+                      my: 1, display: 'block',
+                      '&.active': {
+                        color: 'black'
+                      },
+                      '&.hover': {
+                        backgroundColor: 'seagreen',
+                        border: 'solid 1px seagreen'
+                      }
+                    }}
+                    LinkComponent={NavLink} to={page.url}
+                  >{page.label}</Button>
+                )
+              ))
+            )}
           </NavBox>
 
           {user ? (

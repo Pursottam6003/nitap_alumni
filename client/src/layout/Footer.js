@@ -29,7 +29,7 @@ export function Footer() {
                 display: 'flex',
                 flexDirection: 'column',
               }}>
-                <img src={Logo} style={{ height: "100px" }}></img>
+                <img src={Logo} style={{ height: "100px" }} alt=""></img>
 
                 {/* <Logo ftr={true}/> */}
                 <Typography variant='subtitle1'>

@@ -14,7 +14,7 @@ import axios from "axios";
 export const UserContext = createContext();
 
 function App() {
-  const { profile, error, loading, refetch } = useFetchProfile();
+  const { profile, admin, setAdmin, error, loading, refetch } = useFetchProfile();
 
   if (error) {
     console.log(error);
@@ -30,7 +30,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ profile, error, loading, logout }}>
+      <UserContext.Provider value={{ profile, error, loading, logout, admin, setAdmin }}>
         <LayoutComponent>
           <Routes>
             <Route path="/login" element={<Login fetchProfile={refetch} />} />

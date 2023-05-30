@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const useFetchProfile = () => {
+  const [admin, setAdmin] = useState(false);
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ const useFetchProfile = () => {
     fetchProfile();
   }, []);
 
-  return { profile, loading, error, refetch: fetchProfile };
+  return { profile, loading, error, refetch: fetchProfile, admin, setAdmin };
 };
 
 export default useFetchProfile;
