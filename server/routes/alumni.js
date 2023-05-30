@@ -100,4 +100,17 @@ alumni.route('/register').post(upload.fields([
   });
 });
 
+alumni.route('/alumni').get((req, res) => {
+
+  const db = getDb();
+
+  db.query('SELECT * FROM alumnilist', (err, result) => {
+    if (err) throw err;
+
+    res.json(result)
+  })
+
+
+})
+
 module.exports = alumni;

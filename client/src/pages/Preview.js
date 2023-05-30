@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
 
-export default function Preview({ formData, formFiles }) {
+export default function Preview({ formData, formFiles = null }) {
 
   var today = new Date();
 
@@ -20,9 +20,11 @@ export default function Preview({ formData, formFiles }) {
         <Box component={''}>
           <Grid container spacing={2}>
             {/* row 1 */}
-            <Grid item xs={12} sm={4}>
-              <img alt="not found" width={"135px"} height={"150px"} src={URL.createObjectURL(formFiles.passport)}></img>
-            </Grid>
+            {formFiles && (
+              <Grid item xs={12} sm={4}>
+                <img alt="not found" width={"135px"} height={"150px"} src={URL.createObjectURL(formFiles.passport)}></img>
+              </Grid>
+            )}
 
             <Grid item xs={12} sm={8}>
               <span className='previewLabel'>Name: </span>
@@ -168,10 +170,12 @@ export default function Preview({ formData, formFiles }) {
               <span className='draftData'>{strDate}</span>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <span className='previewLabel'> Signature </span>
-              <img alt="not found" width={"180px"} height={"70px"} src={URL.createObjectURL(formFiles.sign)} ></img>
-            </Grid>
+            {formFiles && (
+              <Grid item xs={12} sm={6}>
+                <span className='previewLabel'> Signature </span>
+                <img alt="not found" width={"180px"} height={"70px"} src={URL.createObjectURL(formFiles.sign)} ></img>
+              </Grid>
+            )}
           </Grid>
         </Box>
       </Typography>
