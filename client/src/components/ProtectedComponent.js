@@ -33,8 +33,8 @@ const UnauthorizedComponent = () => (
   </Container>
 );
 
-const ProtectedComponent = ({ children }) => {
-  const { isAuth, loading, error } = useAuth();
+const ProtectedComponent = ({ children, admin = false }) => {
+  const { isAuth, isAdmin, loading, error } = useAuth();
   const { profile } = useContext(UserContext);
 
   const history = useNavigate();
@@ -44,7 +44,13 @@ const ProtectedComponent = ({ children }) => {
   }, [loading, isAuth, profile]);
 
   return (
-    loading ? <Loading /> : (isAuth && profile?.profile_Id) ? children : <UnauthorizedComponent />
+    loading
+      ? <Loading />
+      : !admin ? (
+        isAuth && profile?.profile_Id ? children : <UnauthorizedComponent />
+      ) : (
+        isAuth && isAdmin && profile?.profile_Id ? children : <UnauthorizedComponent />
+      )
   )
 };
 

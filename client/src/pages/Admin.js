@@ -9,10 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 const columns = [
-  {id: 'slno.', label: 'S/no', minWidth: 70, align: 'right',},
+  { id: 'slno.', label: 'S/no', minWidth: 70, align: 'right', },
   { id: 'name', label: 'Name', minWidth: 70 },
   { id: 'department', label: 'Department', minWidth: 70 },
-  {id: 'graduationYear',label: 'Graduation\u00a0year',minWidth: 70,align: 'right',},
+  { id: 'graduationYear', label: 'Graduation\u00a0year', minWidth: 70, align: 'right', },
   { id: 'current', label: 'Current\u00a0organistaion\u00a0employed', minWidth: 70 },
   { id: 'currentDesignation', label: 'Current\u00a0Designatoin', minWidth: 70 },
   { id: 'Location', label: 'location', minWidth: 70 },
@@ -24,10 +24,9 @@ const columns = [
 // }
 
 const rows = [
- {'slno.': '1', fristname: 'Daknya', department :'CSE', graduationYear: '2024',current:'microsoft',  'currentDesignation': 'Managing director', Location : 'Banglore , US '},
- {'slno.': '2', name: 'chandrasheker', department :'CSE', graduationYear: '2024',current:'facebook',  'currentDesignation': ' react engineer', Location : 'Seattle,US'},
- {'slno.': '3', name: 'purushotam', department :'CSE', graduationYear: '2024' ,current:'Google' ,  'currentDesignation': 'SDE2', Location : 'Washington , US'},
-
+  { 'slno.': '1', fristname: 'Daknya', department: 'CSE', graduationYear: '2024', current: 'microsoft', 'currentDesignation': 'Managing director', Location: 'Banglore , US ' },
+  { 'slno.': '2', name: 'chandrasheker', department: 'CSE', graduationYear: '2024', current: 'facebook', 'currentDesignation': ' react engineer', Location: 'Seattle,US' },
+  { 'slno.': '3', name: 'purushotam', department: 'CSE', graduationYear: '2024', current: 'Google', 'currentDesignation': 'SDE2', Location: 'Washington , US' },
 ];
 
 export default function Admin() {
@@ -37,11 +36,6 @@ export default function Admin() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setRowsPerPage(+event.target.value);
-  //   setPage(0);
-  // };
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden', margin: '2rem auto' }}>
@@ -61,25 +55,18 @@ export default function Admin() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {/* {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value} */}
-                            {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+            {rows.map((row) => (
+              <TableRow hover role="checkbox" tabIndex={-1} key={row.name}>
+                {columns.map((column) => {
+                  const value = row[column.id];
+                  return (
+                    <TableCell key={column.id} align={column.align}>
+                      {value}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
