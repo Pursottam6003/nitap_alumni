@@ -24,6 +24,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE profile (
+    profile_Id varchar(50),
     title varchar(5) NOT NULL,
     firstName varchar(64) NOT NULL,
     lastName varchar(64),
@@ -31,7 +32,7 @@ CREATE TABLE profile (
     phone varchar(15),
     batch varchar(20) NOT NULL,
     department varchar(30) NOT NULL,
-    profile_Id varchar(50)
+    PRIMARY KEY(profile_Id)
 );
 
 -- select all from the table  
@@ -76,6 +77,45 @@ CREATE TABLE profile (
 -- )
 
 
+-- CREATE TABLE alumnilist (
+--     user_id varchar(50) NOT NULL,
+--     title varchar(5) NOT NULL,
+--     firstName varchar(255) NOT NULL,
+--     lastName varchar(255),
+--     nationality varchar(15) NOT NULL,
+--     category  varchar(10),
+--     religion varchar(16),
+--     linkedin varchar(50),
+--     github varchar(50),
+--     address varchar(128) NOT NULL,
+--     pincode varchar(10) NOT NULL,
+--     state  varchar(64) NOT NULL,
+--     city varchar(64) NOT NULL,
+--     country  varchar(64) NOT NULL,
+--     phone varchar(14) NOT NULL,
+--     altPhone varchar(14),
+--     dob varchar(10) NOT NULL,
+--     email varchar(255) NOT NULL,
+--     altEmail varchar(255),
+--     courseCompleted  varchar(255) NOT NULL,
+--     registrationNo varchar(20) NOT NULL,
+--     rollNo varchar(16),
+--     discipline  varchar(30),
+--     gradYear varchar(10),
+--     sign  varchar(255),
+--     passport varchar(255),
+--     occupation varchar(30),
+--     ctc decimal(10,2),
+--     ongoingCourseDetails varchar(40),
+--     ongoingDiscipline varchar(40) ,
+--     ongoingGradYear varchar(10),
+--     currentOrganisation varchar(50),
+--     jobtitle varchar(64),
+--     preparing varchar(64),
+--     currentStatus varchar(64) DEFAULT 'preparing'
+-- )
+
+
 CREATE TABLE alumnilist (
     user_id varchar(50) NOT NULL,
     title varchar(5) NOT NULL,
@@ -117,9 +157,6 @@ CREATE TABLE alumnilist (
 
 CREATE TABLE pending (
     user_id varchar(50) NOT NULL,
-    title varchar(5) NOT NULL,
-    firstName varchar(255) NOT NULL,
-    lastName varchar(255),
     nationality varchar(15) NOT NULL,
     category  varchar(10),
     religion varchar(16),
@@ -130,10 +167,8 @@ CREATE TABLE pending (
     state  varchar(64) NOT NULL,
     city varchar(64) NOT NULL,
     country  varchar(64) NOT NULL,
-    phone varchar(14) NOT NULL,
     altPhone varchar(14),
     dob varchar(10) NOT NULL,
-    email varchar(255) NOT NULL,
     altEmail varchar(255),
     courseCompleted  varchar(255) NOT NULL,
     registrationNo varchar(20) NOT NULL,

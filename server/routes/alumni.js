@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const alumni = express.Router();
 const getDb = require('../db/conn').getDb;
 const multer = require('multer');
@@ -24,10 +23,10 @@ alumni.route('/register').post(upload.fields([
 ]), (req, res) => {
   const db = getDb();
 
-  const { title, firstName, lastName,
+  const { title, firstName, lastName, email, phone,
     nationality, category, religion, linkedin,
-    github, address, pincode, state, city, country, phone,
-    altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+    github, address, pincode, state, city, country,
+    altPhone, dob, altEmail, courseCompleted, registrationNo,
     rollNo, discipline, gradYear, occupation, ctc,
     ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
     jobtitle, preparing, currentStatus } = req.body;
@@ -40,49 +39,44 @@ alumni.route('/register').post(upload.fields([
   let v = [];
 
   if (currentStatus === 'working') {
-    q = `INSERT INTO pending (title, firstName, lastName,
-      nationality, category, religion, linkedin,
-      github, address, pincode, state, city, country, phone,
-      altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+    q = `INSERT INTO pending (nationality, category, religion, linkedin,
+      github, address, pincode, state, city, country,
+      altPhone, dob, altEmail, courseCompleted, registrationNo,
       rollNo, discipline, gradYear, occupation, ctc,
       currentOrganisation,
       jobtitle, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
-    v = [title, firstName, lastName,
-      nationality, category, religion, linkedin,
-      github, address, pincode, state, city, country, phone,
-      altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+    v = [nationality, category, religion, linkedin,
+      github, address, pincode, state, city, country,
+      altPhone, dob, altEmail, courseCompleted, registrationNo,
       rollNo, discipline, gradYear, occupation, Number(ctc),
       currentOrganisation,
       jobtitle, currentStatus, sign, passport]
   } else if (currentStatus === 'higher-education') {
-    q = `INSERT INTO pending (title, firstName, lastName,
-      nationality, category, religion, linkedin,
-      github, address, pincode, state, city, country, phone,
-      altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+    q = `INSERT INTO pending (nationality, category, religion, linkedin,
+      github, address, pincode, state, city, country,
+      altPhone, dob, altEmail, courseCompleted, registrationNo,
       rollNo, discipline, gradYear,
       ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
       currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
-    v = [title, firstName, lastName,
-      nationality, category, religion, linkedin,
-      github, address, pincode, state, city, country, phone,
-      altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+    v = [nationality, category, religion, linkedin,
+      github, address, pincode, state, city, country,
+      altPhone, dob, altEmail, courseCompleted, registrationNo,
       rollNo, discipline, gradYear,
       ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
       currentStatus, sign, passport]
   } else {
-    q = `INSERT INTO pending (title, firstName, lastName, 
+    q = `INSERT INTO pending (
     nationality, category, religion, linkedin, 
-    github, address, pincode, state, city, country, phone, 
-    altPhone, dob, email, altEmail, courseCompleted, registrationNo, 
+    github, address, pincode, state, city, country, 
+    altPhone, dob, altEmail, courseCompleted, registrationNo, 
     rollNo, discipline, gradYear, 
     preparing, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
-    v = [title, firstName, lastName,
-      nationality, category, religion, linkedin,
-      github, address, pincode, state, city, country, phone,
-      altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+    v = [nationality, category, religion, linkedin,
+      github, address, pincode, state, city, country,
+      altPhone, dob, altEmail, courseCompleted, registrationNo,
       rollNo, discipline, gradYear,
       preparing, currentStatus, sign, passport]
   }
@@ -100,27 +94,25 @@ alumni.route('/register').post(upload.fields([
   });
 });
 
-// const findUserByToken = (token) => new Promise((resolve, reject) => {
-//   if (!token) reject('No jwt provided');
+alumni.route('/alumni/prepopulate').post((req, res) => {
+  const token = req.cookies.auth;
+  findUserByToken(token).then(results => {
+    if (results.length === 0) return res.status(400).json('Invalid jwt');
+    const user_id = results[0].id_text;
 
-//   // first verify the token with jwt.verify
-//   jwt.verify(token, SECRET, (err, decoded) => {
-//     if (err) reject(err);
-//     if (!decoded) reject('Invalid jwt');
+    const db = getDb();
+    db.query('SELECT * FROM pending WHERE user_id=?', [user_id], (err, result) => {
+      if (err) throw err;
 
-//     // if the token has expired, then reject
-//     if (decoded.exp < Date.now() / 1000) reject('Invalid jwt');
-
-//     // if the token is valid, then query the database for the user
-//     const db = getDb();
-//     const sql = 'SELECT * FROM users WHERE id_text = ?';
-//     db.query(sql, [decoded.id], (err, results) => {
-//       if (err) reject(err);
-//       resolve(results);
-//     });
-//   });
-// });
-
+      res.json({
+        success: true,
+        data: result[0] || {}
+      });
+    })
+  }).catch(err => {
+    res.clearCookie('auth').status(401).json({ message: 'Unauthorized', error: true });
+  })
+});
 
 alumni.route('/alumni/register').post(upload.fields([
   { name: 'sign', maxCount: 1 },
@@ -130,11 +122,6 @@ alumni.route('/alumni/register').post(upload.fields([
   findUserByToken(token).then(results => {
     if (results.length === 0) return res.status(400).json('Invalid jwt');
     const user_id = results[0].id_text;
-    const response = {
-      success: false,
-      message: 'Unauthorized'
-    };
-    let status = 401;
 
     const db = getDb();
     const { title, firstName, lastName,
@@ -203,96 +190,20 @@ alumni.route('/alumni/register').post(upload.fields([
       // insert
       db.query(q, v, (err, result) => {
         if (err) throw err;
-
-        console.log('Updated profile data');
-
-        res.status(200).json({
-          success: true,
-          message: 'Form submitted successfully'
-        })
-
-      }, (err, result) => {
-        if (err) throw err;
+        console.log('Updated form data');
+        db.query('UPDATE profile SET title=?, firstName=?, lastName=?, phone=? WHERE profile_id=?',
+          [title, firstName, lastName, phone, user_id], (err, result) => {
+            if (err) throw err;
+            console.log('Updated profile data');
+            res.status(200).json({
+              success: true,
+              message: 'Form submitted successfully'
+            })
+          });
       });
-    })
-
-    //   const { title, firstName, lastName,
-    //     nationality, category, religion, linkedin,
-    //     github, address, pincode, state, city, country, phone,
-    //     altPhone, dob, email, altEmail, courseCompleted, registrationNo,
-    //     rollNo, discipline, gradYear, occupation, ctc,
-    //     ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
-    //     jobtitle, preparing, currentStatus } = req.body;
-
-    //   // get the file url from req.files object and insert it in the database
-    //   const sign = req.files.sign[0].path;
-    //   const passport = req.files.passport[0].path;
-
-    //   let q = '';
-    //   let v = [];
-
-    //   if (currentStatus === 'working') {
-    //     q = `INSERT INTO pending (title, firstName, lastName,
-    //     nationality, category, religion, linkedin,
-    //     github, address, pincode, state, city, country, phone,
-    //     altPhone, dob, email, altEmail, courseCompleted, registrationNo,
-    //     rollNo, discipline, gradYear, occupation, ctc,
-    //     currentOrganisation,
-    //     jobtitle, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-
-    //     v = [title, firstName, lastName,
-    //       nationality, category, religion, linkedin,
-    //       github, address, pincode, state, city, country, phone,
-    //       altPhone, dob, email, altEmail, courseCompleted, registrationNo,
-    //       rollNo, discipline, gradYear, occupation, Number(ctc),
-    //       currentOrganisation,
-    //       jobtitle, currentStatus, sign, passport]
-    //   } else if (currentStatus === 'higher-education') {
-    //     q = `INSERT INTO pending (title, firstName, lastName,
-    //     nationality, category, religion, linkedin,
-    //     github, address, pincode, state, city, country, phone,
-    //     altPhone, dob, email, altEmail, courseCompleted, registrationNo,
-    //     rollNo, discipline, gradYear,
-    //     ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
-    //     currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-
-    //     v = [title, firstName, lastName,
-    //       nationality, category, religion, linkedin,
-    //       github, address, pincode, state, city, country, phone,
-    //       altPhone, dob, email, altEmail, courseCompleted, registrationNo,
-    //       rollNo, discipline, gradYear,
-    //       ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
-    //       currentStatus, sign, passport]
-    //   } else {
-    //     q = `INSERT INTO pending (title, firstName, lastName, 
-    //   nationality, category, religion, linkedin, 
-    //   github, address, pincode, state, city, country, phone, 
-    //   altPhone, dob, email, altEmail, courseCompleted, registrationNo, 
-    //   rollNo, discipline, gradYear, 
-    //   preparing, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
-
-    //     v = [title, firstName, lastName,
-    //       nationality, category, religion, linkedin,
-    //       github, address, pincode, state, city, country, phone,
-    //       altPhone, dob, email, altEmail, courseCompleted, registrationNo,
-    //       rollNo, discipline, gradYear,
-    //       preparing, currentStatus, sign, passport]
-    //   }
-
-    //   db.query(q, v, (err, result) => {
-    //     if (err) throw err;
-
-    //     console.log('Inserted profile data');
-    //     res.status(200).json({
-    //       success: true,
-    //       message: 'Form submitted successfully'
-    //     })
-    //   }, (err, result) => {
-    //     if (err) throw err;
-    //   });
+    });
   }).catch(err => {
-    // res.clearCookie('auth').status(401).json({ message: 'Unauthorized', error: true });
-    return res.status(401).json({ message: 'Unauthorized', error: true });
+    res.clearCookie('auth').status(401).json({ message: 'Unauthorized', error: true });
   })
 });
 
@@ -332,5 +243,17 @@ alumni.route('/alumni/accept').post((req, res) => {
     })
   })
 });
+alumni.route('/alumni').get((req, res) => {
+
+  const db = getDb();
+
+  db.query('SELECT * FROM pending', (err, result) => {
+    if (err) throw err;
+
+    res.json(result)
+  })
+
+
+})
 
 module.exports = alumni;

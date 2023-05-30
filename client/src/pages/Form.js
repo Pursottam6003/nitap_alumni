@@ -17,6 +17,8 @@ import Preview from "./Preview";
 import axios from 'axios';
 import { UserContext } from '../App';
 import mockFormData from "../mocks/form";
+import { Alert } from "@mui/material";
+import Loading from "../components/Loading";
 
 const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
@@ -25,20 +27,36 @@ export default function Form() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [formData, setFormData] = React.useState({});
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const [formFiles, setFormFiles] = React.useState({ sign: null, passport: null });
-  const { profile, error, loading, logout } = React.useContext(UserContext);
+  const { profile, error, loading: fetchingProfile, logout } = React.useContext(UserContext);
+
+  const prepopulate = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.post('/alumni/prepopulate', {}, { withCredentials: true });
+      if (res.data.success && res.data.data) {
+        setIsSubmitted(true);
+        setFormData({
+          ...res.data.data,
+          title: profile.title,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          phone: profile.phone,
+          email: profile.email
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   React.useEffect(() => {
     if (profile) {
-      setFormData((prevData) => ({
-        ...prevData,
-        title: profile.title,
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        phone: profile.phone,
-        email: profile.email
-      }));
+      prepopulate();
     }
   }, [profile])
 
@@ -107,56 +125,68 @@ export default function Form() {
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
-          <Typography component="h1" variant="h4" align="center">
-            Alumni Membership Form
-          </Typography>
-          <Stepper alternativeLabel activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <React.Fragment>
-            {getStepContent(activeStep)}
-            {!isSubmitted && activeStep === steps.length - 1 && (
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleSubmit}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Submit
-                </Button>
-              </Box>
-            )}
-            {isSubmitted && (<>
-              <Box className="button-preview" sx={{ display: "flex", justifyContent: "flex-end" }}>
-                <Typography component="h1" variant="h6" align="center">
-                  Thank you for filling out the form !
-                  Your response has been saved successfully. You must take  its screenshort/printout  and bring it for alumni clearance
-                </Typography>
-              </Box>
-              <Box className='button-preview' sx={{ display: "flex", justifyContent: "flex-end" }} >
+          <Box mb={3}>
+            <Typography component="h1" variant="h4" align="center">
+              Alumni Membership Form
+            </Typography>
+          </Box>
+          {loading ? <Loading /> : isSubmitted && activeStep < steps.length - 1 ? (<>
+            <Box my={2}>
+              <Alert severity="info" action={
+                <Button onClick={e => { e.preventDefault(); setIsSubmitted(false) }} variant="text">Edit response</Button>
+              }>
+                You have already submitted your response
+              </Alert>
+            </Box>
+            <Preview formData={formData} />
+          </>) : (<>
+            <Stepper alternativeLabel activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              {!isSubmitted && activeStep === steps.length - 1 && (
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                    Back
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={handleSubmit}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                    Submit
+                  </Button>
+                </Box>
+              )}
+              {isSubmitted && (<>
+                <Box className="button-preview" sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  <Typography component="h1" variant="h6" align="center">
+                    Thank you for filling out the form !
+                    Your response has been saved successfully. You must take  its screenshort/printout  and bring it for alumni clearance
+                  </Typography>
+                </Box>
+                <Box className='button-preview' sx={{ display: "flex", justifyContent: "flex-end" }} >
 
-                <Button onClick={(e) => { e.preventDefault(); window.print() }} variant="outlined" sx={{ mt: 3, ml: 1 }}>
-                  Print
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={e => { e.preventDefault(); logout(); }}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  Exit
-                </Button>
-              </Box>
-            </>
-
-            )}
-          </React.Fragment>
+                  <Button onClick={(e) => { e.preventDefault(); window.print() }} variant="outlined" sx={{ mt: 3, ml: 1 }}>
+                    Print
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={e => { e.preventDefault(); logout(); }}
+                    sx={{ mt: 3, ml: 1 }}
+                  >
+                    Exit
+                  </Button>
+                </Box>
+              </>)}
+            </React.Fragment>
+          </>
+          )}
         </Paper>
       </Container>
     </ThemeProvider>
