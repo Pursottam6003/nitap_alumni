@@ -14,30 +14,30 @@ const TitleList = [
   { label: "Dr", value: "Dr" },
 ];
 const NationalityList = [
-  { label: "Indian" },
-  { label: "Srilankan" },
+  { label: "American" },
   { label: "Bangladeshi" },
-  { label: "Nepali" },
-  { label: "Chinese" },
+  { label: "German" },
+  { label: "Nepalese" },
+  { label: "Indian" },
+  { label: "Sri Lankan" },
 ];
 
 const categoryList = [
+  { label: "SC/ST" },
   { label: "General" },
+  { label: "Gen-EWS" },
   { label: "OBC" },
   { label: "OBC-NCL" },
-  { label: "Gen-EWS" },
-  { label: "SC" },
-  { label: "CT" },
   { label: "Others" },
 ];
 
 const ReligionList = [
-  { label: "Hindu" },
-  { label: "Muslim" },
+  { label: "Hinduism" },
+  { label: "Islam" },
   { label: "Indegeneous" },
-  { label: "Christian" },
-  { label: "Sikh" },
-  { label: "Jain" },
+  { label: "Christianity" },
+  { label: "Sikhism" },
+  { label: "Jainism" },
   { label: "Other" },
 ];
 

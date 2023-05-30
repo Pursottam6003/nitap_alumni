@@ -12,16 +12,15 @@ import axios from 'axios';
 const theme = createTheme();
 
 const DeptList = [
-  { label: "Mechanical Eng." },
-  { label: "Computer Science Eng." },
-  { label: "Civil Eng," },
-  { label: "Electronics and Comm. Eng" },
-  { label: "Electrical Eng." },
-  { label: "Dept of BAS" },
-  { label: "Dept of CS" },
-  { label: "Dept of ME" },
-  { label: "Dept of physics" },
-  { label: "Dept of Civil Eng" }
+  { label: "Basic and Applied Sciences" },
+  { label: "Biotechnology" },
+  { label: "Chemical Engineering" },
+  { label: "Civil Engineering" },
+  { label: "Computer Science & Engineering" },
+  { label: "Electrical Engineering" },
+  { label: "Electronics & Communication Engineering" },
+  { label: "Mechanical Engineering" },
+  { label: "Management and Humanities" },
 ]
 
 const BatchList = [

@@ -8,7 +8,7 @@ module.exports = {
     const db = mysql.createConnection({
       host: 'localhost',
       user: 'root',
-      password: 'rootpass',
+      password: 'Rahul@12345678',
       database: 'alumniDatabase'
     });
 

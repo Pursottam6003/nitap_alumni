@@ -15,6 +15,8 @@ import CourseDetails from "./CourseDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import Preview from "./Preview";
 import axios from 'axios';
+import { UserContext } from '../App';
+
 
 const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
@@ -78,6 +80,7 @@ export default function Form() {
       console.log(err);
     })
   }
+  const { profile: user, error, loading, logout } = React.useContext(UserContext);
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -95,8 +98,8 @@ export default function Form() {
     window.print();
   }
 
-  const logOut = () => {
-    console.log('exit')
+  const handlelogOut = () => {
+    logout();
   }
   function getStepContent(step) {
     switch (step) {
@@ -158,19 +161,28 @@ export default function Form() {
                 </Button>
               </Box>
             )}
-            {isSubmitted && (
-              <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-                <Button onClick={printform} sx={{ mt: 3, ml: 1 }}>
+            {isSubmitted && (<>
+              <Box className="button-preview" sx={{ display: "flex", justifyContent: "flex-end" }}>
+                <Typography component="h1" variant="h6" align="center">
+                  Thank you for filling out the form !
+                  Your response has been saved successfully. You must take  its screenshort/printout  and bring it for alumni clearance
+                </Typography>
+              </Box>
+              <Box className='button-preview' sx={{ display: "flex", justifyContent: "flex-end" }} >
+
+                <Button onClick={printform} variant="outlined" sx={{ mt: 3, ml: 1 }}>
                   Print
                 </Button>
                 <Button
                   variant="contained"
-                  onClick={logOut}
+                  onClick={handlelogOut}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   Exit
                 </Button>
               </Box>
+            </>
+
             )}
           </React.Fragment>
         </Paper>
