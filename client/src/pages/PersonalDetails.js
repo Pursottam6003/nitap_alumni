@@ -323,7 +323,7 @@ export default function PersonalDetails({
                 }}
                 className={cx({ filled: formData.altPhone })}
               />
-              <label className='phoneInputLabel'>Alternate phone number *</label>
+              <label className='phoneInputLabel'>Alternate phone number</label>
             </div>
           </Grid>
 
