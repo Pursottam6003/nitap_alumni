@@ -140,60 +140,74 @@ alumni.route('/alumni/register').post(upload.fields([
     let v = [];
 
     if (currentStatus === 'working') {
-      q = `INSERT INTO alumnilist (nationality, category, religion, linkedin,
+      q = ` alumnilist (user_id, nationality, category, religion, linkedin,
         github, address, pincode, state, city, country,
         altPhone, dob, altEmail, courseCompleted, registrationNo,
         rollNo, discipline, gradYear, occupation, ctc,
         currentOrganisation,
-        jobtitle, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+        jobtitle, currentStatus, sign, passport) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
-      v = [nationality, category, religion, linkedin,
+      v = [user_id, nationality, category, religion, linkedin,
         github, address, pincode, state, city, country,
         altPhone, dob, altEmail, courseCompleted, registrationNo,
         rollNo, discipline, gradYear, occupation, Number(ctc),
         currentOrganisation,
         jobtitle, currentStatus, sign, passport]
     } else if (currentStatus === 'higher-education') {
-      q = `INSERT INTO alumnilist (nationality, category, religion, linkedin,
+      q = ` alumnilist (user_id, nationality, category, religion, linkedin,
         github, address, pincode, state, city, country,
         altPhone, dob, altEmail, courseCompleted, registrationNo,
         rollNo, discipline, gradYear,
         ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
-        currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+        currentStatus, sign, passport) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
-      v = [nationality, category, religion, linkedin,
+      v = [user_id, nationality, category, religion, linkedin,
         github, address, pincode, state, city, country,
         altPhone, dob, altEmail, courseCompleted, registrationNo,
         rollNo, discipline, gradYear,
         ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
         currentStatus, sign, passport]
     } else {
-      q = `INSERT INTO alumnilist (
+      q = ` alumnilist (user_id, 
         nationality, category, religion, linkedin, 
         github, address, pincode, state, city, country, 
         altPhone, dob, altEmail, courseCompleted, registrationNo, 
         rollNo, discipline, gradYear, 
-        preparing, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+        preparing, currentStatus, sign, passport) VALUES (?, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
-      v = [nationality, category, religion, linkedin,
+      v = [user_id, nationality, category, religion, linkedin,
         github, address, pincode, state, city, country,
         altPhone, dob, altEmail, courseCompleted, registrationNo,
         rollNo, discipline, gradYear,
         preparing, currentStatus, sign, passport]
     }
 
-    db.query('SELECT  FROM alumnilist WHERE user_id = ?', [user_id], (err, result) => {
+    // update if already exists else insert
+    db.query('SELECT * FROM alumnilist WHERE user_id = ?', [user_id], (err, result) => {
       if (err) throw err;
-      // insert
-      db.query(q, v, (err, result) => {
-        if (err) throw err;
-        console.log('Updated form data');
-        console.log('Updated profile data');
-        res.status(200).json({
-          success: true,
-          message: 'Form submitted successfully'
-        })
-      });
+      if (result.length > 0) {
+        // update
+        db.query('UPDATE ' + q + ' WHERE user_id = ?', [...v, user_id], (err, result) => {
+          if (err) throw err;
+          console.log('Updated form data');
+          console.log('Updated profile data');
+          res.status(200).json({
+            success: true,
+            message: 'Form submitted successfully'
+          })
+        });
+      } else {
+        // insert
+        db.query('INSERT INTO ' + q, v, (err, result) => {
+          if (err) throw err;
+          console.log('Updated form data');
+          console.log('Updated profile data');
+          res.status(200).json({
+            success: true,
+            message: 'Form submitted successfully'
+          })
+        });
+      }
     });
   }).catch(err => {
     res.clearCookie('auth').status(401).json({ message: 'Unauthorized', error: true });

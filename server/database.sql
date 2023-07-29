@@ -146,7 +146,7 @@ CREATE TABLE alumnilist (
     preparing varchar(64),
     currentStatus varchar(64) DEFAULT 'preparing',
     isApproved  SET('0', '-1', '1') DEFAULT '0'
-)
+);
 
 
 -- CREATE TABLE pending (
