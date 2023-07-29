@@ -31,10 +31,10 @@ users.route('/users/register-admin').post((req, res) => {
         console.log(result);
 
         // create profile
-        const profileInsertQuery = `INSERT INTO profile (title, firstName, lastName, email, phone, batch, department, profile_Id) VALUES (?, ?, ?, ?, ?, ?, ?, (
+        const profileInsertQuery = `INSERT INTO profile (title, firstName, lastName, email, phone, profile_Id) VALUES (?, ?, ?, ?, ?, (
           SELECT id_text FROM users WHERE email = ?
         ))`;
-        db.query(profileInsertQuery, [title, firstName, lastName, email, phone, 'NA', 'NA', email], (err, result) => {
+        db.query(profileInsertQuery, [title, firstName, lastName, email, phone, email], (err, result) => {
           if (err) throw err;
           console.log(result);
           res.status(200).json({
@@ -49,7 +49,7 @@ users.route('/users/register-admin').post((req, res) => {
 
 users.route('/users/register').post((req, res) => {
   const db = getDb();
-  const { email, password, title, firstName, lastName, phone, batch, department } = req.body;
+  const { email, password, title, firstName, lastName, phone } = req.body;
   console.log(req.body);
 
   // check if email already exists
@@ -70,10 +70,10 @@ users.route('/users/register').post((req, res) => {
         console.log(result);
 
         // create profile
-        const profileInsertQuery = `INSERT INTO profile (title, firstName, lastName, email, phone, batch, department, profile_Id) VALUES (? ,?, ?, ?, ?, ?, ?, (
+        const profileInsertQuery = `INSERT INTO profile (title, firstName, lastName, email, phone, profile_Id) VALUES (? ,?, ?, ?, ?, (
           SELECT id_text FROM users WHERE email = ?
         ))`;
-        db.query(profileInsertQuery, [title, firstName, lastName, email, phone, batch, department, email], (err, result) => {
+        db.query(profileInsertQuery, [title, firstName, lastName, email, phone, email], (err, result) => {
           if (err) throw err;
           console.log(result);
           res.status(200).json({

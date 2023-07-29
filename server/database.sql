@@ -30,8 +30,6 @@ CREATE TABLE profile (
     lastName varchar(64),
     email varchar(50) NOT NULL,
     phone varchar(15),
-    batch varchar(20) NOT NULL,
-    department varchar(30) NOT NULL,
     PRIMARY KEY(profile_Id)
 );
 
@@ -118,45 +116,6 @@ CREATE TABLE profile (
 
 CREATE TABLE alumnilist (
     user_id varchar(50) NOT NULL,
-    title varchar(5) NOT NULL,
-    firstName varchar(255) NOT NULL,
-    lastName varchar(255),
-    nationality varchar(15) NOT NULL,
-    category  varchar(10),
-    religion varchar(16),
-    linkedin varchar(50),
-    github varchar(50),
-    address varchar(128) NOT NULL,
-    pincode varchar(10) NOT NULL,
-    state  varchar(64) NOT NULL,
-    city varchar(64) NOT NULL,
-    country  varchar(64) NOT NULL,
-    phone varchar(14) NOT NULL,
-    altPhone varchar(14),
-    dob varchar(10) NOT NULL,
-    email varchar(255) NOT NULL,
-    altEmail varchar(255),
-    courseCompleted  varchar(255) NOT NULL,
-    registrationNo varchar(20) NOT NULL,
-    rollNo varchar(16),
-    discipline  varchar(30),
-    gradYear varchar(10),
-    sign  varchar(255),
-    passport varchar(255),
-    occupation varchar(30),
-    ctc decimal(10,2),
-    ongoingCourseDetails varchar(40),
-    ongoingDiscipline varchar(40) ,
-    ongoingGradYear varchar(10),
-    currentOrganisation varchar(50),
-    jobtitle varchar(64),
-    preparing varchar(64),
-    currentStatus varchar(64) DEFAULT 'preparing'
-)
-
-
-CREATE TABLE pending (
-    user_id varchar(50) NOT NULL,
     nationality varchar(15) NOT NULL,
     category  varchar(10),
     religion varchar(16),
@@ -175,8 +134,8 @@ CREATE TABLE pending (
     rollNo varchar(16),
     discipline  varchar(30),
     gradYear varchar(10),
-    sign  varchar(255),
-    passport varchar(255),
+    sign  varchar(255) DEFAULT NULL,
+    passport varchar(255) DEFAULT NULL,
     occupation varchar(30),
     ctc decimal(10,2),
     ongoingCourseDetails varchar(40),
@@ -185,13 +144,48 @@ CREATE TABLE pending (
     currentOrganisation varchar(50),
     jobtitle varchar(64),
     preparing varchar(64),
-    currentStatus varchar(64) DEFAULT 'preparing'
+    currentStatus varchar(64) DEFAULT 'preparing',
+    isApproved  SET('0', '-1', '1') DEFAULT '0'
 )
+
+
+-- CREATE TABLE pending (
+--     user_id varchar(50) NOT NULL,
+--     nationality varchar(15) NOT NULL,
+--     category  varchar(10),
+--     religion varchar(16),
+--     linkedin varchar(50),
+--     github varchar(50),
+--     address varchar(128) NOT NULL,
+--     pincode varchar(10) NOT NULL,
+--     state  varchar(64) NOT NULL,
+--     city varchar(64) NOT NULL,
+--     country  varchar(64) NOT NULL,
+--     altPhone varchar(14),
+--     dob varchar(10) NOT NULL,
+--     altEmail varchar(255),
+--     courseCompleted  varchar(255) NOT NULL,
+--     registrationNo varchar(20) NOT NULL,
+--     rollNo varchar(16),
+--     discipline  varchar(30),
+--     gradYear varchar(10),
+--     sign  varchar(255),
+--     passport varchar(255),
+--     occupation varchar(30),
+--     ctc decimal(10,2),
+--     ongoingCourseDetails varchar(40),
+--     ongoingDiscipline varchar(40) ,
+--     ongoingGradYear varchar(10),
+--     currentOrganisation varchar(50),
+--     jobtitle varchar(64),
+--     preparing varchar(64),
+--     currentStatus varchar(64) DEFAULT 'preparing'
+-- )
 
 CREATE TABLE organisationDetails 
-{
-    organisation  varchar(100) ,
-}
+(
+    organisation  varchar(100) 
+)
     -- jobtitle varchar(50),
 SELECT * FROM users;
 
