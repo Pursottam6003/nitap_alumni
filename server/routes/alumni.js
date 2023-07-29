@@ -42,9 +42,11 @@ alumni.route('/register').post(upload.fields([
     q = `INSERT INTO alumnilist (nationality, category, religion, linkedin,
       github, address, pincode, state, city, country,
       altPhone, dob, altEmail, courseCompleted, registrationNo,
-      rollNo, discipline, gradYear, occupation, ctc,
-      currentOrganisation,
-      jobtitle, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+      rollNo, discipline, gradYear, 
+      
+      occupation, ctc, currentOrganisation, jobtitle, 
+
+      currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
     v = [nationality, category, religion, linkedin,
       github, address, pincode, state, city, country,
@@ -57,8 +59,10 @@ alumni.route('/register').post(upload.fields([
       github, address, pincode, state, city, country,
       altPhone, dob, altEmail, courseCompleted, registrationNo,
       rollNo, discipline, gradYear,
+
       ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
-      currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+
+      currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
     v = [nationality, category, religion, linkedin,
       github, address, pincode, state, city, country,
@@ -72,7 +76,10 @@ alumni.route('/register').post(upload.fields([
     github, address, pincode, state, city, country, 
     altPhone, dob, altEmail, courseCompleted, registrationNo, 
     rollNo, discipline, gradYear, 
-    preparing, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+    
+    preparing, 
+    
+    currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
 
     v = [nationality, category, religion, linkedin,
       github, address, pincode, state, city, country,
@@ -113,6 +120,7 @@ alumni.route('/alumni/prepopulate').post((req, res) => {
     res.clearCookie('auth').status(401).json({ message: 'Unauthorized', error: true });
   })
 });
+
 
 alumni.route('/alumni/register').post(upload.fields([
   { name: 'sign', maxCount: 1 },
@@ -208,6 +216,99 @@ alumni.route('/alumni/register').post(upload.fields([
           })
         });
       }
+    });
+  }).catch(err => {
+    res.clearCookie('auth').status(401).json({ message: 'Unauthorized', error: true });
+  })
+});
+
+alumni.route('/alumni/register_old').post(upload.fields([
+  { name: 'sign', maxCount: 1 },
+  { name: 'passport', maxCount: 1 }
+]), (req, res) => {
+  const token = req.cookies.auth;
+  findUserByToken(token).then(results => {
+    if (results.length === 0) return res.status(400).json('Invalid jwt');
+    const user_id = results[0].id_text;
+
+    const db = getDb();
+    const { title, firstName, lastName,
+      nationality, category, religion, linkedin,
+      github, address, pincode, state, city, country, phone,
+      altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+      rollNo, discipline, gradYear, occupation, ctc,
+      ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
+      jobtitle, preparing, currentStatus } = req.body;
+
+    // get the file url from req.files object and insert it in the database
+    const sign = req.files.sign[0].path;
+    const passport = req.files.passport[0].path;
+
+    let q = '';
+    let v = [];
+
+    if (currentStatus === 'working') {
+      q = `INSERT INTO pending (user_id, title, firstName, lastName,
+          nationality, category, religion, linkedin,
+          github, address, pincode, state, city, country, phone,
+          altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+          rollNo, discipline, gradYear, occupation, ctc,
+          currentOrganisation,
+          jobtitle, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+      v = [user_id, title, firstName, lastName,
+        nationality, category, religion, linkedin,
+        github, address, pincode, state, city, country, phone,
+        altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+        rollNo, discipline, gradYear, occupation, Number(ctc),
+        currentOrganisation,
+        jobtitle, currentStatus, sign, passport]
+    } else if (currentStatus === 'higher-education') {
+      q = `INSERT INTO pending (user_id, title, firstName, lastName,
+          nationality, category, religion, linkedin,
+          github, address, pincode, state, city, country, phone,
+          altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+          rollNo, discipline, gradYear,
+          ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
+          currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+      v = [user_id, title, firstName, lastName,
+        nationality, category, religion, linkedin,
+        github, address, pincode, state, city, country, phone,
+        altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+        rollNo, discipline, gradYear,
+        ongoingCourseDetails, ongoingDiscipline, ongoingGradYear, currentOrganisation,
+        currentStatus, sign, passport]
+    } else {
+      q = `INSERT INTO pending (user_id, title, firstName, lastName, 
+          nationality, category, religion, linkedin, 
+          github, address, pincode, state, city, country, phone, 
+          altPhone, dob, email, altEmail, courseCompleted, registrationNo, 
+          rollNo, discipline, gradYear, 
+          preparing, currentStatus, sign, passport) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`
+
+      v = [user_id, title, firstName, lastName,
+        nationality, category, religion, linkedin,
+        github, address, pincode, state, city, country, phone,
+        altPhone, dob, email, altEmail, courseCompleted, registrationNo,
+        rollNo, discipline, gradYear,
+        preparing, currentStatus, sign, passport]
+    }
+
+    db.query('DELETE FROM pending WHERE user_id = ?', [user_id], (err, result) => {
+      if (err) throw err;
+      // insert
+      db.query(q, v, (err, result) => {
+        if (err) throw err;
+        console.log('Updated form data');
+        db.query('UPDATE profile SET title=?, firstName=?, lastName=?, phone=? WHERE profile_id=?',
+          [title, firstName, lastName, phone, user_id], (err, result) => {
+            if (err) throw err;
+            console.log('Updated profile data');
+            res.status(200).json({
+              success: true,
+              message: 'Form submitted successfully'
+            })
+          });
+      });
     });
   }).catch(err => {
     res.clearCookie('auth').status(401).json({ message: 'Unauthorized', error: true });

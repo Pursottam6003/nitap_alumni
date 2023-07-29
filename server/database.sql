@@ -55,16 +55,29 @@ CREATE TABLE alumnilist (
     gradYear varchar(10),
     sign  varchar(255) DEFAULT NULL,
     passport varchar(255) DEFAULT NULL,
-    occupation varchar(30),
-    ctc decimal(10,2),
+    currentStatus SET('working', 'higher-education', 'preparing') DEFAULT 'preparing',
+    isApproved  SET('0', '-1', '1') DEFAULT '0'
+);
+
+CREATE TABLE higherEducationDetails (
+    user_id varchar(50) NOT NULL,
     ongoingCourseDetails varchar(40),
     ongoingDiscipline varchar(40) ,
     ongoingGradYear varchar(10),
+    currentOrganisation varchar(50)
+);
+
+CREATE TABLE workingDetails (
+    user_id varchar(50) NOT NULL,
+    occupation varchar(30),
+    ctc decimal(10,2),
     currentOrganisation varchar(50),
-    jobtitle varchar(64),
-    preparing varchar(64),
-    currentStatus varchar(64) DEFAULT 'preparing',
-    isApproved  SET('0', '-1', '1') DEFAULT '0'
+    jobtitle varchar(64)
+);
+
+CREATE TABLE preparing (
+    user_id varchar(50) NOT NULL,
+    preparing varchar(100) NOT NULL
 );
 
 CREATE TABLE organisationDetails 
