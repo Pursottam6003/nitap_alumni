@@ -1,19 +1,10 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import dayjs from 'dayjs';
 
 export default function Preview({ formData, formFiles = null }) {
-
-  var today = new Date();
-
-  var strDate = 'Y-m-d'
-    .replace('Y', today.getFullYear())
-    .replace('m', today.getMonth() + 1)
-    .replace('d', today.getDate());
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -32,7 +23,9 @@ export default function Preview({ formData, formFiles = null }) {
 
               <div>
                 <span className='previewLabel'>Date Of Birth:</span>
-                <span className='draftData'>{formData.dob} </span>
+                <span className='draftData'>
+                  {formData.dob.format('DD/MM/YYYY')}
+                </span>
               </div>
 
               <div>
@@ -167,7 +160,7 @@ export default function Preview({ formData, formFiles = null }) {
 
             <Grid item xs={12} sm={6}>
               <span className='previewLabel'> Date: </span>
-              <span className='draftData'>{strDate}</span>
+              <span className='draftData'>{dayjs().format('DD/MM/YYYY')}</span>
             </Grid>
 
             {formFiles && (

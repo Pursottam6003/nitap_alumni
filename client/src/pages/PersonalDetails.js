@@ -1,11 +1,11 @@
 import React from "react";
-import { Grid, Typography, FormControlLabel, Checkbox, TextField, Autocomplete, Box, Button } from "@mui/material";
-import dayjs from "dayjs";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+import { Grid, Typography, TextField, Autocomplete, Box, Button } from "@mui/material";
+import { DateField } from "@mui/x-date-pickers/DateField";
+
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import cx from 'classnames';
+import dayjs, { Dayjs } from "dayjs";
 
 const TitleList = [
   { label: "Mr.", value: "Mr" },
@@ -132,29 +132,12 @@ export default function PersonalDetails({
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <MobileDatePicker
-                label="Date of Birth"
-                value={dayjs(formData.dob)}
-                required
-                id="dob"
-                fullWidth
-                autoComplete="dob"
-                variant="standard"
-                onChange={(newValue) => {
-                  handleInputChange('dob', newValue.format('MM/DD/YYYY'))
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    required
-                    fullWidth
-                    name="dob"
-                    {...params}
-                    variant="standard"
-                  />
-                )}
-              />
-            </LocalizationProvider>
+            <DateField
+              value={formData.dob}
+              onChange={(newValue) => {
+                handleInputChange('dob', newValue)
+              }}
+              label="Date of Birth" variant="standard" fullWidth format="DD/MM/YYYY" />
           </Grid>
 
           <Grid item xs={12} sm={6}>
