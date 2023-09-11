@@ -21,9 +21,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
+import mockFormData from "../mocks/form";
 
 const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
+
 
 export default function Form() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -32,6 +34,7 @@ export default function Form() {
   const [loading, setLoading] = React.useState(false);
 
   const [formFiles, setFormFiles] = React.useState({ sign: null, passport: null });
+  // eslint-disable-next-line
   const { profile, error, loading: fetchingProfile, logout } = React.useContext(UserContext);
 
   const prepopulate = async () => {
@@ -58,9 +61,14 @@ export default function Form() {
   }
 
   React.useEffect(() => {
-    if (profile) {
-      prepopulate();
-    }
+    setFormData({
+      ...mockFormData,
+      dob: dayjs(mockFormData.dob, 'DD/MM/YYYY'),
+    })
+    // if (profile) {
+    //   prepopulate();
+    // }
+    // eslint-disable-next-line
   }, [profile])
 
   const handleNext = () => {

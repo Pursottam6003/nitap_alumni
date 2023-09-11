@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container, Autocomplete, Alert, AlertTitle, Avatar, Collapse, IconButton } from '@mui/material';
+import { Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container, Autocomplete, Alert, Collapse, IconButton } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
@@ -11,51 +11,51 @@ import axios from 'axios';
 
 const theme = createTheme();
 
-const DeptList = [
-  { label: "Mechanical Eng." },
-  { label: "Computer Science Eng." },
-  { label: "Civil Eng," },
-  { label: "Electronics and Comm. Eng" },
-  { label: "Electrical Eng." },
-  { label: "Dept of BAS" },
-  { label: "Dept of CS" },
-  { label: "Dept of ME" },
-  { label: "Dept of physics" },
-  { label: "Dept of Civil Eng" }
-]
+// const DeptList = [
+//   { label: "Mechanical Eng." },
+//   { label: "Computer Science Eng." },
+//   { label: "Civil Eng," },
+//   { label: "Electronics and Comm. Eng" },
+//   { label: "Electrical Eng." },
+//   { label: "Dept of BAS" },
+//   { label: "Dept of CS" },
+//   { label: "Dept of ME" },
+//   { label: "Dept of physics" },
+//   { label: "Dept of Civil Eng" }
+// ]
 
-const BatchList = [
-  { label: "UG 2010-14" },
-  { label: "UG 2011-15" },
-  { label: "UG 2012-16" },
-  { label: "UG 2013-17" },
-  { label: "UG 2014-18" },
-  { label: "UG 2015-19" },
-  { label: "UG 2016-20" },
-  { label: "UG 2017-21" },
-  { label: "UG 2018-22" },
-  { label: "UG 2019-23" },
-  { label: "UG 2020-24" },
-  { label: "UG 2021-25" },
-  { label: "UG 2022-26" },
-  { label: "PG 2015-17" },
-  { label: "PG 2016-18" },
-  { label: "PG 2017-19" },
-  { label: "PG 2018-20" },
-  { label: "PG 2019-21" },
-  { label: "PG 2020-22" },
-  { label: "PG 2021-23" },
-  { label: "PG 2022-24" },
-  { label: "PHD 2013-18" },
-  { label: "PHD 2014-19" },
-  { label: "PHD 2015-20" },
-  { label: "PHD 2016-21" },
-  { label: "PHD 2017-22" },
-  { label: "PHD 2018-23" },
-  { label: "PHD 2019-24" },
-  { label: "PHD 2020-25" },
+// const BatchList = [
+//   { label: "UG 2010-14" },
+//   { label: "UG 2011-15" },
+//   { label: "UG 2012-16" },
+//   { label: "UG 2013-17" },
+//   { label: "UG 2014-18" },
+//   { label: "UG 2015-19" },
+//   { label: "UG 2016-20" },
+//   { label: "UG 2017-21" },
+//   { label: "UG 2018-22" },
+//   { label: "UG 2019-23" },
+//   { label: "UG 2020-24" },
+//   { label: "UG 2021-25" },
+//   { label: "UG 2022-26" },
+//   { label: "PG 2015-17" },
+//   { label: "PG 2016-18" },
+//   { label: "PG 2017-19" },
+//   { label: "PG 2018-20" },
+//   { label: "PG 2019-21" },
+//   { label: "PG 2020-22" },
+//   { label: "PG 2021-23" },
+//   { label: "PG 2022-24" },
+//   { label: "PHD 2013-18" },
+//   { label: "PHD 2014-19" },
+//   { label: "PHD 2015-20" },
+//   { label: "PHD 2016-21" },
+//   { label: "PHD 2017-22" },
+//   { label: "PHD 2018-23" },
+//   { label: "PHD 2019-24" },
+//   { label: "PHD 2020-25" },
 
-]
+// ]
 
 export default function SignUpAdmin() {
   const history = useNavigate();

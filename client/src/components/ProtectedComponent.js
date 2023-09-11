@@ -17,13 +17,14 @@ const UnauthorizedComponent = () => (
 );
 
 const ProtectedComponent = ({ children, admin = false }) => {
-  const { isAuth, isAdmin, loading, error } = useAuth();
+  const { isAuth, isAdmin, loading } = useAuth();
   const { profile } = useContext(UserContext);
 
   const history = useNavigate();
   useEffect(() => {
     if (loading) return;
     if (!isAuth || !profile?.profile_Id) history('/login');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, isAuth, profile]);
 
   return (

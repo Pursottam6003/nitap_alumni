@@ -7,7 +7,6 @@ import { Box } from "@mui/system";
 import { AccountCircle as UserIcon, Logout as LogoutIcon } from '@mui/icons-material'
 
 import NITAP from '../media/Logo/nitap.png'
-import { apiPostCall } from '../utils/helpers';
 
 import { UserContext } from '../App';
 
@@ -52,7 +51,7 @@ const navItems = [
 const Navigation = () => {
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { profile: user, error, loading, logout, admin } = React.useContext(UserContext);
+  const { profile: user, logout, admin } = React.useContext(UserContext);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };

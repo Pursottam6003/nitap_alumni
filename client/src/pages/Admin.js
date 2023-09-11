@@ -1,10 +1,5 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import TableHead from '@mui/material/TableHead';
-// import TablePagination from '@mui/material/TablePagination';
 import axios from 'axios';
-import Preview from './Preview';
-
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
@@ -54,6 +49,7 @@ const rows = [
 
 export default function Admin() {
   const [list, setList] = React.useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [headings, setHeadings] = React.useState([]);
 
   const fetchAlumni = async () => {

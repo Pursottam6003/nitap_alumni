@@ -34,6 +34,7 @@ CREATE TABLE profile (
 );
 
 CREATE TABLE alumnilist (
+    id varchar(50) NOT NULL,
     user_id varchar(50) NOT NULL,
     nationality varchar(15) NOT NULL,
     category  varchar(10),
@@ -56,7 +57,8 @@ CREATE TABLE alumnilist (
     sign  varchar(255) DEFAULT NULL,
     passport varchar(255) DEFAULT NULL,
     currentStatus SET('working', 'higher-education', 'preparing') DEFAULT 'preparing',
-    isApproved  SET('0', '-1', '1') DEFAULT '0'
+    isApproved  SET('0', '-1', '1') DEFAULT '0',
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE higherEducationDetails (

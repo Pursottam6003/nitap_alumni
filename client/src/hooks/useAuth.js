@@ -36,6 +36,7 @@ const useAuth = () => {
 
   useEffect(() => {
     fetchAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return { isAuth, isAdmin, loading, error }

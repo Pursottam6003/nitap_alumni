@@ -5,7 +5,6 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import cx from 'classnames';
-import dayjs, { Dayjs } from "dayjs";
 
 const TitleList = [
   { label: "Mr.", value: "Mr" },
