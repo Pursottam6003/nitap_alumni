@@ -37,8 +37,8 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signup-admin" element={<SignUpAdmin />} />
             <Route path="/" element={<ProtectedComponent children={<Form />} />} />
-            <Route path="/admin" element={
-              <ProtectedComponent children={<Admin />} admin={true} />
+            <Route path="/admin" element={<Admin />
+              // <ProtectedComponent children={<Admin />} admin={true} />
             } />
           </Routes>
         </LayoutComponent>

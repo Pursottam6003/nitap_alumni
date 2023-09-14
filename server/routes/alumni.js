@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, 'upload/');
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname + '-' + Date.now());
+    cb(null, Date.now() + '-' + file.originalname);
   }
 });
 
@@ -123,10 +123,10 @@ alumni.route('/alumni/prepopulate').post((req, res) => {
     const db = getDb();
     db.query('SELECT * FROM alumnilist WHERE user_id=?', [user_id], (err, result) => {
       if (err) throw err;
-
+      console.log(result[0])
       res.json({
         success: true,
-        data: result[0] || {}
+        data: result[0] || null
       });
     })
   }).catch(err => {

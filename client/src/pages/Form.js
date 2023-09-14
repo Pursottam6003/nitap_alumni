@@ -41,18 +41,17 @@ export default function Form() {
     setLoading(true);
     try {
       const res = await axios.post('/alumni/prepopulate', {}, { withCredentials: true });
+      let fetchedFormData = { ...profile }
+
       if (res.data.success && res.data.data) {
-        // setIsSubmitted(true);
-        setFormData({
+        setIsSubmitted(true);
+        fetchedFormData = {
+          ...fetchedFormData,
           ...res.data.data,
           dob: dayjs(res.data.data.dob, 'DD/MM/YYYY'),
-          title: profile.title,
-          firstName: profile.firstName,
-          lastName: profile.lastName,
-          phone: profile.phone,
-          email: profile.email
-        });
+        }
       }
+      setFormData({ ...fetchedFormData })
     } catch (err) {
       console.log(err);
     } finally {
@@ -61,13 +60,9 @@ export default function Form() {
   }
 
   React.useEffect(() => {
-    setFormData({
-      ...mockFormData,
-      dob: dayjs(mockFormData.dob, 'DD/MM/YYYY'),
-    })
-    // if (profile) {
-    //   prepopulate();
-    // }
+    if (profile) {
+      prepopulate();
+    }
     // eslint-disable-next-line
   }, [profile])
 
