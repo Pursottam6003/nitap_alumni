@@ -184,8 +184,7 @@ alumni.route('/alumni/accept').post((req, res) => {
 alumni.route('/alumni').get((req, res) => {
 
   const db = getDb();
-
-  db.query('SELECT * FROM alumnilist', (err, result) => {
+  db.query('SELECT * FROM alumnilist JOIN profile ON alumnilist.user_id = profile.profile_Id;', (err, result) => {
     if (err) throw err;
 
     res.json(result)
