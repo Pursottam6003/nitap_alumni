@@ -15,11 +15,6 @@ export const UserContext = createContext();
 
 function App() {
   const { profile, admin, setAdmin, error, loading, refetch } = useFetchProfile();
-
-  if (error) {
-    console.log(error);
-  }
-
   const logout = () => {
     axios.post('/users/logout', { withCredentials: true }).then(res => {
       if (res.status === 200) refetch();

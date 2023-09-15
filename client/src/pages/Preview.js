@@ -11,11 +11,14 @@ export default function Preview({ formData, formFiles = null }) {
         <Box component={''}>
           <Grid container spacing={2}>
             {/* row 1 */}
-            {formFiles && (
-              <Grid item xs={12} sm={4}>
-                <img alt="not found" width={"135px"} height={"150px"} src={URL.createObjectURL(formFiles.passport)}></img>
-              </Grid>
-            )}
+            <Grid item xs={12} sm={4}>
+              <img alt={formFiles || formData?.passport ? "Passport" : "Not found"} width={"135px"} height={"150px"}
+                src={
+                  formFiles
+                    ? URL.createObjectURL(formFiles.passport)
+                    : `http://localhost:5000/media/${formData.passport}`
+                } />
+            </Grid>
 
             <Grid item xs={12} sm={8}>
               <span className='previewLabel'>Name: </span>
@@ -163,12 +166,15 @@ export default function Preview({ formData, formFiles = null }) {
               <span className='draftData'>{dayjs().format('DD/MM/YYYY')}</span>
             </Grid>
 
-            {formFiles && (
-              <Grid item xs={12} sm={6}>
-                <span className='previewLabel'> Signature </span>
-                <img alt="not found" width={"180px"} height={"70px"} src={URL.createObjectURL(formFiles.sign)} ></img>
-              </Grid>
-            )}
+            <Grid item xs={12} sm={6}>
+              <span className='previewLabel'> Signature </span>
+              <img alt={formFiles || formData?.sign ? "Signature" : "Not found"} width={"180px"} height={"70px"}
+                src={
+                  formFiles
+                    ? URL.createObjectURL(formFiles.sign)
+                    : `http://localhost:5000/media/${formData.sign}`
+                } />
+            </Grid>
           </Grid>
         </Box>
       </Typography>

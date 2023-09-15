@@ -7,7 +7,7 @@ const { findUserByToken } = require('../utils/helpers');
 // configure storage for multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'upload/');
+    cb(null, 'media/');
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -23,8 +23,8 @@ alumni.route('/alumni/register').post(upload.fields([
   { name: 'passport', maxCount: 1 }
 ]), (req, res) => {
   // get the file url from req.files object and insert it in the database
-  const sign = req.files.sign[0].path;
-  const passport = req.files.passport[0].path;
+  const sign = req.files.sign[0].path.slice(6);
+  const passport = req.files.passport[0].path.slice(6);
 
   // an object containing both req.body and file paths
   let formData = { ...req.body, sign, passport }
