@@ -141,22 +141,24 @@ export default function CourseDetails({
             <FormLabel sx={{ my: 2 }} component="legend">
               Signature *
             </FormLabel>
-            {sign && (
+            {(sign || formData.sign) && (
               <div>
                 <img
                   alt="not found"
                   width={"135px"}
                   height={"100px"}
-                  src={URL.createObjectURL(sign)}
+                  src={formData.sign
+                    ? `http://localhost:5000/media/${formData.sign}`
+                    : URL.createObjectURL(sign)}
                 />
               </div>
             )}
             <Button variant="outlined" component="label">
-              {!sign ? 'Upload File' : 'Change File'}
+              {!(sign || formData.sign) ? 'Upload File' : 'Change File'}
               <input
                 type="file"
                 name="sign"
-                required={!sign}
+                required={!formData.sign?.length && !sign}
                 onChange={(event) => {
                   if (event.target.files) {
                     handleFileInputChange('sign', event.target.files[0])
@@ -182,22 +184,24 @@ export default function CourseDetails({
             <FormLabel sx={{ my: 2 }} component="legend">
               Passsport size photo *
             </FormLabel>
-            {profilePic && (
+            {(profilePic || formData.passport) && (
               <div>
                 <img
                   alt="not found"
                   width={"135px"}
                   height={"150px"}
-                  src={URL.createObjectURL(profilePic)}
+                  src={formData.passport
+                    ? `http://localhost:5000/media/${formData.passport}`
+                    : URL.createObjectURL(profilePic)}
                 />
               </div>
             )}
             <Button variant="outlined" component="label">
-              {!profilePic ? 'Upload File' : 'Change File'}
+              {!(formData.passport || profilePic) ? 'Upload File' : 'Change File'}
               <input
                 type="file"
                 name="passport"
-                required={!profilePic}
+                required={!formData.passport?.length && !profilePic}
                 onChange={(event) => {
                   if (event.target.files) {
                     handleFileInputChange('passport', event.target.files[0])

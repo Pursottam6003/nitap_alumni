@@ -21,7 +21,6 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
-import mockFormData from "../mocks/form";
 
 const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
@@ -45,9 +44,14 @@ export default function Form() {
 
       if (res.data.success && res.data.data) {
         setIsSubmitted(true);
+        let prefillData = Object.keys(res.data.data).filter(key => res.data.data[key] !== "null").reduce((obj, key) => {
+          obj[key] = res.data.data[key];
+          return obj;
+        }, {});
+
         fetchedFormData = {
           ...fetchedFormData,
-          ...res.data.data,
+          ...prefillData,
           dob: dayjs(res.data.data.dob, 'DD/MM/YYYY'),
         }
       }
@@ -60,9 +64,7 @@ export default function Form() {
   }
 
   React.useEffect(() => {
-    if (profile) {
-      prepopulate();
-    }
+    if (profile) prepopulate();
     // eslint-disable-next-line
   }, [profile])
 
@@ -78,8 +80,10 @@ export default function Form() {
     e.preventDefault();
     const data = new FormData();
     Object.keys(formData).forEach(key => {
+      if (key === 'passport' || key === 'sign') return;
       if (key === 'dob') {
         data.append(key, formData[key].format('DD/MM/YYYY'));
+        console.log(key, formData[key])
         return;
       }
       data.append(key, formData[key]);
@@ -108,6 +112,7 @@ export default function Form() {
   }
   const handleFileInputChange = (name, value) => {
     setFormFiles((prevData) => ({ ...prevData, [name]: value }));
+    setFormData((prevData) => ({ ...prevData, [name]: null }));
   }
 
   function getStepContent(step) {

@@ -1,89 +1,23 @@
 import React from "react";
 import { Grid, Typography, TextField, Autocomplete, Box, Button } from "@mui/material";
 import { DateField } from "@mui/x-date-pickers/DateField";
-
+import { CATEGORIES, NATIONALITIES, RELIGIONS, TITLES } from '../data'
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import cx from 'classnames';
 
-const TitleList = [
-  { label: "Mr.", value: "Mr" },
-  { label: "Miss", value: "Miss" },
-  { label: "Mrs", value: "Mrs" },
-  { label: "Dr", value: "Dr" },
-];
-const NationalityList = [
-  { label: "American" },
-  { label: "Bangladeshi" },
-  { label: "German" },
-  { label: "Nepalese" },
-  { label: "Indian" },
-  { label: "Sri Lankan" },
-];
-
-const categoryList = [
-  { label: "SC/ST" },
-  { label: "General" },
-  { label: "Gen-EWS" },
-  { label: "OBC" },
-  { label: "OBC-NCL" },
-  { label: "Others" },
-];
-
-const ReligionList = [
-  { label: "Hinduism" },
-  { label: "Islam" },
-  { label: "Indegeneous" },
-  { label: "Christianity" },
-  { label: "Sikhism" },
-  { label: "Jainism" },
-  { label: "Other" },
-];
-
-export default function PersonalDetails({
-  activeStep,
-  handleBack,
-  handleNext,
-  formData,
-  handleInputChange
-}) {
-  /**
-   * @param {Event} e
-   * */
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-
-    const d = {
-      title: data.get('title'),
-      dob: data.get('dob'),
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      nationality: data.get('nationality'),
-      category: data.get('category'),
-      religion: data.get('religion'),
-      address: data.get('address'),
-      pincode: data.get('pincode'),
-      state: data.get('state'),
-      city: data.get('city'),
-      country: data.get('country'),
-      email: data.get('email'),
-      altEmail: data.get('altEmail')
-    }
-    handleNext(d);
-  };
-
+export default function PersonalDetails({ activeStep, handleBack, handleNext, formData, handleInputChange }) {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Personal Details
       </Typography>
-      <Box component='form' onSubmit={handleSubmit}>
+      <Box component='form' onSubmit={handleNext}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={2.5}>
             <Autocomplete
               id="title"
-              options={TitleList}
+              options={TITLES}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               value={{ label: formData.title || '' }}
               onInputChange={(e, val) => {
@@ -132,7 +66,8 @@ export default function PersonalDetails({
 
           <Grid item xs={12} sm={6}>
             <DateField
-              value={formData.dob}
+              required
+              value={formData.dob || null}
               onChange={(newValue) => {
                 handleInputChange('dob', newValue)
               }}
@@ -142,7 +77,7 @@ export default function PersonalDetails({
           <Grid item xs={12} sm={6}>
             <Autocomplete
               id="category"
-              options={categoryList}
+              options={CATEGORIES}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               value={{ label: formData.category || '' }}
               onInputChange={(e, val) => {
@@ -167,7 +102,7 @@ export default function PersonalDetails({
           <Grid item xs={12} sm={6}>
             <Autocomplete
               id="nationality"
-              options={NationalityList}
+              options={NATIONALITIES}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               value={{ label: formData.nationality || '' }}
               onInputChange={(e, val) => {
@@ -190,7 +125,7 @@ export default function PersonalDetails({
           <Grid item xs={12} sm={6}>
             <Autocomplete
               id="religion"
-              options={ReligionList}
+              options={RELIGIONS}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               value={{ label: formData.religion || '' }}
               onInputChange={(e, val) => {

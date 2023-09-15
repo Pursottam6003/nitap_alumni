@@ -23,11 +23,8 @@ alumni.route('/alumni/register').post(upload.fields([
   { name: 'passport', maxCount: 1 }
 ]), (req, res) => {
   // get the file url from req.files object and insert it in the database
-  const sign = req.files.sign[0].path.slice(6);
-  const passport = req.files.passport[0].path.slice(6);
-
-  // an object containing both req.body and file paths
-  let formData = { ...req.body, sign, passport }
+  const sign = req.files.sign ? req.files.sign[0].path.slice(6) : null;
+  const passport = req.files.passport ? req.files.passport[0].path.slice(6) : null;
 
   let formFields = [
     'nationality',
@@ -48,10 +45,23 @@ alumni.route('/alumni/register').post(upload.fields([
     'rollNo',
     'discipline',
     'gradYear',
-    'sign',
-    'passport',
     'currentStatus'
   ]
+
+  // an object containing both req.body and file paths
+  let formData = Object.keys(req.body).reduce((obj, key) => {
+    obj[key] = req.body[key];
+    return obj;
+  }, {})
+
+  if (sign) {
+    formFields.push('sign');
+    formData.sign = sign;
+  }
+  if (passport) {
+    formFields.push('passport');
+    formData.passport = passport;
+  }
 
   const token = req.cookies.auth;
   findUserByToken(token).then(results => {
@@ -67,8 +77,12 @@ alumni.route('/alumni/register').post(upload.fields([
       if (result.length > 0) {
         // update
         let q = '', v = [];
-        formFields.forEach(field => {
-          q += field + ' = ?,'
+        formFields.forEach((field, index) => {
+          if (index === formFields.length - 1) {
+            q += field + ' = ?'
+          } else {
+            q += field + ' = ?,'
+          }
           v.push(formData[field])
         })
 
@@ -123,7 +137,6 @@ alumni.route('/alumni/prepopulate').post((req, res) => {
     const db = getDb();
     db.query('SELECT * FROM alumnilist WHERE user_id=?', [user_id], (err, result) => {
       if (err) throw err;
-      console.log(result[0])
       res.json({
         success: true,
         data: result[0] || null

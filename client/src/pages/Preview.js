@@ -12,11 +12,13 @@ export default function Preview({ formData, formFiles = null }) {
           <Grid container spacing={2}>
             {/* row 1 */}
             <Grid item xs={12} sm={4}>
-              <img alt={formFiles || formData?.passport ? "Passport" : "Not found"} width={"135px"} height={"150px"}
+              <img alt={formFiles?.sign || formData?.passport ? "Passport" : "Not found"} width={"135px"} height={"150px"}
                 src={
-                  formFiles
-                    ? URL.createObjectURL(formFiles.passport)
-                    : `http://localhost:5000/media/${formData.passport}`
+                  formData.passport
+                    ? `http://localhost:5000/media/${formData.passport}`
+                    : formFiles.passport
+                      ? URL.createObjectURL(formFiles.passport)
+                      : ''
                 } />
             </Grid>
 
@@ -168,11 +170,13 @@ export default function Preview({ formData, formFiles = null }) {
 
             <Grid item xs={12} sm={6}>
               <span className='previewLabel'> Signature </span>
-              <img alt={formFiles || formData?.sign ? "Signature" : "Not found"} width={"180px"} height={"70px"}
+              <img alt={formFiles?.sign || formData?.sign ? "Signature" : "Not found"} width={"180px"} height={"70px"}
                 src={
-                  formFiles
-                    ? URL.createObjectURL(formFiles.sign)
-                    : `http://localhost:5000/media/${formData.sign}`
+                  formData.sign
+                    ? `http://localhost:5000/media/${formData.sign}`
+                    : formFiles?.sign
+                      ? URL.createObjectURL(formFiles.sign)
+                      : ""
                 } />
             </Grid>
           </Grid>
