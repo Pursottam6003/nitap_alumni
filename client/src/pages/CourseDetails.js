@@ -3,9 +3,8 @@ import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import { FormLabel } from "@mui/material";
-import { Button, Box, RadioGroup, Radio } from "@mui/material";
+import { Button, Box } from "@mui/material";
 
 export default function CourseDetails({
   activeStep,
@@ -108,33 +107,6 @@ export default function CourseDetails({
               autoComplete="gradYear"
               variant="standard"
             />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormLabel mt={2} component="legend">
-              Which Membership do you require ?
-            </FormLabel>
-
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="membership-level-1"
-              name="radio-buttons-group"
-              id="membership"
-              required
-            >
-              <FormControlLabel
-                value="membership-level-1"
-                control={<Radio />}
-                label="Membership Level 1 -Yes! I am Interested to
-                get information and networking only."
-              />
-              <FormControlLabel
-                value="membership-level-2"
-                control={<Radio />}
-                label="Membership Level 2 -Yes! I am Interested in
-                volunteering for events and activities."
-              />
-            </RadioGroup>
           </Grid>
 
           <Grid item xs={12} md={6}>

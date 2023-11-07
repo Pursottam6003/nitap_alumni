@@ -82,6 +82,19 @@ CREATE TABLE preparing (
     preparing varchar(100) NOT NULL
 );
 
+CREATE TABLE currentStatusDetails (
+    id varchar(50) NOT NULL,
+    currentStatus SET('preparing', 'working', 'higher-education') DEFAULT 'preparing',
+    preparingfor varchar(100),
+    occupation varchar(30),
+    organisation varchar(50),
+    ctc decimal(10,2),
+    ongoingCourseDetails varchar(40),
+    ongoingDiscipline varchar(40),
+    ongoingGradYear varchar(10),
+    PRIMARY KEY(id)
+);
+
 CREATE TABLE organisationDetails 
 (
     organisation  varchar(100) 

@@ -18,6 +18,7 @@ export default function PersonalDetails({ activeStep, handleBack, handleNext, fo
             <Autocomplete
               id="title"
               options={TITLES}
+              disabled={true}
               isOptionEqualToValue={(option, value) => option.label === value.label}
               value={{ label: formData.title || '' }}
               onInputChange={(e, val) => {
@@ -41,6 +42,7 @@ export default function PersonalDetails({ activeStep, handleBack, handleNext, fo
               required
               id="firstName"
               name="firstName"
+              disabled={true}
               value={formData.firstName || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               label="First name"
@@ -55,6 +57,7 @@ export default function PersonalDetails({ activeStep, handleBack, handleNext, fo
               required
               id="lastName"
               name="lastName"
+              disabled={true}
               value={formData.lastName || ''}
               onChange={e => { handleInputChange(e.target.name, e.target.value) }}
               label="Last name"

@@ -84,8 +84,6 @@ export default function SignUp() {
     "lastName": "Tripathi",
     "email": "tripathics17@gmail.com",
     "phone": "+918448052150",
-    "batch": "UG 2010-14",
-    "department": "Mechanical Eng.",
     "password": "12345"
   });
 
@@ -210,39 +208,6 @@ export default function SignUp() {
                   />
                   <label className='phoneInputLabel'>Phone number *</label>
                 </div>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Autocomplete
-                  id="combo-box-demo"
-                  options={BatchList}
-                  isOptionEqualToValue={(option, value) => option.label === value.label}
-                  value={{ label: formData.batch || '' }}
-                  onInputChange={(e, val) => handleChange('batch', val)}
-                  renderInput={(params) => <TextField {...params}
-                    autoComplete="batch"
-                    name="batch"
-                    required
-                    fullWidth
-                    id="batch"
-                    label="Batch"
-                  />}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Autocomplete
-                  options={DeptList}
-                  isOptionEqualToValue={(option, value) => option.label === value.label}
-                  value={{ label: formData.department || '' }}
-                  onInputChange={(e, val) => handleChange('department', val)}
-                  renderInput={(params) => <TextField {...params}
-                    autoComplete="department"
-                    name="department"
-                    required
-                    fullWidth
-                    id="department"
-                    label="Department"
-                  />}
-                />
               </Grid>
               <Grid item xs={12}>
                 <TextField
