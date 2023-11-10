@@ -3,12 +3,9 @@ import React from 'react'
 import { NavLink } from "react-router-dom";
 import { AppBar, Toolbar, Container, Typography, Menu, MenuItem, Button, IconButton, Tooltip, Avatar } from "@mui/material";
 import { Box } from "@mui/system";
-
 import { AccountCircle as UserIcon, Logout as LogoutIcon } from '@mui/icons-material'
-
 import NITAP from '../media/Logo/nitap.png'
-
-import { UserContext } from '../App';
+import { useUser } from '../contexts/user';
 
 const Logo = () => (
   <Box sx={{ display: "flex", alignItems: "center", textDecoration: 'none' }} component={NavLink} to='/'>
@@ -51,7 +48,8 @@ const navItems = [
 const Navigation = () => {
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { profile: user, logout, admin } = React.useContext(UserContext);
+  // const { profile: user, logout, admin } = React.useContext(UserContext);
+  const { profile: user, logout, isAdmin: admin } = useUser();
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };

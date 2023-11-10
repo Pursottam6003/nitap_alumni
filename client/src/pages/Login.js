@@ -1,32 +1,30 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, CssBaseline, TextField, Link, Grid, Box, Typography, Container, Collapse, Alert, IconButton } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
+import { useUser } from '../contexts/user';
 
 const theme = createTheme();
 
-export default function LogIn({ fetchProfile }) {
+export default function LogIn() {
   const history = useNavigate();
   const [formData, setFormData] = useState({});
   const [errorMsg, setErrorMsg] = useState('');
+
+  const { profile } = useUser();
+
+  const { login } = useUser();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
 
-    // call api to login user
+    // call login function from user context
     try {
-      const res = await axios.post('/users/login', formData);
-      if (res.status === 200) {
-        fetchProfile();
-        history('/');
-      }
-    }
-    catch (err) {
+      await login(formData);
+    } catch (err) {
       setErrorMsg(err.response.data.message || err.message);
     } finally {
       setFormData({});
@@ -36,6 +34,10 @@ export default function LogIn({ fetchProfile }) {
   const handleChange = (name, value) => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   }
+
+  useEffect(() => {
+    if (!!profile) history('/');
+  })
 
   return (
     <ThemeProvider theme={theme} >

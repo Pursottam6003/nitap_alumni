@@ -1,43 +1,33 @@
-import React, { createContext } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
+import UpdateProfile from "./pages/UpdateProfile";
 import LayoutComponent from './layout/LayoutComponent'
 import Form from './pages/Form'
 import Admin from "./pages/Admin";
 import SignUpAdmin from "./pages/SignUpAdmin";
 import './styles/styles.scss'
-import useFetchProfile from "./hooks/useFetchProfile";
 import ProtectedComponent from "./components/ProtectedComponent";
-import axios from "axios";
+import UserProvider from "./contexts/user";
 
-export const UserContext = createContext();
 
 function App() {
-  const { profile, admin, setAdmin, error, loading, refetch } = useFetchProfile();
-  const logout = () => {
-    axios.post('/users/logout', { withCredentials: true }).then(res => {
-      if (res.status === 200) refetch();
-    }).catch(err => {
-      throw err;
-    })
-  }
-
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ profile, error, loading, logout, admin, setAdmin }}>
+      <UserProvider>
         <LayoutComponent>
           <Routes>
-            <Route path="/login" element={<Login fetchProfile={refetch} />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<UpdateProfile />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signup-admin" element={<SignUpAdmin />} />
+            <Route path="/update-profile" element={<ProtectedComponent children={<UpdateProfile />} />} />
             <Route path="/" element={<ProtectedComponent children={<Form />} />} />
-            <Route path="/admin" element={<Admin />
-              // <ProtectedComponent children={<Admin />} admin={true} />
-            } />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </LayoutComponent>
-      </UserContext.Provider>
+      </UserProvider>
     </BrowserRouter>
   );
 }

@@ -2,7 +2,7 @@ const express = require('express');
 const alumni = express.Router();
 const getDb = require('../db/conn').getDb;
 const multer = require('multer');
-const { findUserByToken } = require('../utils/helpers');
+const { findUserByToken } = require('../helpers/helper');
 
 // configure storage for multer
 const storage = multer.diskStorage({
@@ -135,7 +135,7 @@ alumni.route('/alumni/prepopulate').post((req, res) => {
     const user_id = results[0].id_text;
 
     const db = getDb();
-    db.query('SELECT * FROM alumnilist WHERE user_id=?', [user_id], (err, result) => {
+    db.query('SELECT * FROM alumnilist WHERE userId=?', [user_id], (err, result) => {
       if (err) throw err;
       res.json({
         success: true,

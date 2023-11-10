@@ -1,10 +1,9 @@
 import { Box, Container } from '@mui/system';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import useAuth from '../hooks/useAuth';
-import { UserContext } from '../App';
 import Loading from './Loading';
+import { useUser } from '../contexts/user';
 
 const UnauthorizedComponent = () => (
   <Container maxWidth="lg">
@@ -17,24 +16,24 @@ const UnauthorizedComponent = () => (
 );
 
 const ProtectedComponent = ({ children, admin = false }) => {
-  const { isAuth, isAdmin, loading } = useAuth();
-  const { profile } = useContext(UserContext);
+  const { profile, isAdmin, loading } = useUser();
 
   const history = useNavigate();
   useEffect(() => {
     if (loading) return;
-    if (!isAuth || !profile?.profile_Id) history('/login');
+
+    if (!profile) {
+      history('/login');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, isAuth, profile]);
+  }, [loading, profile]);
 
   return (
     loading
       ? <Loading />
-      : !admin ? (
-        isAuth && profile?.profile_Id ? children : <UnauthorizedComponent />
-      ) : (
-        isAuth && isAdmin && profile?.profile_Id ? children : <UnauthorizedComponent />
-      )
+      : !admin
+        ? profile ? children : <UnauthorizedComponent />
+        : profile && isAdmin ? children : <UnauthorizedComponent />
   )
 };
 

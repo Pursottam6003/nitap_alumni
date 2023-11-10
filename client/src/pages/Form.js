@@ -14,13 +14,14 @@ import CourseDetails from "./CourseDetails";
 import EmploymentDetails from "./EmploymentDetails";
 import Preview from "./Preview";
 import axios from 'axios';
-import { UserContext } from '../App';
+// import { UserContext } from '../App';
 import { Alert } from "@mui/material";
 import Loading from "../components/Loading";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/en-gb";
+import { useUser } from "../contexts/user";
 
 const steps = ["Personal Details", "Course Details", "Employment Details", "Form Preview"];
 const theme = createTheme();
@@ -34,7 +35,8 @@ export default function Form() {
 
   const [formFiles, setFormFiles] = React.useState({ sign: null, passport: null });
   // eslint-disable-next-line
-  const { profile, error, loading: fetchingProfile, logout } = React.useContext(UserContext);
+  // const { profile, error, loading: fetchingProfile, logout } = React.useContext(UserContext);
+  const { profile, logout } = useUser();
 
   const prepopulate = async () => {
     setLoading(true);
