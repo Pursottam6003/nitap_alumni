@@ -1,0 +1,587 @@
+:root {
+    --nav-height: 64px;
+    --footer-height: 240px;
+}
+
+::-webkit-scrollbar {
+    background: #e7e7e7d9;
+    height: 8px;
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 2px;
+}
+
+.navBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px 5px 50px;
+    box-shadow: 1px -5px 16px 1px;
+}
+
+
+.navLinks {
+    color: #723f21;
+    display: flex;
+    flex-direction: row;
+    font-weight: 700;
+    justify-content: space-between;
+    gap: 40px;
+    font-variant: small-caps;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: -25px;
+
+    :hover {
+        color: red;
+    }
+
+    .navEle {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgb(106, 60, 60);
+    }
+}
+
+.main-component-wrapper {
+    padding: 1px 0;
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height) - 2px);
+}
+
+.lists {
+    list-style: none;
+    margin: 0.5rem 0;
+    padding: 0;
+}
+
+.organization {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+:root {
+    --nav-height: 64px;
+    --footer-height: 240px;
+}
+
+::-webkit-scrollbar {
+    background: #e7e7e7d9;
+    height: 8px;
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 2px;
+}
+
+.navBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px 5px 50px;
+    box-shadow: 1px -5px 16px 1px;
+}
+
+
+.navLinks {
+    color: #723f21;
+    display: flex;
+    flex-direction: row;
+    font-weight: 700;
+    justify-content: space-between;
+    gap: 40px;
+    font-variant: small-caps;
+    align-items: center;
+    margin-bottom: 15px;
+    margin-top: -25px;
+
+    :hover {
+        color: red;
+    }
+
+    .navEle {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgb(106, 60, 60);
+    }
+}
+
+.main-component-wrapper {
+    padding: 1px 0;
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height) - 2px);
+}
+
+.lists {
+    list-style: none;
+    margin: 0.5rem 0;
+    padding: 0;
+}
+
+.organization {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+
+
+.mainSection {
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .componentBox {
+        max-width: 750px;
+        font-family: monospace;
+        font-size: 18px;
+    }
+}
+
+.directorHeading {
+
+    color: #723f21;
+    text-align: center;
+    position: relative;
+    font-family: cursive;
+}
+
+.directorHeading:hover {
+    text-decoration: underline;
+}
+
+.DirectorsMessage {
+    max-width: 800px;
+
+    .Message {
+        padding-left: 120px;
+    }
+}
+
+.News {
+    background-color: rgb(235, 235, 235);
+    width: 600px;
+    padding: 10px;
+    border-radius: 1rem;
+    margin-bottom: 20px;
+
+    .newsArticle {
+        box-shadow: 0px 1px 0px 0px;
+
+    }
+
+    .newsArticle:hover {
+        background-color: #ffffff;
+    }
+}
+
+// .PhoneInputInput
+// {
+//     height: 50px;
+// }
+// .PhoneInputCountryIcon
+// {
+//     width: 50px !important;
+//     height: 35px !important;
+// }
+
+.MoreOptions {
+    text-align: center;
+    color: rgb(255, 98, 0);
+
+    .SignInOptions {
+        gap: 20px;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+// form 
+.MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-126nd9x-MuiPaper-root {
+    width: 768px !important;
+}
+
+
+
+// phone ---------------
+.phoneInputField {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    vertical-align: top;
+    width: 100%;
+
+    .phoneInputLabel {
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.6);
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.4375em;
+        letter-spacing: 0.00938em;
+        padding: 0;
+        position: relative;
+        display: block;
+        transform-origin: top left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        -webkit-transform: translate(48px, 20px) scale(1);
+        -moz-transform: translate(48px, 20px) scale(1);
+        -ms-transform: translate(48px, 20px) scale(1);
+        transform: translate(48px, 20px) scale(1);
+        -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, -webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    }
+
+    .PhoneInput {
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.4375em;
+        letter-spacing: 0.00938em;
+        color: rgba(0, 0, 0, 0.87);
+        box-sizing: border-box;
+        position: relative;
+        cursor: text;
+        display: -webkit-inline-box;
+        display: -webkit-inline-flex;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        margin-top: 16px;
+
+        .PhoneInputInput {
+            font: inherit;
+            letter-spacing: inherit;
+            color: currentColor;
+            padding: 4px 0 5px;
+            border: 0;
+            box-sizing: content-box;
+            background: none;
+            height: 1.4375em;
+            margin: 0;
+            -webkit-tap-highlight-color: transparent;
+            display: block;
+            min-width: 0;
+            width: 100%;
+        }
+
+        .PhoneInputCountryIcon {
+            width: 33px !important;
+            height: 20px !important;
+        }
+    }
+
+    .PhoneInput::before {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+        left: 0;
+        bottom: 0;
+        content: "\00a0";
+        position: absolute;
+        right: 0;
+        transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        pointer-events: none;
+    }
+
+    .PhoneInput:hover::before {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.87);
+    }
+
+    .PhoneInput::after {
+        border-bottom: 2px solid #1976d2;
+        left: 0;
+        bottom: 0;
+        content: "";
+        position: absolute;
+        right: 0;
+        transform: scaleX(0);
+        transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        pointer-events: none;
+    }
+
+    .PhoneInput.PhoneInput--focus~.phoneInputLabel {
+        transform: translate(0, -1.5px) scale(0.75);
+        color: #1976d2;
+    }
+
+    .PhoneInput.PhoneInput--focus::after {
+        transform: scaleX(1) translateX(0);
+    }
+
+    .PhoneInput.filled~.phoneInputLabel {
+        transform: translate(0, -1.5px) scale(0.75);
+    }
+}
+
+@media (min-width: 600px) {
+    .css-nicjba-MuiContainer-root {
+        max-width: 768px !important;
+    }
+}
+
+@media (max-width:500px) {
+    .MuiStepper-root {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}
+
+input:focus {
+    outline: none;
+}
+
+
+.previewLabel {
+    color: #9E9E9E;
+    font-size: medium;
+}
+
+.draftData {
+    font-size: medium;
+    font-family: sans-serif;
+}
+
+.mainSection {
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    .componentBox {
+        max-width: 750px;
+        font-family: monospace;
+        font-size: 18px;
+    }
+}
+
+
+.MoreOptions {
+    text-align: center;
+    color: rgb(255, 98, 0);
+
+    .SignInOptions {
+        gap: 20px;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+// form 
+.MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-126nd9x-MuiPaper-root {
+    width: 768px !important;
+}
+
+
+
+// phone ---------------
+.phoneInputField {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    position: relative;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    vertical-align: top;
+    width: 100%;
+
+    .phoneInputLabel {
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.6);
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.4375em;
+        letter-spacing: 0.00938em;
+        padding: 0;
+        position: relative;
+        display: block;
+        transform-origin: top left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        -webkit-transform: translate(48px, 20px) scale(1);
+        -moz-transform: translate(48px, 20px) scale(1);
+        -ms-transform: translate(48px, 20px) scale(1);
+        transform: translate(48px, 20px) scale(1);
+        -webkit-transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, -webkit-transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+    }
+
+    .PhoneInput {
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.4375em;
+        letter-spacing: 0.00938em;
+        color: rgba(0, 0, 0, 0.87);
+        box-sizing: border-box;
+        position: relative;
+        cursor: text;
+        display: -webkit-inline-box;
+        display: -webkit-inline-flex;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        margin-top: 16px;
+
+        .PhoneInputInput {
+            font: inherit;
+            letter-spacing: inherit;
+            color: currentColor;
+            padding: 4px 0 5px;
+            border: 0;
+            box-sizing: content-box;
+            background: none;
+            height: 1.4375em;
+            margin: 0;
+            -webkit-tap-highlight-color: transparent;
+            display: block;
+            min-width: 0;
+            width: 100%;
+        }
+
+        .PhoneInputCountryIcon {
+            width: 33px !important;
+            height: 20px !important;
+        }
+    }
+
+    .PhoneInput::before {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+        left: 0;
+        bottom: 0;
+        content: "\00a0";
+        position: absolute;
+        right: 0;
+        transition: border-bottom-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+        pointer-events: none;
+    }
+
+    .PhoneInput:hover::before {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.87);
+    }
+
+    .PhoneInput::after {
+        border-bottom: 2px solid #1976d2;
+        left: 0;
+        bottom: 0;
+        content: "";
+        position: absolute;
+        right: 0;
+        transform: scaleX(0);
+        transition: transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
+        pointer-events: none;
+    }
+
+    .PhoneInput.PhoneInput--focus~.phoneInputLabel {
+        transform: translate(0, -1.5px) scale(0.75);
+        color: #1976d2;
+    }
+
+    .PhoneInput.PhoneInput--focus::after {
+        transform: scaleX(1) translateX(0);
+    }
+
+    .PhoneInput.filled~.phoneInputLabel {
+        transform: translate(0, -1.5px) scale(0.75);
+    }
+}
+
+@media (min-width: 768px) {
+    .css-nicjba-MuiContainer-root {
+        max-width: 768px !important;
+    }
+}
+
+@media (min-width: 0px) {
+    .css-126nd9x-MuiPaper-root {
+        max-width: 768px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}
+
+input:focus {
+    outline: none;
+}
+
+.previewLabel {
+    color: #9E9E9E;
+    font-size: medium;
+}
+
+.draftData {
+    font-size: medium;
+    font-family: sans-serif;
+}
+
+@media print {
+    html {
+        margin: 0px 0px;
+        // padding-left: 5px;
+        // padding-right: 5px;
+    }
+
+    .app-navigation,
+    .app-footer {
+        display: none !important;
+    }
+
+    .button-preview {
+        display: none !important;
+    }
+
+    .print-container {
+        max-width: 800px !important;
+        margin: 0 !important;
+    }
+}

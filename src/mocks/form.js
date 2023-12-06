@@ -1,0 +1,33 @@
+const formData = {
+  "dob": "17/03/2001",
+  "title": "Mr.",
+  "firstName": "CHANDRASHEKHAR",
+  "lastName": "TRIPATHI",
+  "phone": "+918448052150",
+  "email": "tripathics17@gmail.com",
+  "category": "General",
+  "nationality": "Indian",
+  "religion": "Hinduism",
+  "address": "HIG 29, Vistar nagar",
+  "state": "Uttar Pradesh",
+  "city": "Please select...",
+  "country": "IN",
+  "pincode": "273007",
+  "courseCompleted": "b.tech",
+  "registrationNo": "123",
+  "rollNo": "38",
+  "discipline": "cse",
+  "gradYear": "2024",
+  "currentStatus": "preparing",
+  "preparing": "something",
+  "ongoingCourseDetails": "",
+  "ongoingDiscipline": "",
+  "ongoingGradYear": "",
+  "ongoingInstitute": "",
+  "currentOrganisation": "",
+  "occupation": "",
+  "jobtitle": "",
+  "ctc": ""
+}
+
+export default formData;
