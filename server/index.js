@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const cookies = require('cookie-parser');
+const path = require('path');
 
 const app = express();
 
@@ -10,10 +11,13 @@ const { findUserByToken } = require('./helpers/helper');
 
 app.use(cookies());
 app.use(express.json());
-app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001'],
-  credentials: true
-}));
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors({
+    origin: [`http://localhost:${process.env.PORT}`, 'http://localhost:3000'],
+    credentials: true
+  }));
+}
 
 // middlewares for routes
 app.use(require('./routes/usersnew'));
@@ -34,8 +38,14 @@ app.get('/media/:filename', (req, res) => {
   });
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.SERVER_PORT || 5000;
 app.listen(port, () => {
   console.log('Server listening to port', port);
   dbo.connectToServer();
+});
+
+// serve react frontend (static files) from build folder
+app.use(express.static(path.join(__dirname, '..', 'build')));
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
